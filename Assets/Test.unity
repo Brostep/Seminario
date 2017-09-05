@@ -1829,7 +1829,7 @@ Prefab:
     - target: {fileID: 2300128, guid: c224487945a3ebb40bce6f65a542d2bd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 6a4912ca79776c0438f9fe4372641378, type: 2}
+      objectReference: {fileID: 2100000, guid: 539b4e1a056c4c84e91185c654545ecb, type: 2}
     - target: {fileID: 2300038, guid: c224487945a3ebb40bce6f65a542d2bd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
