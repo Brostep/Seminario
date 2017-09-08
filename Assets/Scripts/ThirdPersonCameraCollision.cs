@@ -22,7 +22,7 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 		RaycastHit hit;
 
 		if (Physics.Raycast(transform.parent.position, desiredCameraPos, out hit))
-			distance = Mathf.Clamp((hit.distance * 0.8f), minDistance, maxDistance);
+			distance = Mathf.Clamp((hit.distance * 0.85f), minDistance, maxDistance);
 		else
 			distance = maxDistance;
 
