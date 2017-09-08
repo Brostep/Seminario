@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OLDThirdPersonCameraController : MonoBehaviour
 {
-
     public float CameraMoveSpeed = 120.0f;
     public GameObject CameraFollowObj;
     public float clampAngle = 80.0f;
@@ -19,8 +18,6 @@ public class OLDThirdPersonCameraController : MonoBehaviour
         Vector3 rot = transform.localRotation.eulerAngles;
         rotY = rot.y;
         rotX = rot.x;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     void Update()

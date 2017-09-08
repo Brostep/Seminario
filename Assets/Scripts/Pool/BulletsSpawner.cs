@@ -22,7 +22,6 @@ public class BulletsSpawner : MonoBehaviour
 			_bulletPool.GetObjectFromPool();
 		}
 	}
-
 	private Bullet BulletFactory()
 	{
 		return Instantiate<Bullet>(bulletPrefab);

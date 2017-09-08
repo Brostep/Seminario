@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		topDownController = GetComponent<TopDownMovement>();
+		ChangeMovement();
 	}
 	void Update()
 	{
@@ -27,14 +28,18 @@ public class PlayerController : MonoBehaviour {
 	void ChangeMovement()
 	{
 		if (cameraChanged)
-		{
+		{//TOP DOWN
 			thirdPersonCamera.SetActive(false);
 			thirdPersonController.enabled = false;
 			topDownCamera.SetActive(true);
 			topDownController.enabled = true;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 		}
 		else
 		{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
 			topDownController.enabled = false;
 			topDownCamera.SetActive(false);
 			thirdPersonController.enabled = true;

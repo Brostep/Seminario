@@ -20,7 +20,10 @@ public class Bullet : MonoBehaviour
 			transform.position += transform.forward * speed * Time.deltaTime;
 		}
 	}
-
+	void OnCollisionEnter(Collision collision)
+	{
+		BulletsSpawner.Instance.ReturnBulletToPool(this);
+	}
 	public void Initialize()
 	{
 		_tick = 0;
