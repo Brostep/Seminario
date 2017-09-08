@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPersonCameraController : MonoBehaviour
+public class OLDThirdPersonCameraController : MonoBehaviour
 {
 
     public float CameraMoveSpeed = 120.0f;
