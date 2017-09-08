@@ -39,4 +39,10 @@ public class Bullet : MonoBehaviour
 	{
 		bulletObj.gameObject.SetActive(false);
 	}
+
+    void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.layer == 8)
+            BulletsSpawner.Instance.ReturnBulletToPool(this);
+    }
 }
