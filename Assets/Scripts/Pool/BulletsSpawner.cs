@@ -19,7 +19,13 @@ public class BulletsSpawner : MonoBehaviour
 	}
 	void Update()
 	{
-		transform.rotation = firePoint.transform.rotation;
+		if (firePoint.transform.rotation.x > 0)
+		{
+			var clampRotation = new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w);
+			transform.rotation = clampRotation;
+		}
+		else
+			transform.rotation = firePoint.transform.rotation;
 	}
 	IEnumerator Shoot()
 	{
