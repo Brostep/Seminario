@@ -5,30 +5,8 @@ using UnityEngine;
 public class AutoFocus : MonoBehaviour
 {
 	public Transform target;            
-	Rigidbody targetRigidbody;
-	Transform cam;
-	Transform pivot;
-	public float targetVelocityLimit;
-	float currentTurnAmount;
-	float turnSpeedVelocity;
-	float lastFlatAngle;
-	public float smoothTurnTime;
-	public float turnSpeed;
 	public float movementSpeed;
-	Vector3 rollUp = Vector3.up;
-	public float rollSpeed;
-	public float spinTurnLimit = 90;
 
-	void Awake()
-	{
-		cam = GetComponentInChildren<Camera>().transform;
-		pivot = cam.parent;
-	}
-	void Start()
-	{
-		if (target == null) return;
-		targetRigidbody = target.GetComponent<Rigidbody>();
-	}
 
 	void FixedUpdate()
 	{
@@ -40,10 +18,10 @@ public class AutoFocus : MonoBehaviour
 		if (!(Time.deltaTime > 0) || target == null)
 			return;
 
-		var targetForward = target.forward;
-		var targetUp = target.up;
+//		var targetForward = target.forward;
+//		var targetUp = target.up;
 		
-		var currentFlatAngle = Mathf.Atan2(targetForward.x, targetForward.z) * Mathf.Rad2Deg;
+/*		var currentFlatAngle = Mathf.Atan2(targetForward.x, targetForward.z) * Mathf.Rad2Deg;
 
 		if (spinTurnLimit > 0)
 		{
@@ -56,14 +34,14 @@ public class AutoFocus : MonoBehaviour
 		{
 			currentTurnAmount = 1;
 		}
-
-		lastFlatAngle = currentFlatAngle;
+		*/
+	//	lastFlatAngle = currentFlatAngle;
 		
 		transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * movementSpeed);
 
-		var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
+	//	var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
 
-		rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
-		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
+	//	rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
+	//	transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
 	}
 }

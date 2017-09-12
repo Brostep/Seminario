@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour {
 	void ChangeMovement()
 	{
 		if (cameraChanged)
-		{//TOP DOWN
+		{
+			//TOP DOWN
 			thirdPersonCamera.SetActive(false);
 			thirdPersonController.enabled = false;
 			topDownCamera.SetActive(true);

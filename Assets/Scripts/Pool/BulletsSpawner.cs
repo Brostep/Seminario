@@ -4,6 +4,8 @@ using System.Collections;
 public class BulletsSpawner : MonoBehaviour
 {
 	public Bullet bulletPrefab;
+	public float cooldown = 10f;
+	public GameObject firePoint;
 	private Pool<Bullet> _bulletPool;
 
 	private static BulletsSpawner _instance;
@@ -13,14 +15,21 @@ public class BulletsSpawner : MonoBehaviour
 	{
 		_instance = this;
 		_bulletPool = new Pool<Bullet>(15, BulletFactory, Bullet.InitializeBullet, Bullet.DisposeBullet, true);
+		StartCoroutine(Shoot());
 	}
-
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Mouse0))
+		transform.rotation = firePoint.transform.rotation;
+	}
+	IEnumerator Shoot()
+	{
+		if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
 		{
 			_bulletPool.GetObjectFromPool();
 		}
+
+		yield return new WaitForSeconds(cooldown/10f);
+		StartCoroutine(Shoot());
 	}
 	private Bullet BulletFactory()
 	{

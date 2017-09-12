@@ -5,29 +5,27 @@ public class Bullet : MonoBehaviour
 {
 	public float speed;
 	public float lifeSpan;
-	private float _tick;
+	private float _timeAlive;
 	private bool _alive;
 
     void Update()
 	{
-		_tick += Time.deltaTime;
-		if (_tick >= lifeSpan)
-		{
+		_timeAlive += Time.deltaTime;
+		if (_timeAlive >= lifeSpan)
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
-		}
 		else
-		{
-			transform.position += transform.forward * speed * Time.deltaTime;
-		}
+			transform.position += transform.forward* speed * Time.deltaTime;
 	}
-	void OnCollisionEnter(Collision collision)
+	void OnCollisionEnter(Collision c)
 	{
 		BulletsSpawner.Instance.ReturnBulletToPool(this);
 	}
 	public void Initialize()
 	{
-		_tick = 0;
-        var bulletSpawner = FindObjectOfType<BulletsSpawner>().gameObject;
+		_timeAlive = 0;
+
+		//busca el bullet spawner y copia su direccion y rotacion y spawnea ahi.
+		var bulletSpawner = FindObjectOfType<BulletsSpawner>().gameObject;
         transform.position = bulletSpawner.transform.position;
         transform.rotation = bulletSpawner.transform.rotation; 
 	}
