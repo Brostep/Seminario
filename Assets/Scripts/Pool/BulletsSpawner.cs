@@ -6,6 +6,7 @@ public class BulletsSpawner : MonoBehaviour
 	public Bullet bulletPrefab;
 	public float cooldown = 10f;
 	public GameObject firePoint;
+	public float clampAngle = 0f;
 	private Pool<Bullet> _bulletPool;
 
 	private static BulletsSpawner _instance;
@@ -19,13 +20,14 @@ public class BulletsSpawner : MonoBehaviour
 	}
 	void Update()
 	{
-		if (firePoint.transform.rotation.x > 0)
-		{
-			var clampRotation = new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w);
-			transform.rotation = clampRotation;
-		}
-		else
-			transform.rotation = firePoint.transform.rotation;
+		var rotX = firePoint.transform.rotation.x;
+		rotX = Mathf.Clamp(rotX , -clampAngle, 0f);
+	
+		Quaternion localRotation = new Quaternion(rotX, firePoint.transform.rotation.y, 0, firePoint.transform.rotation.w);
+		print(localRotation);
+		transform.rotation = localRotation;
+
+		//transform.rotation = firePoint.transform.rotation;
 	}
 	IEnumerator Shoot()
 	{
