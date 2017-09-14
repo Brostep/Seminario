@@ -1941,7 +1941,7 @@ Prefab:
       objectReference: {fileID: 2066024248}
     - target: {fileID: 4445346328301472, guid: b303d86fab4bb4c4fab84c88d6e127a0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4916662884950160, guid: b303d86fab4bb4c4fab84c88d6e127a0, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -2072,7 +2072,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4445346328301472, guid: b303d86fab4bb4c4fab84c88d6e127a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 22.2
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4445346328301472, guid: b303d86fab4bb4c4fab84c88d6e127a0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2191,13 +2191,16 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1643644324}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0360281a502d164d8de4abf7c4382a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1951771710}
+  target: {fileID: 2132846177}
   movementSpeed: 4
+  spinTurnLimit: 90
+  rollSpeed: 0.2
+  turnSpeed: 1
 --- !u!114 &1643644326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2213,6 +2216,9 @@ MonoBehaviour:
   CameraFollowObj: {fileID: 2132846176}
   clampAngle: 45
   inputSensitivity: 150
+  spinTurnLimit: 90
+  rollSpeed: 0.2
+  turnSpeed: 1
 --- !u!4 &1643644327
 Transform:
   m_ObjectHideFlags: 0
@@ -2655,5 +2661,10 @@ MeshCollider:
 --- !u!1 &2132846176 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1107722224607748, guid: b303d86fab4bb4c4fab84c88d6e127a0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1608688260}
+--- !u!4 &2132846177 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4720493590388114, guid: b303d86fab4bb4c4fab84c88d6e127a0,
     type: 2}
   m_PrefabInternal: {fileID: 1608688260}

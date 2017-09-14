@@ -40,10 +40,6 @@ public class ThirdPersonController : MonoBehaviour {
 	{	
 		if (thirdPersonCam != null)
 		{
-			//look at camera foward
-			//var lookAt = new Quaternion(0,thirdPersonCam.rotation.y,0,thirdPersonCam.rotation.w);
-			//transform.rotation = lookAt;
-
 			// calculate camera relative direction to move:
 			camForward = Vector3.Scale(thirdPersonCam.forward, new Vector3(1, 0, 1)).normalized;
 			relativeMove = verticalInput * camForward + horizontalInput * thirdPersonCam.right;

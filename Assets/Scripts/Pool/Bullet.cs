@@ -7,14 +7,13 @@ public class Bullet : MonoBehaviour
 	public float lifeSpan;
 	private float _timeAlive;
 	private bool _alive;
-
     void Update()
 	{
 		_timeAlive += Time.deltaTime;
 		if (_timeAlive >= lifeSpan)
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
 		else
-			transform.position += transform.forward* speed * Time.deltaTime;
+			transform.position += transform.forward * speed * Time.deltaTime;
 	}
 	void OnCollisionEnter(Collision c)
 	{

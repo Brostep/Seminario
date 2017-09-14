@@ -14,6 +14,13 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 	float rotX = 0f;
 	Transform target;
 	Vector3 stoped;
+	public float spinTurnLimit = 90;
+	float currentTurnAmount;
+	float lastFlatAngle;
+	float turnSpeedVelocity;
+	Vector3 rollUp = Vector3.up;
+	public float rollSpeed = 0.2f;
+	public float turnSpeed = 1f;
 	void Start()
 	{
 		Vector3 rot = transform.localRotation.eulerAngles;
@@ -35,16 +42,20 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		stickX = Input.GetAxis("RightStickHorizontal");
 		stickY = Input.GetAxis("RightStickVertical");
 		rotY += (stickX + mouseX) * inputSensitivity * Time.deltaTime;
-		rotX += (stickY + mouseY )* inputSensitivity * Time.deltaTime;
+		rotX += (stickY + mouseY) * inputSensitivity * Time.deltaTime;
 	}
 	void RotateCamera()
 	{
-		rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+		if (Input.GetKey(KeyCode.E)) FollowTarget();
+		else
+		{
+			rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
-		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
-		transform.rotation = localRotation;
+			Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
+			transform.rotation = localRotation;
+		}
+
 	}
-
 	void FixedUpdate()
 	{
 		CameraUpdater();
@@ -62,5 +73,46 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 			stoped = target.transform.position;
 			transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * CameraMoveSpeed);
 		}
+
+	}
+	void FollowTarget()
+	{
+		if (!(Time.deltaTime > 0) || target == null)
+			return;
+
+		var targetForward = target.forward;
+		var targetUp = target.up;
+
+		var currentFlatAngle = Mathf.Atan2(targetForward.x, targetForward.z) * Mathf.Rad2Deg;
+
+		if (spinTurnLimit > 0)
+		{
+			var targetSpinSpeed = Mathf.Abs(Mathf.DeltaAngle(lastFlatAngle, currentFlatAngle)) / Time.deltaTime;
+			var desiredTurnAmount = Mathf.InverseLerp(spinTurnLimit, spinTurnLimit * 0.75f, targetSpinSpeed);
+			var turnReactSpeed = (currentTurnAmount > desiredTurnAmount ? .1f : 1f);
+			currentTurnAmount = Mathf.SmoothDamp(currentTurnAmount, desiredTurnAmount, ref turnSpeedVelocity, turnReactSpeed);
+		}
+		else
+		{
+			currentTurnAmount = 1;
+		}
+
+		lastFlatAngle = currentFlatAngle;
+
+		var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
+
+		rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
+		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
+
+		var rot = transform.localRotation.eulerAngles;
+		rotY = rot.y;
+		rotX = rot.x;
+		// aca salta el error (?
+		if (rotX > clampAngle && rotX < 180 - clampAngle)
+			print("in");
+		else
+			print("out");
+		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
+		transform.rotation = localRotation;
 	}
 }

@@ -6,7 +6,13 @@ public class AutoFocus : MonoBehaviour
 {
 	public Transform target;            
 	public float movementSpeed;
-
+	public float spinTurnLimit = 90;
+	float currentTurnAmount;
+	float lastFlatAngle;
+	float turnSpeedVelocity;
+	Vector3 rollUp = Vector3.up;
+	public float rollSpeed= 0.2f;
+	public float turnSpeed= 1f;
 
 	void FixedUpdate()
 	{
@@ -18,10 +24,10 @@ public class AutoFocus : MonoBehaviour
 		if (!(Time.deltaTime > 0) || target == null)
 			return;
 
-//		var targetForward = target.forward;
-//		var targetUp = target.up;
+		var targetForward = target.forward;
+		var targetUp = target.up;
 		
-/*		var currentFlatAngle = Mathf.Atan2(targetForward.x, targetForward.z) * Mathf.Rad2Deg;
+		var currentFlatAngle = Mathf.Atan2(targetForward.x, targetForward.z) * Mathf.Rad2Deg;
 
 		if (spinTurnLimit > 0)
 		{
@@ -34,14 +40,12 @@ public class AutoFocus : MonoBehaviour
 		{
 			currentTurnAmount = 1;
 		}
-		*/
-	//	lastFlatAngle = currentFlatAngle;
 		
-		transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * movementSpeed);
+		lastFlatAngle = currentFlatAngle;
 
-	//	var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
+		var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
 
-	//	rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
-	//	transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
+		rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
+		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
 	}
 }

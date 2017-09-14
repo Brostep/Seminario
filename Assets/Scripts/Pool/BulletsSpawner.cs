@@ -8,7 +8,8 @@ public class BulletsSpawner : MonoBehaviour
 	public GameObject firePoint;
 	public float clampAngle = 0f;
 	private Pool<Bullet> _bulletPool;
-
+	float rotX, rotY;
+	public float inputSensitivity = 150f;
 	private static BulletsSpawner _instance;
 	public static BulletsSpawner Instance { get { return _instance; } }
 
@@ -16,18 +17,35 @@ public class BulletsSpawner : MonoBehaviour
 	{
 		_instance = this;
 		_bulletPool = new Pool<Bullet>(15, BulletFactory, Bullet.InitializeBullet, Bullet.DisposeBullet, true);
+		Vector3 rot = transform.localRotation.eulerAngles;
+		rotY = rot.y;
+		rotX = rot.x;
+
 		StartCoroutine(Shoot());
 	}
 	void Update()
 	{
-		var rotX = firePoint.transform.rotation.x;
-		rotX = Mathf.Clamp(rotX , -clampAngle, 0f);
-	
-		Quaternion localRotation = new Quaternion(rotX, firePoint.transform.rotation.y, 0, firePoint.transform.rotation.w);
-		print(localRotation);
-		transform.rotation = localRotation;
-
+		if (!PlayerController.cameraChanged)
+		{
+			GetInputs();
+			RotateCamera();		
+		}
 		//transform.rotation = firePoint.transform.rotation;
+	}
+	void GetInputs()
+	{
+		var mouseX = Input.GetAxis("Mouse X");
+		var mouseY = Input.GetAxis("Mouse Y");
+		var stickX = Input.GetAxis("RightStickHorizontal");
+		var stickY = Input.GetAxis("RightStickVertical");
+		rotY += (stickX + mouseX) * inputSensitivity * Time.deltaTime;
+		rotX += (stickY + mouseY) * inputSensitivity * Time.deltaTime;
+	}
+	void RotateCamera()
+	{
+		rotX = Mathf.Clamp(rotX, -clampAngle, 0);
+		Quaternion localRotation = Quaternion.Euler(rotX, rotY+90, 0.0f);
+		transform.rotation = localRotation;
 	}
 	IEnumerator Shoot()
 	{
