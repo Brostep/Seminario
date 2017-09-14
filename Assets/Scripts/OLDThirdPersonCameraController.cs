@@ -46,7 +46,7 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 	}
 	void RotateCamera()
 	{
-		if (Input.GetKey(KeyCode.E)) FollowTarget();
+		if (Input.GetKey(KeyCode.E)) rotateBack();
 		else
 		{
 			rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
@@ -75,7 +75,7 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		}
 
 	}
-	void FollowTarget()
+	void rotateBack()
 	{
 		if (!(Time.deltaTime > 0) || target == null)
 			return;
@@ -108,11 +108,11 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		rotY = rot.y;
 		rotX = rot.x;
 		// aca salta el error (?
-		if (rotX > clampAngle && rotX < 180 - clampAngle)
-			print("in");
-		else
-			print("out");
+		if (rotX < 360 && rotX > 360 - clampAngle)
+			rotX = rotX - 360;
+		
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
+
 	}
 }
