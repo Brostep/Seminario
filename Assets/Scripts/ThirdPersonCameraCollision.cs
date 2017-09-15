@@ -18,10 +18,10 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 desiredCameraPos = transform.parent.TransformPoint(-playerDir * maxDistance);
+		Vector3 desiredCameraPos = transform.TransformPoint(playerDir * maxDistance);
 		RaycastHit hit;
 
-		if (Physics.Raycast(transform.parent.position, desiredCameraPos, out hit))
+		if (Physics.Raycast(transform.position, desiredCameraPos, out hit))
 			distance = Mathf.Clamp((hit.distance * 0.85f), minDistance, maxDistance);
 		else
 			distance = maxDistance;

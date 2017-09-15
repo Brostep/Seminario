@@ -36,7 +36,7 @@ public class BulletsSpawner : MonoBehaviour
 		rotX = rot.x;
 		if (rotX <= 360 && rotX >= 360 - clampAngle)
 			rotX = rotX - 360;
-		print(rotX);
+
 		rotX = Mathf.Clamp(rotX, -clampAngle, 0);
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
