@@ -107,7 +107,7 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		var rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;
 		rotX = rot.x;
-		// aca salta el error (?
+
 		if (rotX < 360 && rotX > 360 - clampAngle)
 			rotX = rotX - 360;
 		

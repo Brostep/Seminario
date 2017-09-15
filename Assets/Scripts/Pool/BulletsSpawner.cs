@@ -26,25 +26,19 @@ public class BulletsSpawner : MonoBehaviour
 	void Update()
 	{
 		if (!PlayerController.cameraChanged)
-		{
-			GetInputs();
-			RotateCamera();		
-		}
-		//transform.rotation = firePoint.transform.rotation;
+			RotateSpawner();		
+
 	}
-	void GetInputs()
+	void RotateSpawner()
 	{
-		var mouseX = Input.GetAxis("Mouse X");
-		var mouseY = Input.GetAxis("Mouse Y");
-		var stickX = Input.GetAxis("RightStickHorizontal");
-		var stickY = Input.GetAxis("RightStickVertical");
-		rotY += (stickX + mouseX) * inputSensitivity * Time.deltaTime;
-		rotX += (stickY + mouseY) * inputSensitivity * Time.deltaTime;
-	}
-	void RotateCamera()
-	{
+		Vector3 rot = firePoint.transform.localRotation.eulerAngles;
+		rotY = rot.y;
+		rotX = rot.x;
+		if (rotX < 360 && rotX > 360 - clampAngle)
+			rotX = rotX - 360;
+
 		rotX = Mathf.Clamp(rotX, -clampAngle, 0);
-		Quaternion localRotation = Quaternion.Euler(rotX, rotY+90, 0.0f);
+		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
 	}
 	IEnumerator Shoot()
