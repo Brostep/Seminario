@@ -1,31 +1,101 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ThirdPersonCameraCollision : MonoBehaviour
 {
-	public float minDistance = 1.0f;
-	public float maxDistance = 4.0f;
-	public float smooth = 10.0f;
-	Vector3 playerDir;
-	float distance;
-	
-	void Awake()
+	public float clipMoveTime = 0.05f;           
+	public float returnTime = 0.4f;               
+	public float sphereCastRadius = 0.1f;           
+	public bool visualiseInEditor;                  
+	public float closestDistance = 0.5f;           
+	public bool protecting { get; private set; }    
+	public string dontClipTag = "Player";        
+
+	private Transform cam;                 
+	private Transform pivot;                
+	private float originalDist;             
+	private float modeVelocity;           
+	private float currentDist;              
+	private Ray ray = new Ray();                
+	private RaycastHit[] hits;            
+	private RayHitComparer rayHitComparer;  
+
+	void Start()
 	{
-		playerDir = transform.localPosition.normalized;
-		distance = transform.localPosition.magnitude;
+		cam = GetComponentInChildren<Camera>().transform;
+		pivot = cam.parent;
+		originalDist = cam.localPosition.magnitude;
+		currentDist = originalDist;
+
+		rayHitComparer = new RayHitComparer();
 	}
 
-	void Update()
+	void LateUpdate()
 	{
-		Vector3 desiredCameraPos = transform.TransformPoint(playerDir * maxDistance);
-		RaycastHit hit;
+		float targetDist = originalDist;
 
-		if (Physics.Raycast(transform.position, desiredCameraPos, out hit))
-			distance = Mathf.Clamp((hit.distance * 0.85f), minDistance, maxDistance);
+		ray.origin = pivot.position + pivot.forward * sphereCastRadius;
+		ray.direction = -pivot.forward;
+		
+		var cols = Physics.OverlapSphere(ray.origin, sphereCastRadius);
+
+		bool initialIntersect = false;
+		bool hitSomething = false;
+
+		for (int i = 0; i < cols.Length; i++)
+		{
+			if ((!cols[i].isTrigger) &&
+				!(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipTag)))
+			{
+				initialIntersect = true;
+				break;
+			}
+		}
+
+		if (initialIntersect)
+		{
+			ray.origin += pivot.forward * sphereCastRadius;
+
+			hits = Physics.RaycastAll(ray, originalDist - sphereCastRadius);
+		}
 		else
-			distance = maxDistance;
+		{
+			hits = Physics.SphereCastAll(ray, sphereCastRadius, originalDist + sphereCastRadius);
+		}
 
-		transform.localPosition = Vector3.Lerp(transform.localPosition, playerDir * distance, Time.deltaTime * smooth);
+		Array.Sort(hits, rayHitComparer);
+		float nearest = Mathf.Infinity;
+
+		for (int i = 0; i < hits.Length; i++)
+		{
+			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger) &&
+				!(hits[i].collider.attachedRigidbody != null &&
+					hits[i].collider.attachedRigidbody.CompareTag(dontClipTag)))
+			{
+				nearest = hits[i].distance;
+				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;
+				hitSomething = true;
+			}
+		}
+		if (hitSomething)
+		{
+			Debug.DrawRay(ray.origin, -pivot.forward * (targetDist + sphereCastRadius), Color.red);
+		}
+
+
+		protecting = hitSomething;
+		currentDist = Mathf.SmoothDamp(currentDist, targetDist, ref modeVelocity,
+										 currentDist > targetDist ? clipMoveTime : returnTime);
+		currentDist = Mathf.Clamp(currentDist, closestDistance, originalDist);
+		cam.localPosition = -Vector3.forward * currentDist;
+	}
+	public class RayHitComparer : IComparer
+	{
+		public int Compare(object x, object y)
+		{
+			return ((RaycastHit)x).distance.CompareTo(((RaycastHit)y).distance);
+		}
 	}
 }
