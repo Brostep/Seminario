@@ -29,7 +29,7 @@ public class TopDownMovement : MonoBehaviour {
 	{
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
-		Vector3 inputMovement = new Vector3(vertical, 0,-horizontal);
+		Vector3 inputMovement = new Vector3(horizontal, 0,vertical);
         Vector3 tempVelocity = inputMovement * movementSpeed;
         rb.velocity = tempVelocity;
 	} 
