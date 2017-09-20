@@ -7,7 +7,8 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 	public float CameraMoveSpeed = 120.0f;
 	public GameObject CameraFollowObj;
 	public float clampAngle = 80.0f;
-	public float inputSensitivity = 150.0f;
+	public float inputSensitivityX= 150.0f;
+	public float inputSensitivityY = 150.0f;
 	float mouseX, stickX;
 	float mouseY, stickY;
 	float rotY = 0f;
@@ -41,8 +42,8 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		mouseY = Input.GetAxis("Mouse Y");
 		stickX = Input.GetAxis("RightStickHorizontal");
 		stickY = Input.GetAxis("RightStickVertical");
-		rotY += (stickX + mouseX) * inputSensitivity * Time.deltaTime;
-		rotX += (stickY + mouseY) * inputSensitivity * Time.deltaTime;
+		rotY += (stickX + mouseX) * inputSensitivityY* Time.deltaTime;
+		rotX += (stickY + mouseY) * inputSensitivityX * Time.deltaTime;
 	}
 	void RotateCamera()
 	{

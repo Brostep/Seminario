@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LButton"))
 		{
 			cameraChanged = !cameraChanged;
 			ChangeMovement();

@@ -5,6 +5,7 @@ public class BulletsSpawner : MonoBehaviour
 {
 	public Bullet bulletPrefab;
 	public float cooldown = 10f;
+	float cd;
 	public GameObject firePoint;
 	public float clampAngle = 0f;
 	private Pool<Bullet> _bulletPool;
@@ -26,8 +27,22 @@ public class BulletsSpawner : MonoBehaviour
 	void Update()
 	{
 		if (!PlayerController.cameraChanged)
-			RotateSpawner();		
+			RotateSpawner();
+		else
+			transform.rotation = transform.parent.rotation;
 
+		cd += Time.deltaTime;
+
+		if (Input.GetKey(KeyCode.Mouse0)  && (cooldown/10f)<cd )
+		{
+			_bulletPool.GetObjectFromPool();
+			cd = 0f;
+		}
+		else if (Input.GetButton("RButton") && (cooldown / 10f) < cd)
+		{
+			_bulletPool.GetObjectFromPool();
+			cd = 0f;
+		}
 	}
 	void RotateSpawner()
 	{
@@ -43,13 +58,11 @@ public class BulletsSpawner : MonoBehaviour
 	}
 	IEnumerator Shoot()
 	{
-		if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
+		while (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
 		{
 			_bulletPool.GetObjectFromPool();
+			yield return new WaitForSeconds(cooldown / 10f);
 		}
-
-		yield return new WaitForSeconds(cooldown/10f);
-		StartCoroutine(Shoot());
 	}
 	private Bullet BulletFactory()
 	{

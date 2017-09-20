@@ -18,7 +18,7 @@ Material:
     - first:
         name: _ramp
       second:
-        m_Texture: {fileID: 2800000, guid: 23eac7821558b1340bada2d81b408e34, type: 3}
+        m_Texture: {fileID: 2800000, guid: 19296b5eca4d6cc458a437d2e50f63ff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
