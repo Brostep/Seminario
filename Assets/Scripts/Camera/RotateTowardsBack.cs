@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoFocus : MonoBehaviour
+public class RotateTowardsBack : MonoBehaviour
 {
 	public Transform target;            
 	public float movementSpeed;

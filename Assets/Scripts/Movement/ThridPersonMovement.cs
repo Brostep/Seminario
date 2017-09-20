@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OLDThridPersonMovement : MonoBehaviour {
+public class ThridPersonMovement : MonoBehaviour {
 	Rigidbody rb;
 	public Camera thirdPersonCamera;
 	public float movementSpeed;

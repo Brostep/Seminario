@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OLDThirdPersonCameraController : MonoBehaviour
+public class ThirdPersonCameraController : MonoBehaviour
 {
 	public float CameraMoveSpeed = 120.0f;
 	public GameObject CameraFollowObj;
@@ -22,6 +22,10 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 	Vector3 rollUp = Vector3.up;
 	public float rollSpeed = 0.2f;
 	public float turnSpeed = 1f;
+	Quaternion auxRotation;
+	public float timeSinceNoRotation;
+	float tickSinceNoRotation;
+
 	void Start()
 	{
 		Vector3 rot = transform.localRotation.eulerAngles;
@@ -47,15 +51,25 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 	}
 	void RotateCamera()
 	{
-		if (Input.GetKey(KeyCode.E)) rotateBack();
-		else
+		
+		rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+
+		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
+		transform.rotation = localRotation;
+
+		if (auxRotation == transform.rotation)
 		{
-			rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
-
-			Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
-			transform.rotation = localRotation;
+			tickSinceNoRotation += Time.deltaTime;
+			if (timeSinceNoRotation < tickSinceNoRotation)
+				rotateBack(1f);//que tan rapido rota hacia la espalda
 		}
+		else
+			tickSinceNoRotation = 0f;
 
+		if (Input.GetKey(KeyCode.R))
+			rotateBack(6f);
+			
+		auxRotation = transform.rotation;
 	}
 	void FixedUpdate()
 	{
@@ -76,7 +90,7 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		}
 
 	}
-	void rotateBack()
+	void rotateBack(float multiplier)
 	{
 		if (!(Time.deltaTime > 0) || target == null)
 			return;
@@ -103,7 +117,7 @@ public class OLDThirdPersonCameraController : MonoBehaviour
 		var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
 
 		rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
-		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime);
+		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime * multiplier);
 
 		var rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;
