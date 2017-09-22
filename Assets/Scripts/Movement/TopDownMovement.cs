@@ -10,9 +10,13 @@ public class TopDownMovement : MonoBehaviour {
 	Vector3 lookPos;
 	Quaternion _rot;
 	Vector3 aux;
+	float horizontalInput;
+	float verticalInput;
+	Animator anim;
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+		anim = GetComponent<Animator>();
 	}
 	void Update()
 	{
@@ -22,12 +26,27 @@ public class TopDownMovement : MonoBehaviour {
 			mouseRotation();
 
 		aux = Input.mousePosition;
+
+		if (horizontalInput > 0 || verticalInput > 0 || horizontalInput < 0 || verticalInput < 0)
+		{
+			anim.SetBool("Run", true);
+			anim.SetBool("Was Running", true);
+		}
+		else if (anim.GetBool("Was Running"))
+		{
+			anim.SetBool("Was Running", false);
+			anim.Play("Run To Stop");
+		}
+		else
+		{
+			anim.SetBool("Run", false);
+		}
 	}
 	void FixedUpdate()
 	{
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
-		Vector3 inputMovement = new Vector3(horizontal, 0,vertical);
+		horizontalInput = Input.GetAxis("Horizontal");
+		verticalInput = Input.GetAxis("Vertical");
+		Vector3 inputMovement = new Vector3(horizontalInput, 0, verticalInput);
         Vector3 tempVelocity = inputMovement * movementSpeed;
         rb.velocity = tempVelocity;
 	}

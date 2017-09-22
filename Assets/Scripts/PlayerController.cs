@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour {
 	public GameObject thirdPersonCamera;
 	public GameObject topDownCamera;
 	public static bool cameraChanged = false;
+
 	void Start()
 	{
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		topDownController = GetComponent<TopDownMovement>();
+		
 		ChangeMovement();
 	}
 	void Update()

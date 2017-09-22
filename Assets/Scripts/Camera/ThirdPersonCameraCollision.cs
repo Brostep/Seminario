@@ -26,6 +26,7 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 	{
 		cam = GetComponentInChildren<Camera>().transform;
 		pivot = cam.parent;
+		pivot.transform.position = pivot.parent.transform.position;
 		originalDist = cam.localPosition.magnitude;
 		currentDist = originalDist;
 

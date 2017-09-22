@@ -18,10 +18,12 @@ public class ThirdPersonController : MonoBehaviour {
 	public float stationaryTurnSpeed = 180;
 	Vector3 groundNormal;
 	bool onGround;
+	Animator anim;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+		anim = GetComponent<Animator>();
 	}
 
 	void FixedUpdate()
@@ -63,6 +65,22 @@ public class ThirdPersonController : MonoBehaviour {
 			velocity.y = Physics.gravity.y;
 
 		rb.velocity = velocity;
+
+		if (horizontalInput > 0 || verticalInput > 0 || horizontalInput < 0 || verticalInput < 0)
+		{
+			anim.SetBool("Run", true);
+			anim.SetBool("Was Running", true);
+		}
+		else if (anim.GetBool("Was Running"))
+		{
+			anim.SetBool("Was Running", false);
+			anim.Play("Run To Stop");
+		}
+		else
+		{
+			anim.SetBool("Run", false);
+		}
+			
 
 		//rotation 
 		relMove = transform.InverseTransformDirection(relMove);

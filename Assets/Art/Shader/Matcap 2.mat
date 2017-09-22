@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: New AmplifyShader
-  m_Shader: {fileID: 4800000, guid: a0f564bd6c8951f43a2c5088a748e340, type: 3}
+  m_Name: Matcap 2
+  m_Shader: {fileID: 4800000, guid: 48156e284ba02804fbd52b20cab44714, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -16,16 +16,13 @@ Material:
     serializedVersion: 2
     m_TexEnvs:
     - first:
-        name: _ramp
+        name: _TextureSample0
       second:
-        m_Texture: {fileID: 2800000, guid: 19296b5eca4d6cc458a437d2e50f63ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2413a353b88a10f45a7642857beedd22, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: __dirty
       second: 0
-    m_Colors:
-    - first:
-        name: _Color0
-      second: {r: 1, g: 0.31034482, b: 0, a: 0}
+    m_Colors: []
