@@ -1228,6 +1228,26 @@ Prefab:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
+    - target: {fileID: 114100065897045760, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44,
+        type: 2}
+      propertyPath: dashDistance
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100065897045760, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44,
+        type: 2}
+      propertyPath: dashSpeed
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100065897045760, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44,
+        type: 2}
+      propertyPath: dashCd
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100065897045760, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44,
+        type: 2}
+      propertyPath: dashDuration
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
   m_IsPrefabParent: 0
@@ -2680,7 +2700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1487806160
 MonoBehaviour:
   m_ObjectHideFlags: 0
