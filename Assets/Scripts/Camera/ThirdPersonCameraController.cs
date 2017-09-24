@@ -43,7 +43,20 @@ public class ThirdPersonCameraController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Tab)&&!isTargeting)
 		{
-			List<GameObject> enemiesInRadius = new List<GameObject>();
+		//	if (LineOfSight.)
+			isTargeting = true;
+		}
+		else if (isTargeting)
+		{
+			transform.LookAt(nearestEnemy.transform);
+		}
+		else 
+		{
+			GetInputs();
+			RotateCamera();
+		}
+		/* deteccion por sphere collider
+		 List<GameObject> enemiesInRadius = new List<GameObject>();
 			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
 			float distanceNearestEnemy = 0f;
 			foreach (var item in hitColliders)
@@ -57,18 +70,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 						nearestEnemy = item.gameObject;
 					}
 				}
-			}
-			isTargeting = true;
-		}
-		else if (isTargeting)
-		{
-			transform.LookAt(nearestEnemy.transform);
-		}
-		else 
-		{
-			GetInputs();
-			RotateCamera();
-		}
+			}*/
 	}
 	void GetInputs()
 	{
@@ -161,3 +163,4 @@ public class ThirdPersonCameraController : MonoBehaviour
 
 	}
 }
+ 

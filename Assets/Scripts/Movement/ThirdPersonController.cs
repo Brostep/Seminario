@@ -27,11 +27,6 @@ public class ThirdPersonController : MonoBehaviour {
 	bool onGround;
 	bool isDashing;
 	Animator anim;
-	GameObject nearestEnemy;
-	public GameObject test;
-
-	public delegate void CharacterEventHandler(GameObject e);
-	public static event CharacterEventHandler closestTarget;
 
 	void Start()
 	{

@@ -10,7 +10,7 @@ public class LineOfSight : MonoBehaviour
 	public float sightAngle = 90f;
 	public LayerMask targetLayer;
 	public Transform target;
-	GameObject currentTarget;
+	public GameObject currentTarget;
 	Transform inSight;
 	Camera cam;
 	void Start()
@@ -31,8 +31,7 @@ public class LineOfSight : MonoBehaviour
 	void Update()
 	{
 		inSight = null; 
-		if (currentTarget!=null)
-			currentTarget.GetComponent<Renderer>().material.color = Color.white;
+		
 		Transform my = transform;
 		Transform other = target;
 
@@ -52,12 +51,20 @@ public class LineOfSight : MonoBehaviour
 			RaycastHit rch;
 			if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance,targetLayer))
 			{
-				inSight = other;
-				rch.collider.gameObject.GetComponent<Renderer>().material.color = Color.red;
+				if (currentTarget != null)
+					currentTarget.GetComponent<Renderer>().material.color = Color.white;
+
 				currentTarget = rch.collider.gameObject;
+				CurrentTarget(currentTarget);
+				currentTarget.GetComponent<Renderer>().material.color = Color.red;
+				
 			}
 		}
 		
+	}
+	public static GameObject CurrentTarget(GameObject e)
+	{
+		return e;
 	}
 
 	void OnDrawGizmos()
