@@ -50,14 +50,11 @@ public class LineOfSight : MonoBehaviour
 		if (sqrDistance < sightDistance * sightDistance && angle < sightAngle / 2f)
 		{
 			RaycastHit rch;
-			if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance))
+			if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance,targetLayer))
 			{
-				if (Utility.LayerNumberToMask(rch.collider.gameObject.layer) == targetLayer)
-				{
-					inSight = other;
-					rch.collider.gameObject.GetComponent<Renderer>().material.color = Color.red;
-					currentTarget = rch.collider.gameObject;
-				}
+				inSight = other;
+				rch.collider.gameObject.GetComponent<Renderer>().material.color = Color.red;
+				currentTarget = rch.collider.gameObject;
 			}
 		}
 		
