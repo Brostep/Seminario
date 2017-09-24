@@ -9,6 +9,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	public float clampAngle = 80.0f;
 	public float inputSensitivityX= 150.0f;
 	public float inputSensitivityY = 150.0f;
+	public GameObject test;
 	float mouseX, stickX;
 	float mouseY, stickY;
 	float rotY = 0f;
@@ -27,6 +28,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	float tickSinceNoRotation;
 	GameObject nearestEnemy;
 	bool isTargeting;
+	Camera cam;
 
 	void Start()
 	{
@@ -35,6 +37,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 		rotX = rot.x;
 		target = CameraFollowObj.transform;
 		transform.position = target.transform.position;
+		cam = GetComponentInChildren<Camera>();
 	}
 	void Update()
 	{
@@ -57,7 +60,11 @@ public class ThirdPersonCameraController : MonoBehaviour
 			}
 			isTargeting = true;
 		}
-		else
+		else if (isTargeting)
+		{
+			transform.LookAt(nearestEnemy.transform);
+		}
+		else 
 		{
 			GetInputs();
 			RotateCamera();

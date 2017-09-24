@@ -2956,6 +2956,7 @@ MonoBehaviour:
   clampAngle: 45
   inputSensitivityX: 60
   inputSensitivityY: 100
+  test: {fileID: 1112860419439914, guid: 264a2d3d6a6a5524b962bbddf8a19954, type: 2}
   spinTurnLimit: 90
   rollSpeed: 0.2
   turnSpeed: 0.7
