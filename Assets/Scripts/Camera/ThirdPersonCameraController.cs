@@ -25,6 +25,8 @@ public class ThirdPersonCameraController : MonoBehaviour
 	Quaternion auxRotation;
 	public float timeSinceNoRotation;
 	float tickSinceNoRotation;
+	GameObject nearestEnemy;
+	bool isTargeting;
 
 	void Start()
 	{
@@ -34,11 +36,32 @@ public class ThirdPersonCameraController : MonoBehaviour
 		target = CameraFollowObj.transform;
 		transform.position = target.transform.position;
 	}
-
 	void Update()
 	{
-		GetInputs();
-		RotateCamera();
+		if (Input.GetKeyDown(KeyCode.Tab)&&!isTargeting)
+		{
+			List<GameObject> enemiesInRadius = new List<GameObject>();
+			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
+			float distanceNearestEnemy = 0f;
+			foreach (var item in hitColliders)
+			{
+				if (item.gameObject.layer == 10)
+				{
+					var distance = Vector3.Distance(transform.position, item.transform.localPosition);
+					if (distance < distanceNearestEnemy || distanceNearestEnemy == 0f)
+					{
+						distanceNearestEnemy = distance;
+						nearestEnemy = item.gameObject;
+					}
+				}
+			}
+			isTargeting = true;
+		}
+		else
+		{
+			GetInputs();
+			RotateCamera();
+		}
 	}
 	void GetInputs()
 	{
@@ -46,7 +69,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 		mouseY = Input.GetAxis("Mouse Y");
 		stickX = Input.GetAxis("RightStickHorizontal");
 		stickY = Input.GetAxis("RightStickVertical");
-		rotY += (stickX + mouseX) * inputSensitivityY* Time.deltaTime;
+		rotY += (stickX + mouseX) * inputSensitivityY * Time.deltaTime;
 		rotX += (stickY + mouseY) * inputSensitivityX * Time.deltaTime;
 	}
 	void RotateCamera()

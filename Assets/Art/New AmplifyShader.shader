@@ -56,7 +56,7 @@ Shader "New AmplifyShader"
 			float3 ase_worldPos = i.worldPos;
 			float3 ase_worldlightDir = normalize( UnityWorldSpaceLightDir( ase_worldPos ) );
 			float dotResult12 = dot( i.worldNormal , ase_worldlightDir );
-			float clampResult5 = clamp( dotResult12 , 0.05 , 0.8 );
+			float clampResult5 = clamp( dotResult12 , 0.2 , 1.0 );
 			float2 temp_cast_0 = (clampResult5).xx;
 			c.rgb = ( tex2D( _ramp, temp_cast_0 ) * _Color0 ).xyz;
 			c.a = 1;
@@ -148,13 +148,13 @@ Shader "New AmplifyShader"
 }
 /*ASEBEGIN
 Version=13101
-402;212;1039;742;1473.204;631.9921;2.037867;True;True
+344;434;1039;742;1141.542;220.0228;1.723719;True;True
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;2;-754.508,-38.13106;Float;False;1;0;FLOAT;0.0;False;1;FLOAT3
 Node;AmplifyShaderEditor.WorldNormalVector;11;-703.8817,-180.7858;Float;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;FLOAT;FLOAT;FLOAT
 Node;AmplifyShaderEditor.DotProductOpNode;12;-442.9887,-180.8496;Float;True;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0.0;False;1;FLOAT
 Node;AmplifyShaderEditor.WireNode;13;-249.6967,11.32368;Float;False;1;0;FLOAT;0.0;False;1;FLOAT
 Node;AmplifyShaderEditor.WireNode;14;-471.8634,38.69967;Float;False;1;0;FLOAT;0.0;False;1;FLOAT
-Node;AmplifyShaderEditor.ClampOpNode;5;-440.0647,59.7072;Float;True;3;0;FLOAT;0.0;False;1;FLOAT;0.05;False;2;FLOAT;0.8;False;1;FLOAT
+Node;AmplifyShaderEditor.ClampOpNode;5;-440.0647,59.7072;Float;True;3;0;FLOAT;0.0;False;1;FLOAT;0.2;False;2;FLOAT;1.0;False;1;FLOAT
 Node;AmplifyShaderEditor.WireNode;16;-212.9528,236.2761;Float;False;1;0;FLOAT;0.0;False;1;FLOAT
 Node;AmplifyShaderEditor.WireNode;15;-557.1501,261.9193;Float;False;1;0;FLOAT;0.0;False;1;FLOAT
 Node;AmplifyShaderEditor.ColorNode;9;-454.0647,524.7073;Float;False;Property;_Color0;Color 0;1;0;1,0,0,0;0;5;COLOR;FLOAT;FLOAT;FLOAT;FLOAT
@@ -173,4 +173,4 @@ WireConnection;10;0;7;0
 WireConnection;10;1;9;0
 WireConnection;0;2;10;0
 ASEEND*/
-//CHKSM=5F9809CB275D6BCF02BD326B7CD3B459A2982D1E
+//CHKSM=8FDAE8ABCDC0889396509F3A2CDA55524075FA32

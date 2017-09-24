@@ -9,7 +9,6 @@ public class ThirdPersonController : MonoBehaviour {
 	Vector3 camForward;
 	Vector3 relativeMove;
 	Vector3 groundNormal;
-	//public float dashDistance;
 	public Transform thirdPersonCam;
 	float horizontalInput;
 	float verticalInput;
@@ -28,6 +27,11 @@ public class ThirdPersonController : MonoBehaviour {
 	bool onGround;
 	bool isDashing;
 	Animator anim;
+	GameObject nearestEnemy;
+	public GameObject test;
+
+	public delegate void CharacterEventHandler(GameObject e);
+	public static event CharacterEventHandler closestTarget;
 
 	void Start()
 	{
@@ -35,7 +39,34 @@ public class ThirdPersonController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		dashDurationAux = dashDuration;
 	}
-
+	/*void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Tab))
+		{
+			List<GameObject> enemiesInRadius = new List<GameObject>();
+			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
+			float distanceNearestEnemy = 0f;
+			foreach (var item in hitColliders)
+			{
+				if (item.gameObject.layer == 10)
+				{
+					var distance = Vector3.Distance(transform.position, item.transform.localPosition);
+					if (distance < distanceNearestEnemy || distanceNearestEnemy == 0f)
+					{
+						distanceNearestEnemy = distance;
+						nearestEnemy = item.gameObject;
+					}
+				}
+			}
+			closestTarget(nearestEnemy);
+			//	if (nearestEnemy != null)
+			//		Instantiate(test, nearestEnemy.transform.localPosition, nearestEnemy.transform.localRotation);	
+		}
+	}*/
+	void OnDrawGizmos()
+	{
+		Gizmos.DrawWireSphere(transform.position, 15f);
+	}
 	void FixedUpdate()
 	{
 		GetInputs();

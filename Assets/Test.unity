@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16788329, g: 0.21073541, b: 0.2899403, a: 1}
+  m_IndirectSpecularColor: {r: 0.17492536, g: 0.2188244, b: 0.30111057, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1203,7 +1203,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1593400af1aae654da3c35dff8c46995, type: 2}
+      objectReference: {fileID: 2100000, guid: 9109a53da27ec0649810e054d309ed3f, type: 2}
     - target: {fileID: 1049504043774880, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
       propertyPath: m_Icon
       value: 
@@ -1248,6 +1248,12 @@ Prefab:
       propertyPath: dashDuration
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 114100065897045760, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44,
+        type: 2}
+      propertyPath: test
+      value: 
+      objectReference: {fileID: 1112860419439914, guid: 264a2d3d6a6a5524b962bbddf8a19954,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
   m_IsPrefabParent: 0
@@ -2700,7 +2706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1487806160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2893,13 +2899,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1620488676}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.5148743, y: -0.42483604, z: 0.2717177, w: -0.69324476}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 70.86301, y: 70.61, z: 370.678}
 --- !u!1 &1640326682 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100090, guid: f75b8ba1b7aa4ed4ba615312eabc5024, type: 3}
