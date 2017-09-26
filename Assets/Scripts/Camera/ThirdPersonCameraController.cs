@@ -9,7 +9,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 	public float clampAngle = 80.0f;
 	public float inputSensitivityX= 150.0f;
 	public float inputSensitivityY = 150.0f;
-	public GameObject test;
 	float mouseX, stickX;
 	float mouseY, stickY;
 	float rotY = 0f;
@@ -29,6 +28,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	GameObject nearestEnemy;
 	bool isTargeting;
 	Camera cam;
+	LineOfSight los;
 
 	void Start()
 	{
@@ -38,23 +38,19 @@ public class ThirdPersonCameraController : MonoBehaviour
 		target = CameraFollowObj.transform;
 		transform.position = target.transform.position;
 		cam = GetComponentInChildren<Camera>();
+		los = GetComponentInChildren<LineOfSight>();
 	}
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Tab)&&!isTargeting)
-		{
-		//	if (LineOfSight.)
-			isTargeting = true;
-		}
-		else if (isTargeting)
-		{
-			transform.LookAt(nearestEnemy.transform);
-		}
-		else 
+
+		if (!isTargeting)
 		{
 			GetInputs();
 			RotateCamera();
 		}
+
+		LockOnEnemy();
+
 		/* deteccion por sphere collider
 		 List<GameObject> enemiesInRadius = new List<GameObject>();
 			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
@@ -71,6 +67,46 @@ public class ThirdPersonCameraController : MonoBehaviour
 					}
 				}
 			}*/
+	}
+	void LockOnEnemy()
+	{
+		if (Input.GetKeyDown(KeyCode.Tab) && !isTargeting)
+		{
+			if (los.currentTarget != null)
+			{
+				isTargeting = true;
+				nearestEnemy = los.currentTarget;
+			}
+		}
+		else if (isTargeting && Input.GetKeyDown(KeyCode.Tab))
+		{
+			if (los.currentTarget !=null)
+				nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
+			nearestEnemy = null;
+			los.currentTarget = null;
+			isTargeting = false;
+			Vector3 rot = transform.rotation.eulerAngles;
+			rotX = rot.x;
+			rotY = rot.y;
+		}
+		else if (isTargeting && !los.targetalive)
+		{
+			if (los.currentTarget != null)
+				nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
+			nearestEnemy = null;
+			los.currentTarget = null;
+			isTargeting = false;
+			Vector3 rot = transform.rotation.eulerAngles;
+			rotX = rot.x;
+			rotY = rot.y;
+		}
+
+		if (isTargeting)
+		{
+			var enemyPos = new Vector3(nearestEnemy.transform.position.x, 0f, nearestEnemy.transform.position.z);
+			transform.LookAt(nearestEnemy.transform);
+		}
+
 	}
 	void GetInputs()
 	{

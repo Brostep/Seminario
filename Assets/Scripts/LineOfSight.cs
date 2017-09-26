@@ -13,8 +13,10 @@ public class LineOfSight : MonoBehaviour
 	public GameObject currentTarget;
 	Transform inSight;
 	Camera cam;
+	public bool targetalive;
 	void Start()
 	{
+
 	//	cam = GetComponent<Camera>();
 	//	target.position = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
 	}
@@ -30,6 +32,9 @@ public class LineOfSight : MonoBehaviour
 
 	void Update()
 	{
+		if (currentTarget != null)
+			targetalive = currentTarget.activeSelf;
+
 		inSight = null; 
 		
 		Transform my = transform;
@@ -55,18 +60,12 @@ public class LineOfSight : MonoBehaviour
 					currentTarget.GetComponent<Renderer>().material.color = Color.white;
 
 				currentTarget = rch.collider.gameObject;
-				CurrentTarget(currentTarget);
 				currentTarget.GetComponent<Renderer>().material.color = Color.red;
 				
 			}
 		}
 		
 	}
-	public static GameObject CurrentTarget(GameObject e)
-	{
-		return e;
-	}
-
 	void OnDrawGizmos()
 	{
 		var p = transform.position;
