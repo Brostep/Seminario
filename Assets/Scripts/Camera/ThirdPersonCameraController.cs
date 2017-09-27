@@ -26,7 +26,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	public float timeSinceNoRotation;
 	float tickSinceNoRotation;
 	GameObject nearestEnemy;
-	bool isTargeting;
+	public bool isTargeting;
 	Camera cam;
 	LineOfSight los;
 
@@ -42,7 +42,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 	}
 	void Update()
 	{
-
 		if (!isTargeting)
 		{
 			GetInputs();
@@ -101,12 +100,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 			rotY = rot.y;
 		}
 
-		if (isTargeting)
-		{
-			var enemyPos = new Vector3(nearestEnemy.transform.position.x, 0f, nearestEnemy.transform.position.z);
-			transform.LookAt(nearestEnemy.transform);
-		}
-
 	}
 	void GetInputs()
 	{
@@ -119,7 +112,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 	}
 	void RotateCamera()
 	{
-		
 		rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
@@ -134,14 +126,27 @@ public class ThirdPersonCameraController : MonoBehaviour
 		else
 			tickSinceNoRotation = 0f;
 
-		if (Input.GetKey(KeyCode.R))
-			rotateBack(6f);
+		if (Input.GetKeyDown(KeyCode.Mouse2))
+		{
+			transform.rotation = CameraFollowObj.transform.rotation;
+			Vector3 rot = transform.rotation.eulerAngles;
+			rotX = rot.x;
+			rotY = rot.y;
+		}
 			
 		auxRotation = transform.rotation;
 	}
 	void FixedUpdate()
 	{
 		CameraUpdater();
+
+		if (isTargeting)
+		{
+			var lookPos = nearestEnemy.transform.position - transform.position;
+			lookPos.y = 0;
+			var rotation = Quaternion.LookRotation(lookPos);
+			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 20);
+		}
 	}
 
 	void CameraUpdater()

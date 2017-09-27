@@ -11,10 +11,12 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 	public bool visualiseInEditor;                  
 	public float closestDistance = 0.5f;           
 	public bool protecting { get; private set; }
-	public LayerMask dontClipPlayer; 
-	public LayerMask dontClipBullet; 
-	       
-
+//	public List<LayerMask>
+//	public LayerMask dontClipPlayer; 
+//	public LayerMask dontClipBullet; 
+//	public LayerMask dontClipEnemy;
+	public string dontClipTagPlayer = "Player";
+	public string dontClipTagEnemy = "Enemy";
 	private Transform cam;                 
 	private Transform pivot;                
 	private float originalDist;             
@@ -47,10 +49,11 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		for (int i = 0; i < cols.Length; i++)
 		{
-			if ((!cols[i].isTrigger) &&
-				!(cols[i].attachedRigidbody != null && cols[i].gameObject.layer != Utility.LayerNumberToMask(dontClipPlayer))
-				  && cols[i].gameObject.layer != Utility.LayerNumberToMask(dontClipBullet))
+			if ((!cols[i].isTrigger) 
+				&& !(cols[i].attachedRigidbody != null 
+				&& cols[i].attachedRigidbody.CompareTag(dontClipTagPlayer)))
 			{
+				
 				initialIntersect = true;
 				break;
 			}
@@ -72,11 +75,11 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		for (int i = 0; i < hits.Length; i++)
 		{
-			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger) &&
-				!(hits[i].collider.attachedRigidbody != null &&
-					hits[i].collider.gameObject.layer != Utility.LayerNumberToMask(dontClipPlayer) 
-					 && hits[i].collider.gameObject.layer != Utility.LayerNumberToMask(dontClipBullet)))
+			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger) 
+					&& !(hits[i].collider.attachedRigidbody != null
+					&& hits[i].collider.attachedRigidbody.CompareTag(dontClipTagPlayer)))
 			{
+				print("in");
 				nearest = hits[i].distance;
 				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;
 				hitSomething = true;

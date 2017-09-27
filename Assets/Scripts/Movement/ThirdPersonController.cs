@@ -34,30 +34,11 @@ public class ThirdPersonController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		dashDurationAux = dashDuration;
 	}
-	/*void Update()
+	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Tab))
-		{
-			List<GameObject> enemiesInRadius = new List<GameObject>();
-			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
-			float distanceNearestEnemy = 0f;
-			foreach (var item in hitColliders)
-			{
-				if (item.gameObject.layer == 10)
-				{
-					var distance = Vector3.Distance(transform.position, item.transform.localPosition);
-					if (distance < distanceNearestEnemy || distanceNearestEnemy == 0f)
-					{
-						distanceNearestEnemy = distance;
-						nearestEnemy = item.gameObject;
-					}
-				}
-			}
-			closestTarget(nearestEnemy);
-			//	if (nearestEnemy != null)
-			//		Instantiate(test, nearestEnemy.transform.localPosition, nearestEnemy.transform.localRotation);	
-		}
-	}*/
+	//	if (Input.GetKeyDown(KeyCode.Space))
+	//	rb.AddForce(new Vector3(0f, 5000f, 0f));
+	}
 	void OnDrawGizmos()
 	{
 		Gizmos.DrawWireSphere(transform.position, 15f);
@@ -142,7 +123,7 @@ public class ThirdPersonController : MonoBehaviour {
 			onePress = true;
 	
 		// mientras que mantega apretado el input del dash, si no esta en cd y si no cumplio la duracion del dash
-		if (Input.GetKey(KeyCode.E) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
 			isDashing = true; // estoy dasheando
 
 		// estoy dasheando ? y todavia hay duracion

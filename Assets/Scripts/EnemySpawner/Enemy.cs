@@ -15,9 +15,13 @@ public class Enemy : MonoBehaviour {
 	}
 	private void Update()
 	{
-		transform.LookAt(player.transform);
+
+		var lookPos = player.transform.position - transform.position;
+		lookPos.y = 0;
+		var rotation = Quaternion.LookRotation(lookPos);
+		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 20);
+
 		transform.position += transform.forward * speed * Time.deltaTime;
-		transform.position = new Vector3(transform.position.x, 1.2f, transform.position.z);
 	}
 	public void Initialize()
 	{

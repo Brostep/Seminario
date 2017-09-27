@@ -13,10 +13,20 @@ public class TopDownMovement : MonoBehaviour {
 	float horizontalInput;
 	float verticalInput;
 	Animator anim;
+	float dashTimer;
+	float dashDurationAux;
+	public float dashCd;
+	public float dashSpeed;
+	public float dashDuration;
+
+	bool onePress;
+	bool isDashing;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
+		dashDurationAux = dashDuration;
 	}
 	void Update()
 	{
@@ -41,15 +51,48 @@ public class TopDownMovement : MonoBehaviour {
 		{
 			anim.SetBool("Run", false);
 		}
+
 	}
+	
 	void FixedUpdate()
 	{
 		horizontalInput = Input.GetAxis("Horizontal");
 		verticalInput = Input.GetAxis("Vertical");
 		Vector3 inputMovement = new Vector3(horizontalInput, 0, verticalInput);
-        Vector3 tempVelocity = inputMovement * movementSpeed;
-        rb.velocity = tempVelocity;
+		var velocity = GetVelocity(inputMovement);
+        rb.velocity = velocity;
 	}
+	Vector3 GetVelocity(Vector3 relMove)
+	{
+		Vector3 relVel;
+		dashTimer += Time.deltaTime;
+		isDashing = false;
+
+		// bool para que tengas que soltar el trigger despues de cada dash
+		if (Input.GetAxis("RTrigger") == 0 && !onePress)
+			onePress = true;
+
+		// mientras que mantega apretado el input del dash, si no esta en cd y si no cumplio la duracion del dash
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
+			isDashing = true; // estoy dasheando
+
+		// estoy dasheando ? y todavia hay duracion
+		if (isDashing && dashDuration > 0f)
+		{
+			relVel = relMove * dashSpeed;
+			dashDuration -= Time.deltaTime;
+			return relVel;
+		} // si solte el botton o me quede si duracion reseteo el dash.
+		else if (!isDashing && dashDuration < dashDurationAux)
+		{
+			dashDuration = dashDurationAux;
+			dashTimer = 0f;
+			onePress = false;
+		}
+		// sino.. retorno la velocidad normal del player
+		return relVel = relMove * movementSpeed;
+	}
+
 	void joystickRotation()
 	{
 		float _angle = Mathf.Atan2(Input.GetAxis("RightStickHorizontal"),-Input.GetAxis("RightStickVertical")) * Mathf.Rad2Deg;

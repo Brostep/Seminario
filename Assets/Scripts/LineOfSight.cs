@@ -14,9 +14,11 @@ public class LineOfSight : MonoBehaviour
 	Transform inSight;
 	Camera cam;
 	public bool targetalive;
+	ThirdPersonCameraController thirdPersonCameraController;
+
 	void Start()
 	{
-
+		thirdPersonCameraController = GetComponentInParent<ThirdPersonCameraController>();
 	//	cam = GetComponent<Camera>();
 	//	target.position = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
 	}
@@ -27,44 +29,45 @@ public class LineOfSight : MonoBehaviour
 			return new List<Transform>() { inSight };
 		else
 			return new List<Transform>() { };
-
 	}
 
 	void Update()
 	{
 		if (currentTarget != null)
-			targetalive = currentTarget.activeSelf;
-
-		inSight = null; 
-		
-		Transform my = transform;
-		Transform other = target;
-
-		//Diferencia de posición = Dirección * distancia
-		var deltaPos = other.position - my.position;
-
-		//Angulo entre mi frente y la dirección
-		var angle = Vector3.Angle(transform.forward, deltaPos);
-
-		//El cuadrado de la distancia es más rápido de calcular
-		var sqrDistance = deltaPos.sqrMagnitude;
-
-		//Descarte previo
-		//< en vez de <= por si queremos hacerlo chicato!
-		if (sqrDistance < sightDistance * sightDistance && angle < sightAngle / 2f)
 		{
-			RaycastHit rch;
-			if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance,targetLayer))
-			{
-				if (currentTarget != null)
-					currentTarget.GetComponent<Renderer>().material.color = Color.white;
-
-				currentTarget = rch.collider.gameObject;
-				currentTarget.GetComponent<Renderer>().material.color = Color.red;
-				
-			}
+			targetalive = currentTarget.activeSelf;
 		}
-		
+		if (!thirdPersonCameraController.isTargeting)
+		{
+			inSight = null;
+
+			Transform my = transform;
+			Transform other = target;
+
+			//Diferencia de posición = Dirección * distancia
+			var deltaPos = other.position - my.position;
+
+			//Angulo entre mi frente y la dirección
+			var angle = Vector3.Angle(transform.forward, deltaPos);
+
+			//El cuadrado de la distancia es más rápido de calcular
+			var sqrDistance = deltaPos.sqrMagnitude;
+
+			//Descarte previo
+			//< en vez de <= por si queremos hacerlo chicato!
+			if (sqrDistance < sightDistance * sightDistance && angle < sightAngle / 2f)
+			{
+				RaycastHit rch;
+				if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance, targetLayer))
+				{
+					if (currentTarget != null)
+						currentTarget.GetComponent<Renderer>().material.color = Color.white;
+
+					currentTarget = rch.collider.gameObject;
+					currentTarget.GetComponent<Renderer>().material.color = Color.red;
+				}
+			}
+		}		
 	}
 	void OnDrawGizmos()
 	{
