@@ -53,7 +53,7 @@ public class TopDownMovement : MonoBehaviour {
 		else if (anim.GetBool("Was Running"))
 		{
 			anim.SetBool("Was Running", false);
-			anim.Play("Run To Stop");
+			//anim.Play("Run To Stop");
 		}
 		else
 		{

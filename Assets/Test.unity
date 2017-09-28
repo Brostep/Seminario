@@ -1761,7 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 8
-  cam: {fileID: 0}
+  cam: {fileID: 2066024248}
   dashCd: 0.3
   dashSpeed: 14
   dashDuration: 0.7
