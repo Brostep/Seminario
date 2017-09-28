@@ -79,7 +79,6 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 					&& !(hits[i].collider.attachedRigidbody != null
 					&& hits[i].collider.attachedRigidbody.CompareTag(dontClipTagPlayer)))
 			{
-				print("in");
 				nearest = hits[i].distance;
 				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;
 				hitSomething = true;

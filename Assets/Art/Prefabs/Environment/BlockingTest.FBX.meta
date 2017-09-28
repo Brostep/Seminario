@@ -71,6 +71,7 @@ ModelImporter:
     100126: Cylinder050
     100128: Cylinder052
     100130: Plane005
+    100132: Box193
     400000: Box064
     400002: Box068
     400004: Box069
@@ -137,6 +138,7 @@ ModelImporter:
     400126: Cylinder050
     400128: Cylinder052
     400130: Plane005
+    400132: Box193
     2300000: Box064
     2300002: Box068
     2300004: Box069

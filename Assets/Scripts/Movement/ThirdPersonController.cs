@@ -22,7 +22,7 @@ public class ThirdPersonController : MonoBehaviour {
 	public float dashDuration;
 	public float movingTurnSpeed = 360;
 	public float stationaryTurnSpeed = 180;
-
+	public Material roofShader;
 	bool onePress;
 	bool onGround;
 	bool isDashing;
@@ -36,6 +36,8 @@ public class ThirdPersonController : MonoBehaviour {
 	}
 	void Update()
 	{
+		if (roofShader.GetFloat("_AlphaValue") < 0.5f)
+			roofShader.SetFloat("_AlphaValue", 1f);
 	//	if (Input.GetKeyDown(KeyCode.Space))
 	//	rb.AddForce(new Vector3(0f, 5000f, 0f));
 	}

@@ -18,7 +18,9 @@ public class TopDownMovement : MonoBehaviour {
 	public float dashCd;
 	public float dashSpeed;
 	public float dashDuration;
-
+	public GameObject head;
+	public Material roofAlpha;
+	public LayerMask roof;
 	bool onePress;
 	bool isDashing;
 
@@ -30,10 +32,16 @@ public class TopDownMovement : MonoBehaviour {
 	}
 	void Update()
 	{
+		roofAlpha.SetFloat("_AlphaValue", 1f);
+		if (Physics.Raycast(head.transform.position, Vector3.up, float.MaxValue , roof ))
+			roofAlpha.SetFloat("_AlphaValue", 0.2f);
+
 		if (new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) != Vector2.zero)
 			joystickRotation();
 		else if (aux!=Input.mousePosition)
 			mouseRotation();
+
+		
 
 		aux = Input.mousePosition;
 
@@ -53,7 +61,6 @@ public class TopDownMovement : MonoBehaviour {
 		}
 
 	}
-	
 	void FixedUpdate()
 	{
 		horizontalInput = Input.GetAxis("Horizontal");
@@ -96,6 +103,7 @@ public class TopDownMovement : MonoBehaviour {
 	void joystickRotation()
 	{
 		float _angle = Mathf.Atan2(Input.GetAxis("RightStickHorizontal"),-Input.GetAxis("RightStickVertical")) * Mathf.Rad2Deg;
+		// detecto imput 
 		if (new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) != Vector2.zero)
 			_rot = Quaternion.AngleAxis(_angle, new Vector3(0, 1, 0));
 		transform.rotation = Quaternion.Lerp(transform.rotation,_rot,15*Time.deltaTime);
