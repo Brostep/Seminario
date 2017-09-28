@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: New AmplifyShader
+  m_Name: ToonShading
   m_Shader: {fileID: 4800000, guid: a0f564bd6c8951f43a2c5088a748e340, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 1
@@ -28,4 +28,4 @@ Material:
     m_Colors:
     - first:
         name: _Color0
-      second: {r: 0.38181227, g: 0.48101208, b: 0.4852941, a: 0}
+      second: {r: 0.9191176, g: 0.8183503, b: 0.6014814, a: 0}
