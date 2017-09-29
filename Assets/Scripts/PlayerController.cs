@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		topDownController = GetComponent<TopDownMovement>();
-		
 		ChangeMovement();
 	}
 	void Update()

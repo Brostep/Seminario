@@ -27,8 +27,11 @@ public class ThirdPersonCameraController : MonoBehaviour
 	float tickSinceNoRotation;
 	GameObject nearestEnemy;
 	public bool isTargeting;
-	Camera cam;
 	LineOfSight los;
+
+
+	bool targetEnemyTrigger;
+	bool DTargetEnemyTrigger = true;
 
 	void Start()
 	{
@@ -37,7 +40,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 		rotX = rot.x;
 		target = CameraFollowObj.transform;
 		transform.position = target.transform.position;
-		cam = GetComponentInChildren<Camera>();
 		los = GetComponentInChildren<LineOfSight>();
 	}
 	void Update()
@@ -69,6 +71,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	}
 	void LockOnEnemy()
 	{
+
 		if (Input.GetKeyDown(KeyCode.Tab) && !isTargeting)
 		{
 			if (los.currentTarget != null)
@@ -83,6 +86,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 				nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
 			nearestEnemy = null;
 			los.currentTarget = null;
+			targetEnemyTrigger = false;
 			isTargeting = false;
 			Vector3 rot = transform.rotation.eulerAngles;
 			rotX = rot.x;
@@ -95,6 +99,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 			nearestEnemy = null;
 			los.currentTarget = null;
 			isTargeting = false;
+			targetEnemyTrigger = false;
 			Vector3 rot = transform.rotation.eulerAngles;
 			rotX = rot.x;
 			rotY = rot.y;
@@ -189,7 +194,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
 		var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
 
-		rollUp = rollSpeed > 0 ? Vector3.Slerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
+		rollUp = rollSpeed > 0 ? Vector3.Lerp(rollUp, targetUp, rollSpeed * Time.deltaTime) : Vector3.up;
 		transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime * multiplier);
 
 		var rot = transform.localRotation.eulerAngles;

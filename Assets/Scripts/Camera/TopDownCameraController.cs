@@ -12,7 +12,9 @@ public class TopDownCameraController : MonoBehaviour {
 	{
 		var horizontalInput = Input.GetAxis("RightStickHorizontal");
 		var verticalInput = Input.GetAxis("RightStickVertical");
-		Vector3 inputMovement = new Vector3(horizontalInput * offsetJoystick, 0, -verticalInput * offsetJoystick);
+		var mouseInpuntX = (Input.mousePosition.x/Screen.width) - 0.5f;
+		var mouseInpuntY = (Input.mousePosition.y / Screen.height) - 0.5f;
+		Vector3 inputMovement = new Vector3((horizontalInput + mouseInpuntX) * offsetJoystick, 0, -(verticalInput-mouseInpuntY)* offsetJoystick);
 	
 		Vector3 desiredPosition = target.position + offset + inputMovement;
 		Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);

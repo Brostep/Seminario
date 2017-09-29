@@ -27,6 +27,7 @@ public class ThirdPersonController : MonoBehaviour {
 	bool onGround;
 	bool isDashing;
 	Animator anim;
+	int isJumping = 0;
 
 	void Start()
 	{
@@ -38,12 +39,6 @@ public class ThirdPersonController : MonoBehaviour {
 	{
 		if (roofShader.GetFloat("_AlphaValue") < 0.5f)
 			roofShader.SetFloat("_AlphaValue", 1f);
-	//	if (Input.GetKeyDown(KeyCode.Space))
-	//	rb.AddForce(new Vector3(0f, 5000f, 0f));
-	}
-	void OnDrawGizmos()
-	{
-		Gizmos.DrawWireSphere(transform.position, 15f);
 	}
 	void FixedUpdate()
 	{
@@ -66,10 +61,8 @@ public class ThirdPersonController : MonoBehaviour {
 			relativeMove = verticalInput * camForward + horizontalInput * thirdPersonCam.right;
 		}
 		else
-		{
 			//use world directions 
 			relativeMove = verticalInput * Vector3.forward + horizontalInput * Vector3.right;
-		}
 		//move towards Dir
 		Move(relativeMove);
 	}
@@ -80,12 +73,26 @@ public class ThirdPersonController : MonoBehaviour {
 
 		// si esta dasheando tiene otro velocity.
 		var velocity = GetVelocity(relMove);
-		
-		// chekea si esta en el piso, no aplica gravedad
+
 		if (onGround)
+		{
 			velocity.y = 0f;
+			isJumping = 0;
+		}
 		else
-			velocity.y = Physics.gravity.y;
+			velocity.y = velocity.y - 6f;
+
+		// chekea si esta en el piso, no aplica gravedad
+		if ((Input.GetKeyDown(KeyCode.Space)||(Input.GetButton("AButton"))) && isJumping == 0) {
+			if (isJumping==0)
+				velocity.y = 90f;
+			else
+				velocity.y = 130;
+
+			isJumping++;
+		}
+		
+
 
 		// aplico movimiento
 		rb.velocity = velocity;
@@ -93,12 +100,6 @@ public class ThirdPersonController : MonoBehaviour {
 		if (horizontalInput > 0 || verticalInput > 0 || horizontalInput < 0 || verticalInput < 0)
 		{
 			anim.SetBool("Run", true);
-			anim.SetBool("Was Running", true);
-		}
-		else if (anim.GetBool("Was Running"))
-		{
-			anim.SetBool("Was Running", false);
-			anim.Play("Run To Stop");
 		}
 		else
 		{
@@ -148,9 +149,9 @@ public class ThirdPersonController : MonoBehaviour {
 	void CheckGroundStatus()
 	{
 		RaycastHit hitInfo;
-		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, float.MaxValue))
+		if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
 		{
-			if (hitInfo.distance < 1f)
+			if (hitInfo.distance < 0.1f)
 			{
 				groundNormal = hitInfo.normal;
 				onGround = true;

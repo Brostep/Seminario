@@ -48,12 +48,6 @@ public class TopDownMovement : MonoBehaviour {
 		if (horizontalInput > 0 || verticalInput > 0 || horizontalInput < 0 || verticalInput < 0)
 		{
 			anim.SetBool("Run", true);
-			anim.SetBool("Was Running", true);
-		}
-		else if (anim.GetBool("Was Running"))
-		{
-			anim.SetBool("Was Running", false);
-			anim.Play("Run To Stop");
 		}
 		else
 		{

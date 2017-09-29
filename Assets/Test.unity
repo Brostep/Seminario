@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17492522, g: 0.21882416, b: 0.3011105, a: 1}
+  m_IndirectSpecularColor: {r: 0.17492536, g: 0.2188244, b: 0.30111057, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2033225821}
   smoothSpeed: 0.05
-  offsetJoystick: 2
+  offsetJoystick: 5
   offset: {x: 0, y: 55, z: 0}
 --- !u!1 &557504711
 GameObject:
@@ -548,7 +548,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4616717735136764, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.16
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4616717735136764, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
       propertyPath: m_LocalPosition.y
@@ -556,7 +556,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4616717735136764, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.43648
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4616717735136764, guid: 45f82f4b7e770bc4fb35bcc65b1c6b44, type: 2}
       propertyPath: m_LocalRotation.x
@@ -708,10 +708,8 @@ MonoBehaviour:
   clipMoveTime: 0.05
   returnTime: 0.4
   sphereCastRadius: 0.3
-  visualiseInEditor: 1
-  closestDistance: 0.1
-  dontClipTagPlayer: Player
-  dontClipTagEnemy: Enemy
+  visualiseInEditor: 0
+  closestDistance: 0.3
 --- !u!81 &687227927
 AudioListener:
   m_ObjectHideFlags: 0
@@ -851,7 +849,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1296075368}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.21, y: 1.0197237, z: 0.061326563}
+  m_LocalPosition: {x: 0.339, y: 0.879, z: 0.061326563}
   m_LocalScale: {x: 0.028889999, y: 0.028889999, z: 0.028889999}
   m_Children: []
   m_Father: {fileID: 2033225821}
@@ -980,7 +978,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1350725840}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 1.806154, z: -0.68}
+  m_LocalPosition: {x: -0, y: 1.714, z: 0.04}
   m_LocalScale: {x: 0.028889999, y: 0.028889999, z: 0.028889999}
   m_Children: []
   m_Father: {fileID: 2033225821}
@@ -1102,8 +1100,8 @@ MonoBehaviour:
   - {fileID: 762310368}
   - {fileID: 133851754}
   - {fileID: 389611457}
-  Totalvawes: 2
-  totalEnemies: 10
+  Totalvawes: 1
+  totalEnemies: 12
   enemiesSpawned: 0
   door: {fileID: 422015227}
   enemiesAlive: 0
@@ -1409,15 +1407,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400112, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.87
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.027
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.49780655
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1679,6 +1677,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5dfcee926a30b7a4088702654d4aa750, type: 2}
+    - target: {fileID: 100112, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 109c23cbb25b749498bc9f69e56a7061, type: 3}
   m_IsPrefabParent: 0
@@ -1700,7 +1702,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -1761,7 +1763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 8
-  cam: {fileID: 0}
+  cam: {fileID: 2066024248}
   dashCd: 0.3
   dashSpeed: 14
   dashDuration: 0.7

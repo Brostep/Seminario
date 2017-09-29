@@ -11,12 +11,6 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 	public bool visualiseInEditor;                  
 	public float closestDistance = 0.5f;           
 	public bool protecting { get; private set; }
-//	public List<LayerMask>
-//	public LayerMask dontClipPlayer; 
-//	public LayerMask dontClipBullet; 
-//	public LayerMask dontClipEnemy;
-	public string dontClipTagPlayer = "Player";
-	public string dontClipTagEnemy = "Enemy";
 	private Transform cam;                 
 	private Transform pivot;                
 	private float originalDist;             
@@ -51,14 +45,12 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 		{
 			if ((!cols[i].isTrigger) 
 				&& !(cols[i].attachedRigidbody != null 
-				&& cols[i].attachedRigidbody.CompareTag(dontClipTagPlayer)))
-			{
-				
+				&& cols[i].gameObject.layer == 8))
+			{		
 				initialIntersect = true;
 				break;
 			}
 		}
-
 		if (initialIntersect)
 		{
 			ray.origin += pivot.forward * sphereCastRadius;
@@ -77,7 +69,7 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 		{
 			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger) 
 					&& !(hits[i].collider.attachedRigidbody != null
-					&& hits[i].collider.attachedRigidbody.CompareTag(dontClipTagPlayer)))
+					&& hits[i].collider.gameObject.layer == 8))
 			{
 				nearest = hits[i].distance;
 				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;
