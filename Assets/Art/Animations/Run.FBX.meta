@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e95c69dfc69098b4689e34bddcecbf22
-timeCreated: 1506631036
+guid: e11352765375b0b409802307b7bd8c38
+timeCreated: 1506787525
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -61,7 +61,7 @@ ModelImporter:
     100106: CATRigSpine3
     100108: CATRigSpine4
     100110: CATRigStaff
-    100112: Object001
+    100112: Character
     100114: //RootNode
     400000: CATRigHub001
     400002: CATRigHub002
@@ -119,12 +119,12 @@ ModelImporter:
     400106: CATRigSpine3
     400108: CATRigSpine4
     400110: CATRigStaff
-    400112: Object001
+    400112: Character
     400114: //RootNode
-    4300000: Object001
+    4300000: Character
     7400000: Run
     9500000: //RootNode
-    13700000: Object001
+    13700000: Character
   materials:
     importMaterials: 1
     materialName: 0
@@ -290,7 +290,7 @@ ModelImporter:
       - path: CATRigHub001/CATRigSpine1/CATRigSpine2/CATRigSpine3/CATRigSpine4/CATRigHub002/CATRigSpine1
           1/CATRigSpine2 1/CATRigHub003/CATRigSpine/CATRigHub004
         weight: 1
-      - path: Object001
+      - path: Character
         weight: 1
       maskType: 3
       maskSource: {instanceID: 0}

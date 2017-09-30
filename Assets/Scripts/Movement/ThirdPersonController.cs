@@ -78,21 +78,25 @@ public class ThirdPersonController : MonoBehaviour {
 		{
 			velocity.y = 0f;
 			isJumping = 0;
+            anim.SetBool("OnJump", false);
 		}
 		else
 			velocity.y = velocity.y - 6f;
 
 		// chekea si esta en el piso, no aplica gravedad
-		if ((Input.GetKeyDown(KeyCode.Space)||(Input.GetButton("AButton"))) && isJumping == 0) {
-			if (isJumping==0)
-				velocity.y = 90f;
-			else
-				velocity.y = 130;
+		if ((Input.GetKeyDown(KeyCode.Space)||(Input.GetButton("AButton"))) && isJumping == 0)
+        {
+            anim.SetBool("OnJump", true);
+
+            if (isJumping==0)
+            {
+                //velocity.y = 90f;
+            }
+			/*else
+                velocity.y = 130;*/
 
 			isJumping++;
 		}
-		
-
 
 		// aplico movimiento
 		rb.velocity = velocity;
@@ -105,6 +109,8 @@ public class ThirdPersonController : MonoBehaviour {
 		{
 			anim.SetBool("Run", false);
 		}
+
+
 			
 		//rotation 
 		relMove = transform.InverseTransformDirection(relMove);
