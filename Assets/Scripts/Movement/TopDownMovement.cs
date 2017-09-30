@@ -74,8 +74,11 @@ public class TopDownMovement : MonoBehaviour {
 			onePress = true;
 
 		// mientras que mantega apretado el input del dash, si no esta en cd y si no cumplio la duracion del dash
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
-			isDashing = true; // estoy dasheando
+		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
+        {
+            anim.SetBool("OnDash", true);
+            isDashing = true; // estoy dasheando
+        }
 
 		// estoy dasheando ? y todavia hay duracion
 		if (isDashing && dashDuration > 0f)
@@ -89,7 +92,8 @@ public class TopDownMovement : MonoBehaviour {
 			dashDuration = dashDurationAux;
 			dashTimer = 0f;
 			onePress = false;
-		}
+            anim.SetBool("OnDash", false);
+        }
 		// sino.. retorno la velocidad normal del player
 		return relVel = relMove * movementSpeed;
 	}
