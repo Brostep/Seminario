@@ -21,7 +21,7 @@ public class TopDownMovement : MonoBehaviour {
 	public GameObject head;
 	public Material roofAlpha;
 	public LayerMask roof;
-	bool onePress;
+    bool onePress;
 	bool isDashing;
 
 	void Start()
@@ -77,6 +77,7 @@ public class TopDownMovement : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
         {
             anim.SetBool("OnDash", true);
+            
             isDashing = true; // estoy dasheando
         }
 

@@ -22,6 +22,7 @@ public class ThirdPersonController : MonoBehaviour {
 	public float dashDuration;
 	public float movingTurnSpeed = 360;
 	public float stationaryTurnSpeed = 180;
+    public ParticleSystem dashParticle;
 	public Material roofShader;
 	bool onePress;
 	bool onGround;
@@ -31,7 +32,7 @@ public class ThirdPersonController : MonoBehaviour {
 
 	void Start()
 	{
-		rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
 		dashDurationAux = dashDuration;
 	}
@@ -110,8 +111,6 @@ public class ThirdPersonController : MonoBehaviour {
 			anim.SetBool("Run", false);
 		}
 
-
-			
 		//rotation 
 		relMove = transform.InverseTransformDirection(relMove);
 		CheckGroundStatus();
@@ -136,6 +135,7 @@ public class ThirdPersonController : MonoBehaviour {
         {
             isDashing = true; // estoy dasheando
             anim.SetBool("OnDash", true);
+            dashParticle.Play();
         }
 		// estoy dasheando ? y todavia hay duracion
 		if (isDashing && dashDuration > 0f)
@@ -150,7 +150,7 @@ public class ThirdPersonController : MonoBehaviour {
 			dashTimer = 0f;
 			onePress = false;
             anim.SetBool("OnDash", false);
-		}
+        }
 		// sino.. retorno la velocidad normal del player
 		return relVel = relMove * movementSpeed;
 	}
