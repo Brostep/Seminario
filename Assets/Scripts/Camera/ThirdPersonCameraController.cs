@@ -5,37 +5,40 @@ using UnityEngine;
 public class ThirdPersonCameraController : MonoBehaviour
 {
     public float CameraMoveSpeed = 120.0f;
-    public GameObject CameraFollowObj;
     public float clampAngle = 80.0f;
     public float inputSensitivityX = 150.0f;
     public float inputSensitivityY = 150.0f;
-    float mouseX, stickX;
+	public float rollSpeed = 0.2f;
+	public float turnSpeed = 1f;
+	public float timeSinceNoRotation;
+	public float spinTurnLimit = 90;
+	float mouseX, stickX;
     float mouseY, stickY;
     float rotY = 0f;
     float rotX = 0f;
-    Transform target;
-    Vector3 stoped;
-    public float spinTurnLimit = 90;
     float currentTurnAmount;
     float lastFlatAngle;
     float turnSpeedVelocity;
-    Vector3 rollUp = Vector3.up;
-    public float rollSpeed = 0.2f;
-    public float turnSpeed = 1f;
-    Quaternion auxRotation;
-    public float timeSinceNoRotation;
     float tickSinceNoRotation;
-    GameObject nearestEnemy;
-    public bool isTargeting;
-    LineOfSight los;
-    Vector3 currentPosition;
+	float currentTime = 0.0f;
+	float timeLapse = 3.0f;
 
-    float currentTime = 0.0f;
-    float timeLapse = 3.0f;
+	Quaternion auxRotation;
+	Transform target;
+	Vector3 stoped;
+	Vector3 rollUp = Vector3.up;
+	Vector3 currentPosition;
 
+	public GameObject CameraFollowObj;
+	GameObject nearestEnemy;
+
+	LineOfSight los;
+
+	[HideInInspector]
+	public bool isTargeting;
     bool? onePress;
-    bool targetEnemyTrigger;
-    bool DTargetEnemyTrigger = true;
+	bool triggerDown;
+	bool triggerUp;
 
     void Start()
     {
@@ -82,20 +85,30 @@ public class ThirdPersonCameraController : MonoBehaviour
     }
     void LockOnEnemy()
     {
-        if (Input.GetAxis("LTrigger") >= 0 && onePress == null)
-        {
-            if (isTargeting)
-                onePress = false;
-            else
-                onePress = true;
-        }
+		if (Input.GetAxis("LTrigger") == -1)
+		{
+			triggerDown = true;
+			triggerUp = false;
+		}
+		else
+		{
+			triggerDown = false;
+			triggerUp = true;
+		}
+
+		if (triggerDown && onePress == null)
+		{
+			if (isTargeting)
+				onePress = false;
+			else
+				onePress = true;
+		}
 
         if ((Input.GetKeyDown(KeyCode.Tab) || onePress == true) && !isTargeting)
         {
             if (los.currentTarget != null)
             {
                 isTargeting = true;
-                onePress = null;
                 nearestEnemy = los.currentTarget;
             }
         }
@@ -103,10 +116,8 @@ public class ThirdPersonCameraController : MonoBehaviour
         {
             if (los.currentTarget != null)
                 nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
-            onePress = null;
             nearestEnemy = null;
             los.currentTarget = null;
-            targetEnemyTrigger = false;
             isTargeting = false;
             Vector3 rot = transform.rotation.eulerAngles;
             rotX = rot.x;
@@ -117,14 +128,15 @@ public class ThirdPersonCameraController : MonoBehaviour
             if (los.currentTarget != null)
                 nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
             nearestEnemy = null;
-            onePress = null;
             los.currentTarget = null;
             isTargeting = false;
-            targetEnemyTrigger = false;
             Vector3 rot = transform.rotation.eulerAngles;
             rotX = rot.x;
             rotY = rot.y;
         }
+
+		if (triggerUp)
+			onePress = null;	
 
     }
     void GetInputs()

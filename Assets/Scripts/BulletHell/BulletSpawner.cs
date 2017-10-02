@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class BulletSpawner : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Quaternion.Euler(0.0f, rotationAngle * Mathf.Sin(Time.time * rotationSpeed) - 90.0f, 0.0f);
+        transform.rotation = Quaternion.Euler(0.0f, rotationAngle * Mathf.Sin(Time.time * rotationSpeed)-180, 0.0f);
 
         if (currentTime < timeLapse)
         {

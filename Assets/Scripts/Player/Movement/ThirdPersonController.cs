@@ -27,7 +27,6 @@ public class ThirdPersonController : MonoBehaviour {
 	bool onGround;
 	bool isDashing;
 	Animator anim;
-	int isJumping = 0;
 
 	void Start()
 	{
@@ -73,30 +72,8 @@ public class ThirdPersonController : MonoBehaviour {
 
 		// si esta dasheando tiene otro velocity.
 		var velocity = GetVelocity(relMove);
-
-		if (onGround)
-		{
-			velocity.y = 0f;
-			isJumping = 0;
-            anim.SetBool("OnJump", false);
-		}
-		else
+		if (!onGround)
 			velocity.y = velocity.y - 6f;
-
-		// chekea si esta en el piso, no aplica gravedad
-		if ((Input.GetKeyDown(KeyCode.Space)||(Input.GetButton("AButton"))) && isJumping == 0)
-        {
-            anim.SetBool("OnJump", true);
-
-            if (isJumping==0)
-            {
-                //velocity.y = 90f;
-            }
-			/*else
-                velocity.y = 130;*/
-
-			isJumping++;
-		}
 
 		// aplico movimiento
 		rb.velocity = velocity;
@@ -109,9 +86,7 @@ public class ThirdPersonController : MonoBehaviour {
 		{
 			anim.SetBool("Run", false);
 		}
-
-
-			
+		
 		//rotation 
 		relMove = transform.InverseTransformDirection(relMove);
 		CheckGroundStatus();
