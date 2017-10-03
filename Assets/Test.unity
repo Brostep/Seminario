@@ -955,10 +955,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clipMoveTime: 0.05
+  closestDistance: 0.3
   returnTime: 0.4
   sphereCastRadius: 0.3
-  visualiseInEditor: 0
-  closestDistance: 0.3
+  dontClipWith:
+  - serializedVersion: 2
+    m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 512
+  - serializedVersion: 2
+    m_Bits: 1024
 --- !u!81 &687227927
 AudioListener:
   m_ObjectHideFlags: 0

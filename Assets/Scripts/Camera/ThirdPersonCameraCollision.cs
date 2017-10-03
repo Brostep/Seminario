@@ -5,20 +5,24 @@ using UnityEngine;
 
 public class ThirdPersonCameraCollision : MonoBehaviour
 {
-	public float clipMoveTime = 0.05f;           
-	public float returnTime = 0.4f;               
-	public float sphereCastRadius = 0.1f;           
-	public bool visualiseInEditor;                  
-	public float closestDistance = 0.5f;           
 	public bool protecting { get; private set; }
-	private Transform cam;                 
-	private Transform pivot;                
-	private float originalDist;             
-	private float modeVelocity;           
-	private float currentDist;              
-	private Ray ray = new Ray();                
-	private RaycastHit[] hits;            
-	private RayHitComparer rayHitComparer;  
+	public float clipMoveTime = 0.05f;
+	public float closestDistance = 0.5f;
+	public float returnTime = 0.4f;
+	public float sphereCastRadius = 0.1f;
+
+	private float originalDist;
+	private float modeVelocity;
+	private float currentDist;
+
+	private Ray ray = new Ray();
+	private RaycastHit[] hits;
+	private Transform cam;
+	private Transform pivot;
+	private RayHitComparer rayHitComparer;
+
+	public LayerMask[] dontClipWith;
+	int[] layerNumbers;
 
 	void Start()
 	{
@@ -27,6 +31,9 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 		originalDist = cam.localPosition.magnitude;
 		currentDist = originalDist;
 		rayHitComparer = new RayHitComparer();
+		layerNumbers = new int[dontClipWith.Length];
+		for (int i = 0; i < dontClipWith.Length; i++)
+			layerNumbers[i] = Utility.LayerMaskToInt(dontClipWith[i]);
 	}
 
 	void LateUpdate()
@@ -35,7 +42,7 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		ray.origin = pivot.position + pivot.forward * sphereCastRadius;
 		ray.direction = -pivot.forward;
-		
+
 		var cols = Physics.OverlapSphere(ray.origin, sphereCastRadius);
 
 		bool initialIntersect = false;
@@ -43,10 +50,12 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		for (int i = 0; i < cols.Length; i++)
 		{
-			if ((!cols[i].isTrigger) 
-				&& !(cols[i].attachedRigidbody != null 
-				&& cols[i].gameObject.layer == 8))
-			{		
+			if ((!cols[i].isTrigger)
+				&& !(cols[i].attachedRigidbody != null
+				&& cols[i].gameObject.layer == layerNumbers[0])
+				&& cols[i].gameObject.layer != layerNumbers[1]
+				&& cols[i].gameObject.layer != layerNumbers[2])
+			{
 				initialIntersect = true;
 				break;
 			}
@@ -67,9 +76,11 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		for (int i = 0; i < hits.Length; i++)
 		{
-			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger) 
+			if (hits[i].distance < nearest && (!hits[i].collider.isTrigger)
 					&& !(hits[i].collider.attachedRigidbody != null
-					&& hits[i].collider.gameObject.layer == 8))
+					&& hits[i].collider.gameObject.layer == layerNumbers[0])
+					&& hits[i].collider.gameObject.layer != layerNumbers[1]
+					&& hits[i].collider.gameObject.layer != layerNumbers[2])
 			{
 				nearest = hits[i].distance;
 				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;

@@ -45,4 +45,8 @@ public static class Utility
 	{
 		return 1 << layerNum;
 	}
+	public static int LayerMaskToInt(LayerMask layerMask)
+	{
+		return (int)Mathf.Log(layerMask.value, 2);
+	}
 }
