@@ -1520,6 +1520,7 @@ MonoBehaviour:
   dashCd: 0.3
   dashSpeed: 14
   dashDuration: 0.7
+  smoothRoof: 0.3
   head: {fileID: 65974159}
   roofAlpha: {fileID: 2100000, guid: 1fed24a95cc449e4fb3ac60f3e3e8c6d, type: 2}
   roof:

@@ -18,6 +18,8 @@ public class TopDownMovement : MonoBehaviour {
 	public float dashCd;
 	public float dashSpeed;
 	public float dashDuration;
+	public float smoothRoof;
+	float fade = 1;
 	public GameObject head;
 	public Material roofAlpha;
 	public LayerMask roof;
@@ -32,9 +34,20 @@ public class TopDownMovement : MonoBehaviour {
 	}
 	void Update()
 	{
-		roofAlpha.SetFloat("_AlphaValue", 1f);
-		if (Physics.Raycast(head.transform.position, Vector3.up, float.MaxValue , roof ))
-			roofAlpha.SetFloat("_AlphaValue", 0.2f);
+	
+
+		
+		if (Physics.Raycast(head.transform.position, Vector3.up, float.MaxValue , roof))
+		{
+			fade = Mathf.Lerp(fade, 0.1f, smoothRoof);
+			roofAlpha.SetFloat("_AlphaValue", fade);
+		}
+		else
+		{
+			fade = Mathf.Lerp(fade, 1, smoothRoof * 1.5f);
+			roofAlpha.SetFloat("_AlphaValue",fade);
+		}
+
 
 		if (new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) != Vector2.zero)
 			joystickRotation();
