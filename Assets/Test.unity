@@ -581,17 +581,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.225
-      value: 0.2625
-      inSlope: 0.81818193
-      outSlope: 0.81818193
-      tangentMode: 34
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 69
     - serializedVersion: 2
-      time: 0.68333334
-      value: 0.63750005
-      inSlope: 0.81818193
-      outSlope: 0.81818193
-      tangentMode: 34
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 69
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -605,6 +605,7 @@ MonoBehaviour:
   timeLapse: 1
   rotationAngle: 0
   rotationSpeed: 1
+  rotationOffset: 180
 --- !u!1 &557504711
 GameObject:
   m_ObjectHideFlags: 0
