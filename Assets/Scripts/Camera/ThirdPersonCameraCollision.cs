@@ -50,7 +50,7 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 
 		for (int i = 0; i < cols.Length; i++)
 		{
-			if ((!cols[i].isTrigger)
+			if ((!cols[i].isTrigger) 
 				&& !(cols[i].attachedRigidbody != null
 				&& cols[i].gameObject.layer == layerNumbers[0])
 				&& cols[i].gameObject.layer != layerNumbers[1]

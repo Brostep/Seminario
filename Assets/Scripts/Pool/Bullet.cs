@@ -5,15 +5,30 @@ public class Bullet : MonoBehaviour
 {
 	public float speed;
 	public float lifeSpan;
-	private float _timeAlive;
+	float _timeAlive;
 	private bool _alive;
+	Vector3 offset;
+	ThirdPersonCameraController tPCC;
     void Update()
 	{
 		_timeAlive += Time.deltaTime;
 		if (_timeAlive >= lifeSpan)
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
 		else
-			transform.position += transform.forward * speed * Time.deltaTime;
+		{
+		//	if (tPCC.isTargeting)
+		//	{
+		//		if (Input.GetAxis("Horizontal") >= 0)
+		//			offset = new Vector3(-0.5f, 0f, 0f);
+		//		else
+		//			offset = new Vector3(0.5f, 0f, 0f);
+		//	}
+
+			transform.position += transform.forward + offset * speed * Time.deltaTime;
+		}
+		
+
+			
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -22,9 +37,11 @@ public class Bullet : MonoBehaviour
 	public void Initialize()
 	{
 		_timeAlive = 0;
+		offset = new Vector3(0f, 0f, 0f);
 
 		//busca el bullet spawner y copia su direccion y rotacion y spawnea ahi.
 		var bulletSpawner = FindObjectOfType<BulletsSpawner>().gameObject;
+		tPCC = FindObjectOfType<ThirdPersonCameraController>();
         transform.position = bulletSpawner.transform.position;
         transform.rotation = bulletSpawner.transform.rotation; 
 	}

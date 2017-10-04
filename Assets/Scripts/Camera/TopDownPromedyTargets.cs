@@ -9,7 +9,6 @@ public class TopDownPromedyTargets : MonoBehaviour {
 	public float minSize = 6.5f;							// The smallest fieldOfView.
 	public Transform[] targets;				
 
-
 	private Camera cam;                         
 	private float zoomSpeed;                     
 	private Vector3 moveVelocity;               

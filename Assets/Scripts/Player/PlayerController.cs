@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 [RequireComponent(typeof(ThirdPersonController))]
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	bool onGround;
 	Vector3 velocity;
 	Rigidbody rb;
+	public Image crosshair;
 
 	void Start()
 	{
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
+;
 	}
 	void Update()
 	{
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour {
 			topDownController.enabled = true;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
+			crosshair.enabled = false;
 		}
 		else
 		{
@@ -73,6 +75,7 @@ public class PlayerController : MonoBehaviour {
 			topDownCamera.SetActive(false);
 			thirdPersonController.enabled = true;
 			thirdPersonCamera.SetActive(true);
+			crosshair.enabled = true;
 		}	
 	}
 

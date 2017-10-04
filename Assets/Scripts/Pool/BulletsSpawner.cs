@@ -5,12 +5,14 @@ public class BulletsSpawner : MonoBehaviour
 {
 	public Bullet bulletPrefab;
 	public float cooldown = 10f;
-	float cd;
-	public GameObject firePoint;
-	public float clampAngle = 0f;
-	private Pool<Bullet> _bulletPool;
-	float rotX, rotY;
 	public float inputSensitivity = 150f;
+	public float clampAngle = 0f;
+	float cd;
+	float rotX, rotY;
+
+	public GameObject firePoint;
+	private Pool<Bullet> _bulletPool;
+
 	private static BulletsSpawner _instance;
 	public static BulletsSpawner Instance { get { return _instance; } }
 
@@ -22,7 +24,7 @@ public class BulletsSpawner : MonoBehaviour
 		rotY = rot.y;
 		rotX = rot.x;
 
-		StartCoroutine(Shoot());
+		//	StartCoroutine(Shoot());
 	}
 	void Update()
 	{
@@ -33,12 +35,7 @@ public class BulletsSpawner : MonoBehaviour
 
 		cd += Time.deltaTime;
 
-		if (Input.GetKey(KeyCode.Mouse0)  && (cooldown/10f)<cd )
-		{
-			_bulletPool.GetObjectFromPool();
-			cd = 0f;
-		}
-		else if (Input.GetButton("RButton") && (cooldown / 10f) < cd)
+		if (((Input.GetKey(KeyCode.Mouse0)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
 		{
 			_bulletPool.GetObjectFromPool();
 			cd = 0f;
@@ -56,14 +53,14 @@ public class BulletsSpawner : MonoBehaviour
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
 	}
-	IEnumerator Shoot()
-	{
-		while (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
-		{
-			_bulletPool.GetObjectFromPool();
-			yield return new WaitForSeconds(cooldown / 10f);
-		}
-	}
+//	IEnumerator Shoot()
+//	{
+//		while (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
+//		{
+//			_bulletPool.GetObjectFromPool();
+//			yield return new WaitForSeconds(cooldown / 10f);
+//		}
+//	}
 	private Bullet BulletFactory()
 	{
 		return Instantiate<Bullet>(bulletPrefab);

@@ -49,6 +49,7 @@ public class ThirdPersonController : MonoBehaviour {
 	{
 		horizontalInput = Input.GetAxis("Horizontal");
 		verticalInput = Input.GetAxis("Vertical");
+		print(horizontalInput);
 	}
 	// calculate move direction
 	void CalculateMoveDir()

@@ -5,26 +5,28 @@ using UnityEngine;
 public class TopDownMovement : MonoBehaviour {
 
 	Rigidbody rb;
-    public float movementSpeed;
 	public Camera cam;
-	Vector3 lookPos;
 	Quaternion _rot;
+	Vector3 lookPos;
 	Vector3 aux;
-	float horizontalInput;
-	float verticalInput;
-	Animator anim;
-	float dashTimer;
-	float dashDurationAux;
+
+	public float movementSpeed;
 	public float dashCd;
 	public float dashSpeed;
 	public float dashDuration;
 	public float smoothRoof;
 	float fade = 1;
+	float horizontalInput;
+	float verticalInput;
+	float dashTimer;
+	float dashDurationAux;
+
 	public GameObject head;
 	public Material roofAlpha;
 	public LayerMask roof;
 	bool onePress;
 	bool isDashing;
+	Animator anim;
 
 	void Start()
 	{
@@ -34,9 +36,7 @@ public class TopDownMovement : MonoBehaviour {
 	}
 	void Update()
 	{
-	
-
-		
+		//roof shade
 		if (Physics.Raycast(head.transform.position, Vector3.up, float.MaxValue , roof))
 		{
 			fade = Mathf.Lerp(fade, 0.1f, smoothRoof);
@@ -48,13 +48,11 @@ public class TopDownMovement : MonoBehaviour {
 			roofAlpha.SetFloat("_AlphaValue",fade);
 		}
 
-
+		// rotation with mouse or joystick
 		if (new Vector2(Input.GetAxis("RightStickHorizontal"), Input.GetAxis("RightStickVertical")) != Vector2.zero)
 			joystickRotation();
 		else if (aux!=Input.mousePosition)
 			mouseRotation();
-
-		
 
 		aux = Input.mousePosition;
 
