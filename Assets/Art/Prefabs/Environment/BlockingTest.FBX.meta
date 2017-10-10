@@ -72,6 +72,14 @@ ModelImporter:
     100128: Cylinder052
     100130: Plane005
     100132: Box193
+    100134: Box194
+    100136: Box195
+    100138: Box196
+    100140: Box197
+    100142: Box198
+    100144: Box199
+    100146: Roof
+    100148: Bridge
     400000: Box064
     400002: Box068
     400004: Box069
@@ -139,6 +147,14 @@ ModelImporter:
     400128: Cylinder052
     400130: Plane005
     400132: Box193
+    400134: Box194
+    400136: Box195
+    400138: Box196
+    400140: Box197
+    400142: Box198
+    400144: Box199
+    400146: Roof
+    400148: Bridge
     2300000: Box064
     2300002: Box068
     2300004: Box069
@@ -204,6 +220,13 @@ ModelImporter:
     2300124: Cylinder050
     2300126: Cylinder052
     2300128: Plane005
+    2300130: Box194
+    2300132: Box195
+    2300134: Box196
+    2300136: Box197
+    2300138: Box198
+    2300140: Box199
+    2300142: Bridge
     3300000: Box064
     3300002: Box068
     3300004: Box069
@@ -269,6 +292,13 @@ ModelImporter:
     3300124: Cylinder050
     3300126: Cylinder052
     3300128: Plane005
+    3300130: Box194
+    3300132: Box195
+    3300134: Box196
+    3300136: Box197
+    3300138: Box198
+    3300140: Box199
+    3300142: Bridge
     4300000: Box064
     4300002: Box068
     4300004: Plane005
@@ -334,6 +364,13 @@ ModelImporter:
     4300124: Cylinder050
     4300126: Cylinder052
     4300128: Box192
+    4300130: Box194
+    4300132: Box195
+    4300134: Box196
+    4300136: Box198
+    4300138: Box199
+    4300140: Box197
+    4300142: Bridge
   materials:
     importMaterials: 1
     materialName: 0

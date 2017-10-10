@@ -7,7 +7,8 @@ public class Bullet : MonoBehaviour
 	public float lifeSpan;
 	float _timeAlive;
 	private bool _alive;
-	Vector3 offset;
+	Vector3 dir;
+	Vector3 enemyPos;
 	ThirdPersonCameraController tPCC;
     void Update()
 	{
@@ -16,19 +17,14 @@ public class Bullet : MonoBehaviour
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
 		else
 		{
-		//	if (tPCC.isTargeting)
-		//	{
-		//		if (Input.GetAxis("Horizontal") >= 0)
-		//			offset = new Vector3(-0.5f, 0f, 0f);
-		//		else
-		//			offset = new Vector3(0.5f, 0f, 0f);
-		//	}
-
-			transform.position += transform.forward + offset * speed * Time.deltaTime;
+			if (tPCC.isTargeting)
+			{
+				transform.position +=  dir * speed * Time.deltaTime;
+			}
+			else
+				transform.position += transform.forward * speed * Time.deltaTime;
 		}
-		
 
-			
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -37,13 +33,19 @@ public class Bullet : MonoBehaviour
 	public void Initialize()
 	{
 		_timeAlive = 0;
-		offset = new Vector3(0f, 0f, 0f);
+		dir = new Vector3(0f, 0f, 0f);
+		enemyPos = new Vector3(0f, 0f, 0f);
 
 		//busca el bullet spawner y copia su direccion y rotacion y spawnea ahi.
 		var bulletSpawner = FindObjectOfType<BulletsSpawner>().gameObject;
 		tPCC = FindObjectOfType<ThirdPersonCameraController>();
+		if (tPCC.isTargeting)
+			enemyPos = tPCC.nearestEnemy.transform.position;
+
         transform.position = bulletSpawner.transform.position;
-        transform.rotation = bulletSpawner.transform.rotation; 
+        transform.rotation = bulletSpawner.transform.rotation;
+
+		dir = (enemyPos - transform.position).normalized;
 	}
 
 	public static void InitializeBullet(Bullet bulletObj)

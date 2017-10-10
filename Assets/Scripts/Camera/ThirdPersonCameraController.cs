@@ -30,7 +30,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	Vector3 currentPosition;
 
 	public GameObject CameraFollowObj;
-	GameObject nearestEnemy;
+	public GameObject nearestEnemy;
 
 	LineOfSight los;
 

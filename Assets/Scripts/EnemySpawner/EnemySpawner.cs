@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if (wave == waves && enemiesAlive == 0)
+        if (wave == waves && enemiesAlive == 0 && door.activeSelf)
         {
             door.SetActive(false);
         }
