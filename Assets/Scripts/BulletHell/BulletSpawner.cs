@@ -25,11 +25,7 @@ public class BulletSpawner : MonoBehaviour
 
     void Update()
     {
-<<<<<<< HEAD
         transform.rotation = Quaternion.Euler(rotationAngle * Mathf.Sin(Time.time * rotationSpeed) - rotationOffset,0.0f, 0.0f);
-=======
-        transform.rotation = Quaternion.Euler(default(float), rotationAngle * Mathf.Sin(Time.time * rotationSpeed) - rotationOffset, default(float));
->>>>>>> 75b0fb2c1b361bda54e8ba78ea74e0b6aa7deb6b
 
         if (currentTime < timeLapse)
         {
