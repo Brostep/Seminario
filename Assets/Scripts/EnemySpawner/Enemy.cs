@@ -5,23 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	public int life = 2;
-	public float speed;
 	EnemySpawner enemySpawner;
 	GameObject player;
 	private void Start()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
 		player = FindObjectOfType<PlayerController>().gameObject;
-	}
-	private void Update()
-	{
-
-		var lookPos = player.transform.position - transform.position;
-		lookPos.y = 0;
-		var rotation = Quaternion.LookRotation(lookPos);
-		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 20);
-
-		transform.position += transform.forward * speed * Time.deltaTime;
 	}
 	public void Initialize()
 	{

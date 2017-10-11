@@ -30,7 +30,7 @@ Material:
     m_Floats:
     - first:
         name: _AlphaValue
-      second: 1
+      second: 0.100000024
     - first:
         name: _AlphaVariation
       second: 1
