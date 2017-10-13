@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	public int life = 2;
+	public float life = 3;
 	EnemySpawner enemySpawner;
 	private void Start()
 	{
@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
 		var spawners = FindObjectOfType<EnemySpawner>().spawners;
 		var index = FindObjectOfType<EnemySpawner>().enemiesSpawned;
 		transform.position = spawners[index].transform.position;
+		life = 3;
 	}
 	public static void InitializeEnemy(Enemy enemyObj)
 	{
@@ -24,7 +25,7 @@ public class Enemy : MonoBehaviour {
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
-			life--;
+			life-=c.gameObject.GetComponent<Bullet>().damage;
 	}
 	void Update()
 	{

@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
 	public float speed;
 	public float lifeSpan;
+	public float damage;
 	float _timeAlive;
 	private bool _alive;
 	Vector3 dir;

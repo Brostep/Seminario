@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     int enemiesPerWave;
     int wave = 0;
+	int currentWave;
 
     List<int> spawnPerVawe = new List<int>();
 
@@ -45,24 +46,25 @@ public class EnemySpawner : MonoBehaviour
             }
 
             spawnPerVawe.Add(enemiesPerWave);
-        }
-
+        }	
         StartCoroutine(SpawnVawe(spawnPerVawe[wave]));
+		wave++;
     }
 
     void Update()
     {
-        if (wave == waves && enemiesAlive == 0 && door.activeSelf)
+		if (wave == waves && enemiesAlive == 0 && door.activeSelf)
         {
             door.SetActive(false);
         }
 
-        if (enemiesAlive == 0 && totalEnemies > 0)
+        if (enemiesAlive == 0 && totalEnemies > 0 && wave < waves)
         {
             enemiesSpawned = 0;
-            wave++;
-            StartCoroutine(SpawnVawe(spawnPerVawe[wave]));
-        }
+			wave++;
+			StartCoroutine(SpawnVawe(spawnPerVawe[wave]));
+		
+		}
     }
 
     IEnumerator SpawnVawe(int cantEnemies)

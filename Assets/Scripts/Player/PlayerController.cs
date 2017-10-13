@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 	public static bool cameraChanged = false;
 	public Transform melee;
 	public float meleeRadius;
+	public float lightAttackDamage;
+	public float heavyAttackDamage;
 	Animator anim;
 	bool isJumping;
 	bool onGround;
@@ -27,7 +29,6 @@ public class PlayerController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
-		;
 	}
 	void Update()
 	{
@@ -99,16 +100,27 @@ public class PlayerController : MonoBehaviour
 	}
 	void MeleeHit()
 	{
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.E)||Input.GetButton("XButton"))
 		{
-			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z,thirdPersonCamera.transform.rotation.w);
+			if(!cameraChanged)
+				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z,thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)
 			{
 				foreach (var enemy in enemiesHited)
-					enemy.GetComponent<Enemy>().life--;
+					enemy.GetComponent<Enemy>().life-=lightAttackDamage;
 			}
-
+		}
+		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
+		{
+			if (!cameraChanged)
+				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
+			if (enemiesHited.Length > 0)
+			{
+				foreach (var enemy in enemiesHited)
+					enemy.GetComponent<Enemy>().life -= heavyAttackDamage;
+			}
 		}
 	}
 	void OnDrawGizmos()
