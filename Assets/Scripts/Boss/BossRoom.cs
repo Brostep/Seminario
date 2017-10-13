@@ -14,6 +14,7 @@ public class BossRoom : MonoBehaviour {
 			var playerController = c.gameObject.GetComponent<PlayerController>();
 			playerController.topDownCamera.GetComponentInParent<TopDownCameraController>().enabled=false;
 			playerController.topDownCamera.GetComponentInParent<TopDownPromedyTargets>().enabled=true;
+			FindObjectOfType<HellBulletSpawner>().inRoom = true;
 			bridge.SetActive(false);
 		}
 

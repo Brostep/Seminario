@@ -28,7 +28,7 @@ public class Flocking : Steering
 		{
 			if (hit.gameObject == gameObject)
 				continue;
-			if (hit.gameObject.layer == 12)
+			if (hit.gameObject.layer == LayerMask.GetMask("Obstacles"))
 			{
 				var distance = hit.transform.position - transform.position;
 				var distanceMag = distance.magnitude;

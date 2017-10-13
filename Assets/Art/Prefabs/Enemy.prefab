@@ -102,7 +102,7 @@ MonoBehaviour:
   wanderRandomRadius: 5
   wanderPeriod: 0
   wanderRandomStrength: 30
-  obstacleRadius: 20
+  obstacleRadius: 10
   neighborhoodRadius: 5
   separationRadius: 1.5
   alignmentMult: 0.1

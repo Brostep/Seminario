@@ -110,30 +110,36 @@ public class ThirdPersonCameraController : MonoBehaviour
             {
                 isTargeting = true;
                 nearestEnemy = los.currentTarget;
-            }
+			}
         }
         else if (isTargeting && (Input.GetKeyDown(KeyCode.Tab) || onePress == false))
         {
             if (los.currentTarget != null)
-                nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
+                nearestEnemy.GetComponent<Renderer>().material.color = Color.black;
             nearestEnemy = null;
             los.currentTarget = null;
             isTargeting = false;
             Vector3 rot = transform.rotation.eulerAngles;
-            rotX = rot.x;
+			if (rot.x >clampAngle)
+				rotX = rot.x - 360;
+			else
+				rotX = rot.x;
             rotY = rot.y;
         }
         else if (isTargeting && !los.targetalive)
         {
             if (los.currentTarget != null)
-                nearestEnemy.GetComponent<Renderer>().material.color = Color.white;
+                nearestEnemy.GetComponent<Renderer>().material.color = Color.black;
             nearestEnemy = null;
             los.currentTarget = null;
             isTargeting = false;
-            Vector3 rot = transform.rotation.eulerAngles;
-            rotX = rot.x;
-            rotY = rot.y;
-        }
+			Vector3 rot = transform.rotation.eulerAngles;
+			if (rot.x > clampAngle)
+				rotX = rot.x - 360;
+			else
+				rotX = rot.x;
+			rotY = rot.y;
+		}
 
 		if (triggerUp)
 			onePress = null;	
@@ -153,7 +159,8 @@ public class ThirdPersonCameraController : MonoBehaviour
         rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
         Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
-        transform.rotation = localRotation;
+
+		transform.rotation = localRotation;
 
         if (auxRotation == transform.rotation)
         {
@@ -183,7 +190,7 @@ public class ThirdPersonCameraController : MonoBehaviour
         if (isTargeting)
         {
             var lookPos = nearestEnemy.transform.position - transform.position;
-            lookPos.y = 0;
+           // lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 20);
         }
@@ -229,7 +236,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 
         var rollRotation = Quaternion.LookRotation(targetForward, rollUp);
 
-        rollUp = rollSpeed > 0 ? Vector3.Slerp(currentPosition, targetUp, currentTime / timeLapse) : Vector3.up;
+        rollUp = rollSpeed > 0 ? Vector3.Lerp(currentPosition, targetUp, currentTime / timeLapse) : Vector3.up;
         transform.rotation = Quaternion.Lerp(transform.rotation, rollRotation, turnSpeed * currentTurnAmount * Time.deltaTime * multiplier);
 
         var rot = transform.localRotation.eulerAngles;

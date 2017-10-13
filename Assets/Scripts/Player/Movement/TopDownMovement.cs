@@ -26,6 +26,7 @@ public class TopDownMovement : MonoBehaviour {
 	public LayerMask roof;
 	bool onePress;
 	bool isDashing;
+	bool onGround;
 	Animator anim;
 
 	void Start()
@@ -72,7 +73,9 @@ public class TopDownMovement : MonoBehaviour {
 		verticalInput = Input.GetAxis("Vertical");
 		Vector3 inputMovement = new Vector3(horizontalInput, 0, verticalInput);
 		var velocity = GetVelocity(inputMovement);
-        rb.velocity = velocity;
+		if (!onGround)
+			velocity.y = velocity.y - 6f;
+		rb.velocity = velocity;
 	}
 	Vector3 GetVelocity(Vector3 relMove)
 	{
@@ -123,5 +126,16 @@ public class TopDownMovement : MonoBehaviour {
 		Vector3 lookDir = lookPos - transform.position;
 		lookDir.y = 0;
 		transform.LookAt(transform.position + lookDir, Vector3.up);
+	}
+	void CheckGroundStatus()
+	{
+		RaycastHit hitInfo;
+		if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
+		{
+			if (hitInfo.distance < 0.1f)
+				onGround = true;
+			else
+				onGround = false;
+		}
 	}
 }

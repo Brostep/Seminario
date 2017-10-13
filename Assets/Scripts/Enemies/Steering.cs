@@ -28,7 +28,6 @@ public class Steering : MonoBehaviour, ISteerable
 	Vector3 _wander;
 	float _nextWander;
 
-	int _obstacleMask;
 	int nHits;
 
 	public Vector3 position { get { return transform.position; } }
@@ -38,7 +37,6 @@ public class Steering : MonoBehaviour, ISteerable
 
 	virtual protected void Start()
 	{
-		_obstacleMask = LayerMask.GetMask("Obstacles");
 		target = FindObjectOfType<PlayerController>().gameObject.transform;
 	}
 
@@ -138,8 +136,7 @@ public class Steering : MonoBehaviour, ISteerable
 	}
 
 	protected Vector3 Avoidance(Vector3 distance)
-	{
-		
+	{	
 		var adjustedDistane = distance.normalized;
 		var difference = obstacleRadius - distance.magnitude;
 		adjustedDistane = adjustedDistane * difference;

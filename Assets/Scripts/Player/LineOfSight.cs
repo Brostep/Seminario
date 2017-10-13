@@ -19,18 +19,7 @@ public class LineOfSight : MonoBehaviour
 	void Start()
 	{
 		thirdPersonCameraController = GetComponentInParent<ThirdPersonCameraController>();
-	//	cam = GetComponent<Camera>();
-	//	target.position = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
 	}
-
-	public List<Transform> SensedObjects()
-	{
-		if (inSight != null)
-			return new List<Transform>() { inSight };
-		else
-			return new List<Transform>() { };
-	}
-
 	void Update()
 	{
 		if (currentTarget != null)
@@ -61,7 +50,7 @@ public class LineOfSight : MonoBehaviour
 				if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance, targetLayer))
 				{
 					if (currentTarget != null)
-						currentTarget.GetComponent<Renderer>().material.color = Color.white;
+						currentTarget.GetComponent<Renderer>().material.color = Color.black;
 
 					currentTarget = rch.collider.gameObject;
 					currentTarget.GetComponent<Renderer>().material.color = Color.red;

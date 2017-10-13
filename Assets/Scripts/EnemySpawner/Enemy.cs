@@ -6,11 +6,9 @@ public class Enemy : MonoBehaviour {
 
 	public int life = 2;
 	EnemySpawner enemySpawner;
-	GameObject player;
 	private void Start()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
-		player = FindObjectOfType<PlayerController>().gameObject;
 	}
 	public void Initialize()
 	{
@@ -26,14 +24,15 @@ public class Enemy : MonoBehaviour {
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
-		{
 			life--;
-			if (life <= 0)
-			{
-				enemySpawner.totalEnemies--;
-				enemySpawner.enemiesAlive--;
-				EnemySpawner.Instance.ReturnBulletToPool(this);
-			}	
+	}
+	void Update()
+	{
+		if (life <= 0)
+		{
+			enemySpawner.totalEnemies--;
+			enemySpawner.enemiesAlive--;
+			EnemySpawner.Instance.ReturnBulletToPool(this);
 		}
 	}
 
