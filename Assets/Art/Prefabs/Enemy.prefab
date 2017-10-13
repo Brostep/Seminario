@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  velocityLimit: 5
-  forceLimit: 10
+  velocityLimit: 4
+  forceLimit: 8
   arrivalRadius: 5
   pursuitPeriod: 2
   wanderDistanceAhead: 0
@@ -104,10 +104,10 @@ MonoBehaviour:
   wanderRandomStrength: 30
   obstacleRadius: 10
   neighborhoodRadius: 5
-  separationRadius: 1.5
-  alignmentMult: 0.1
-  cohesionMult: 0.5
-  separationMult: 1.5
+  separationRadius: 1.2
+  alignmentMult: 0
+  cohesionMult: 0.2
+  separationMult: 1
   drawFlockingGizmos: 0
 --- !u!114 &114458560375841252
 MonoBehaviour:

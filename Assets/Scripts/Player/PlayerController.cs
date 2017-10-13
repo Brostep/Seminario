@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(TopDownMovement))]
 public class PlayerController : MonoBehaviour
 {
-
 	ThirdPersonController thirdPersonController;
 	TopDownMovement topDownController;
 	public GameObject thirdPersonCamera;

@@ -35,6 +35,11 @@ public class Enemy : MonoBehaviour {
 			enemySpawner.enemiesAlive--;
 			EnemySpawner.Instance.ReturnBulletToPool(this);
 		}
+
+		if (PlayerController.cameraChanged && transform.position.y>5f)
+		{
+			GetComponent<CapsuleCollider>().center = new Vector3(0f,-6f,0f);
+		}
 	}
 
 	public static void DisposeEnemy(Enemy enemyObj)
