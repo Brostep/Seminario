@@ -6,16 +6,20 @@ public class Enemy : MonoBehaviour {
 
 	public float life = 3;
 	EnemySpawner enemySpawner;
+	float _life;
 	private void Start()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
+		_life = life;
 	}
 	public void Initialize()
 	{
 		var spawners = FindObjectOfType<EnemySpawner>().spawners;
 		var index = FindObjectOfType<EnemySpawner>().enemiesSpawned;
 		transform.position = spawners[index].transform.position;
-		life = 3;
+		if (_life>0)
+			life = _life;
+	
 	}
 	public static void InitializeEnemy(Enemy enemyObj)
 	{

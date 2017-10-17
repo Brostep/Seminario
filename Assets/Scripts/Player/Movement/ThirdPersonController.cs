@@ -22,6 +22,7 @@ public class ThirdPersonController : MonoBehaviour {
 	public float dashDuration;
 	public float movingTurnSpeed = 360;
 	public float stationaryTurnSpeed = 180;
+	public float groundDistance = 0.1f;
 	public Material roofShader;
 	bool onePress;
 	bool onGround;
@@ -70,10 +71,11 @@ public class ThirdPersonController : MonoBehaviour {
 		if (relMove.magnitude > 1f)
 			relMove.Normalize();
 
+		
 		// si esta dasheando tiene otro velocity.
 		var velocity = GetVelocity(relMove);
 		if (!onGround)
-			velocity.y = velocity.y - 6f;
+			velocity += Physics.gravity;
 
 		// aplico movimiento
 		rb.velocity = velocity;
@@ -86,14 +88,16 @@ public class ThirdPersonController : MonoBehaviour {
 		{
 			anim.SetBool("Run", false);
 		}
-		
+
 		//rotation 
 		relMove = transform.InverseTransformDirection(relMove);
 		CheckGroundStatus();
 		relMove = Vector3.ProjectOnPlane(relMove, groundNormal);
 		turnAmount = Mathf.Atan2(relMove.x, relMove.z);
 		forwardAmount = relMove.z;
+
 		ApplyExtraTurnRotation();
+
 	}
 
 	Vector3 GetVelocity(Vector3 relMove)
@@ -130,7 +134,7 @@ public class ThirdPersonController : MonoBehaviour {
 	void CheckGroundStatus()
 	{
 		RaycastHit hitInfo;
-		if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
+		if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, groundDistance))
 		{
 			if (hitInfo.distance < 0.1f)
 			{
