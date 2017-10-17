@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour
 			isJumping = false;
 			anim.SetBool("OnJump", false);
 		}
-	//	else
-	//		velocity.y = velocity.y - 6f;
+		else
+			velocity.y = velocity.y - 6f;
 
 		if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LButton"))
 		{
