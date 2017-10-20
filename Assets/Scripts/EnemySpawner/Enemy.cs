@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour {
 		var spawners = FindObjectOfType<EnemySpawner>().spawners;
 		var index = FindObjectOfType<EnemySpawner>().enemiesSpawned;
 		transform.position = spawners[index].transform.position;
-		life = 3;
+		life = 5;
 	}
 	public static void InitializeEnemy(Enemy enemyObj)
 	{
@@ -39,6 +39,10 @@ public class Enemy : MonoBehaviour {
 		if (PlayerController.cameraChanged && transform.position.y>5f)
 		{
 			GetComponent<CapsuleCollider>().center = new Vector3(0f,-6f,0f);
+		}
+		else if (!PlayerController.cameraChanged && transform.position.y>5f)
+		{
+			GetComponent<CapsuleCollider>().center = new Vector3(0f,0f,0f);
 		}
 	}
 

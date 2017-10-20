@@ -73,8 +73,10 @@ public class TopDownMovement : MonoBehaviour {
 		verticalInput = Input.GetAxis("Vertical");
 		Vector3 inputMovement = new Vector3(horizontalInput, 0, verticalInput);
 		var velocity = GetVelocity(inputMovement);
+		CheckGroundStatus();
 		if (!onGround)
 			velocity.y = velocity.y - 6f;
+
 		rb.velocity = velocity;
 	}
 	Vector3 GetVelocity(Vector3 relMove)
@@ -104,6 +106,7 @@ public class TopDownMovement : MonoBehaviour {
 			dashTimer = 0f;
 			onePress = false;
 		}
+
 		// sino.. retorno la velocidad normal del player
 		return relVel = relMove * movementSpeed;
 	}
@@ -133,9 +136,13 @@ public class TopDownMovement : MonoBehaviour {
 		if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
 		{
 			if (hitInfo.distance < 0.1f)
+			{
 				onGround = true;
+			}
 			else
+			{
 				onGround = false;
+			}
 		}
 	}
 }

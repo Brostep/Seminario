@@ -107,7 +107,11 @@ public class PlayerController : MonoBehaviour
 			if (enemiesHited.Length > 0)
 			{
 				foreach (var enemy in enemiesHited)
-					enemy.GetComponent<Enemy>().life-=lightAttackDamage;
+				{
+					var currEnemy = enemy.GetComponent<Enemy>();
+					if (currEnemy.transform.position.y < 3f)
+						currEnemy.life -= lightAttackDamage;
+				}
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
@@ -118,7 +122,12 @@ public class PlayerController : MonoBehaviour
 			if (enemiesHited.Length > 0)
 			{
 				foreach (var enemy in enemiesHited)
-					enemy.GetComponent<Enemy>().life -= heavyAttackDamage;
+				{
+					var currEnemy = enemy.GetComponent<Enemy>();
+					if (currEnemy.transform.position.y < 3f)
+						currEnemy.life -= heavyAttackDamage;
+				}
+				
 			}
 		}
 	}

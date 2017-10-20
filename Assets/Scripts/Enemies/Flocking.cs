@@ -10,13 +10,13 @@ public class Flocking : Steering
 	public float separationMult = 1f;
 
 	public bool drawFlockingGizmos = false;
-
+	
 	Vector3 _alignment, _cohesion, _separation;
 
 	void FixedUpdate()
 	{
 		ResetForces();
-
+		
 		var hits = Physics.OverlapSphere(transform.position, neighborhoodRadius);
 
 		var sumV = Vector3.zero;            //Suma de velocidades
@@ -28,7 +28,7 @@ public class Flocking : Steering
 		{
 			if (hit.gameObject == gameObject)
 				continue;
-			if (hit.gameObject.layer == LayerMask.GetMask("Obstacles"))
+			if (hit.gameObject.layer == obstacleLayer)
 			{
 				var distance = hit.transform.position - transform.position;
 				var distanceMag = distance.magnitude;

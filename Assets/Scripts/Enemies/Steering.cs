@@ -28,6 +28,10 @@ public class Steering : MonoBehaviour, ISteerable
 	Vector3 _wander;
 	float _nextWander;
 
+	public LayerMask obstacle;
+	[HideInInspector]
+	public int obstacleLayer;
+
 	int nHits;
 
 	public Vector3 position { get { return transform.position; } }
@@ -38,6 +42,7 @@ public class Steering : MonoBehaviour, ISteerable
 	virtual protected void Start()
 	{
 		target = FindObjectOfType<PlayerController>().gameObject.transform;
+		obstacleLayer = Utility.LayerMaskToInt(obstacle);
 	}
 
 	protected Vector3 Seek(Vector3 targetPosition)

@@ -94,19 +94,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  velocityLimit: 4
-  forceLimit: 20
-  arrivalRadius: 5
+  velocityLimit: 5
+  forceLimit: 15
+  arrivalRadius: 3
   pursuitPeriod: 2
   wanderDistanceAhead: 0
   wanderRandomRadius: 5
   wanderPeriod: 0
   wanderRandomStrength: 30
-  obstacleRadius: 20
+  obstacleRadius: 8
+  obstacle:
+    serializedVersion: 2
+    m_Bits: 4096
+  obstacleLayer: 0
   neighborhoodRadius: 5
   separationRadius: 1.2
-  alignmentMult: 0
-  cohesionMult: 0.2
+  alignmentMult: 0.2
+  cohesionMult: 0.5
   separationMult: 1
   drawFlockingGizmos: 0
 --- !u!114 &114458560375841252
@@ -120,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540d3271a258b0848b09568f7a8ee24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 3
+  life: 5
 --- !u!136 &136884388005723264
 CapsuleCollider:
   m_ObjectHideFlags: 1
