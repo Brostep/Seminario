@@ -113,15 +113,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  velocityLimit: 5
-  forceLimit: 10
+  velocityLimit: 7
+  forceLimit: 15
   arrivalRadius: 5
   pursuitPeriod: 2
   wanderDistanceAhead: 5
   wanderRandomRadius: 5
   wanderPeriod: 0
   wanderRandomStrength: 5
-  obstacleRadius: 5
+  obstacleRadius: 8
   obstacle:
     serializedVersion: 2
     m_Bits: 4096
