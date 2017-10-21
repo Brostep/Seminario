@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour {
 
 		if (PlayerController.cameraChanged && transform.position.y>5f)
 		{
-			GetComponent<CapsuleCollider>().center = new Vector3(0f,-6f,0f);
+			GetComponent<CapsuleCollider>().center = new Vector3(0f,-4.5f,0f);
 		}
 		else if (!PlayerController.cameraChanged && transform.position.y>5f)
 		{
