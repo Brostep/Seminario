@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     private static EnemySpawner _instance;
     public static EnemySpawner Instance { get { return _instance; } }
     public List<GameObject> spawners = new List<GameObject>();
@@ -12,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public int totalEnemies;
     public int enemiesSpawned;
     public GameObject door;
+	public bool allSpawnerDeads;
     public int enemiesAlive;
     public Enemy enemyPrefab;
     private Pool<Enemy> enemyPool;
@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        enemyPool = new Pool<Enemy>(totalEnemies / 2, EnemyFactory, Enemy.InitializeEnemy, Enemy.DisposeEnemy, true);
+        enemyPool = new Pool<Enemy>(totalEnemies, EnemyFactory, Worm.InitializeEnemy, Worm.DisposeEnemy, true);
     }
 
     void Start()
@@ -53,12 +53,12 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-		if (wave == waves && enemiesAlive == 0 && door.activeSelf)
+		if (allSpawnerDeads && enemiesAlive == 0 && door.activeSelf)
         {
             door.SetActive(false);
         }
 
-        if (enemiesAlive == 0 && totalEnemies > 0 && wave < waves)
+        if (!allSpawnerDeads&&enemiesAlive == 0 && totalEnemies > 0 && wave < waves)
         {
             enemiesSpawned = 0;
 			wave++;

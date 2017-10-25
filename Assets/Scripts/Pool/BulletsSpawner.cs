@@ -28,7 +28,7 @@ public class BulletsSpawner : MonoBehaviour
 	}
 	void Update()
 	{
-		if (!PlayerController.cameraChanged)
+		if (!PlayerController.inTopDown)
 			RotateSpawner();
 		else
 			transform.rotation = transform.parent.rotation;

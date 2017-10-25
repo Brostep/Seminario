@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 	TopDownMovement topDownController;
 	public GameObject thirdPersonCamera;
 	public GameObject topDownCamera;
-	public static bool cameraChanged = false;
+	public static bool inTopDown = false;
 	public Transform melee;
 	public float meleeRadius;
 	public float lightAttackDamage;
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 	Animator anim;
 	bool isJumping;
 	bool onGround;
+	public bool cameraChange;
 	Vector3 velocity;
 	Rigidbody rb;
 	public Image crosshair;
@@ -44,10 +45,12 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LButton"))
 		{
-			cameraChanged = !cameraChanged;
-			ChangeMovement();
+			inTopDown = !inTopDown;
+			cameraChange = true;
 		}
 
+		if (cameraChange)
+			ChangeMovement();
 		// chekea si esta en el piso, no aplica gravedad
 		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetButton("AButton"))) && !isJumping)
 		{
@@ -63,7 +66,7 @@ public class PlayerController : MonoBehaviour
 	}
 	void ChangeMovement()
 	{
-		if (cameraChanged)
+		if (inTopDown)
 		{
 			//TOP DOWN
 			thirdPersonCamera.SetActive(false);
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			crosshair.enabled = false;
+			cameraChange = false;
 		}
 		else
 		{
@@ -83,6 +87,7 @@ public class PlayerController : MonoBehaviour
 			thirdPersonController.enabled = true;
 			thirdPersonCamera.SetActive(true);
 			crosshair.enabled = true;
+			cameraChange = false;
 		}
 	}
 
@@ -101,7 +106,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.E)||Input.GetButton("XButton"))
 		{
-			if(!cameraChanged)
+			if(!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z,thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)
@@ -116,7 +121,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
 		{
-			if (!cameraChanged)
+			if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)

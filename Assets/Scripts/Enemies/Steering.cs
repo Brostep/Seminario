@@ -7,7 +7,6 @@ using System;
 public class Steering : MonoBehaviour, ISteerable
 {
 	public Transform target;
-
 	public float velocityLimit = 5f;
 	public float forceLimit = 10f;
 
@@ -19,7 +18,9 @@ public class Steering : MonoBehaviour, ISteerable
 	public float wanderPeriod;
 	public float wanderRandomStrength = 5f;
 
-	public float obstacleRadius = 5f;
+	public float columnRadius = 5f;
+	public float wallRadius = 5f;
+	public bool wanderFly;
 	//ALUM: Configurar distancia minima de containment y avoidance, y lookahead de containment
 
 	Vector3 _velocity;
@@ -28,10 +29,13 @@ public class Steering : MonoBehaviour, ISteerable
 	Vector3 _wander;
 	float _nextWander;
 
-	public LayerMask obstacle;
+	public LayerMask wall;
+	public LayerMask column;
 	[HideInInspector]
-	public int obstacleLayer;
-
+	public int wallLayer;
+	[HideInInspector]
+	public int columnLayer;
+	//public GameObject test;
 	int nHits;
 
 	public Vector3 position { get { return transform.position; } }
@@ -42,7 +46,8 @@ public class Steering : MonoBehaviour, ISteerable
 	virtual protected void Start()
 	{
 		target = FindObjectOfType<PlayerController>().gameObject.transform;
-		obstacleLayer = Utility.LayerMaskToInt(obstacle);
+		wallLayer = Utility.LayerMaskToInt(wall);
+		columnLayer = Utility.LayerMaskToInt(column);
 	}
 
 	protected Vector3 Seek(Vector3 targetPosition)
@@ -95,7 +100,7 @@ public class Steering : MonoBehaviour, ISteerable
 		if (Time.time > _nextWander)
 		{
 			_nextWander = Time.time + wanderPeriod;
-			_wander = Utility.RandomDirection() * wanderRandomStrength;
+			_wander = Utility.RandomDirection()*wanderRandomStrength;
 		}
 		return Seek(_wander);
 	}
@@ -140,13 +145,12 @@ public class Steering : MonoBehaviour, ISteerable
 		return Flee(targetPosition);
 	}
 
-	protected Vector3 Avoidance(Vector3 distance)
-	{	
-		var adjustedDistane = distance.normalized;
-		var difference = obstacleRadius - distance.magnitude;
-		adjustedDistane = adjustedDistane * difference;
-
-		return _velocity - adjustedDistane;
+	protected Vector3 Avoidance(Vector3 distance, float obstacleRadius)
+	{
+		var adjustedDistance = distance.normalized;
+		var difference = obstacleRadius - distance.magnitude + 1;
+		adjustedDistance = adjustedDistance * difference;
+		return _velocity - adjustedDistance;
 	}
 	//ALUM: Falta Containment/Avoidance
 
@@ -167,7 +171,8 @@ public class Steering : MonoBehaviour, ISteerable
 	{
 		//Euler integration
 		var dt = Time.fixedDeltaTime;
-		_steerForce.y = 0f;
+		if (!wanderFly)
+			_steerForce.y = 0f;
 		_steerForce = Utility.Truncate(_steerForce, forceLimit);
 		_velocity = Utility.Truncate(_velocity + _steerForce * dt, maxVelocity);
 		transform.position += _velocity * dt;

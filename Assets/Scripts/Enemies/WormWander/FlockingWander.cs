@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Flocking : Steering
+public class FlockingWander : Steering
 {
 	public float neighborhoodRadius = 10f;
 	public float separationRadius = 2f;
@@ -28,18 +28,18 @@ public class Flocking : Steering
 		{
 			if (hit.gameObject == gameObject)
 				continue;
-
 			if (hit.gameObject.layer == columnLayer || hit.gameObject.layer == wallLayer)
 			{
 				var distance = hit.transform.position - transform.position;
 				var distanceMag = distance.magnitude;
 				if (distanceMag < columnRadius)
-					AddForce(Avoidance(distance, columnRadius));
+					AddForce(Avoidance(distance,columnRadius));
 				else if (distanceMag < wallRadius)
 					AddForce(Avoidance(distance, wallRadius));
 			}
 			else
 			{
+				
 				var other = hit.GetComponent<Steering>();
 				if (other == null)
 					continue;
@@ -67,10 +67,7 @@ public class Flocking : Steering
 			AddForce(_cohesion * cohesionMult);
 			AddForce(_separation * separationMult);
 		}
-
-		//Seek Player
-		AddForce(Seek(target.position));
-
+		AddForce(WanderWithStateTimed(wanderDistanceAhead, wanderRandomRadius, wanderRandomStrength));
 		ApplyForces();
 
 	}
