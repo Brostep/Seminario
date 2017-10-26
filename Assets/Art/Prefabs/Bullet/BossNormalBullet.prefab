@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 135195178205987782}
   - component: {fileID: 23926417559152542}
   - component: {fileID: 114249201572068170}
-  m_Layer: 9
-  m_Name: HellBullet
+  m_Layer: 14
+  m_Name: BossNormalBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e21f1fd6df94e47b283a6dbce78915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
-  lifeTime: 5
+  movementSpeed: 12
+  lifeTime: 4
 --- !u!135 &135195178205987782
 SphereCollider:
   m_ObjectHideFlags: 1

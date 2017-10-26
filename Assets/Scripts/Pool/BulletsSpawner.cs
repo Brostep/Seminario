@@ -19,12 +19,10 @@ public class BulletsSpawner : MonoBehaviour
 	void Awake()
 	{
 		_instance = this;
-		_bulletPool = new Pool<Bullet>(15, BulletFactory, Bullet.InitializeBullet, Bullet.DisposeBullet, true);
+		_bulletPool = new Pool<Bullet>(20, BulletFactory, bulletPrefab.InitializePool, bulletPrefab.DisposePool, true);
 		Vector3 rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;
 		rotX = rot.x;
-
-		//	StartCoroutine(Shoot());
 	}
 	void Update()
 	{
@@ -53,14 +51,6 @@ public class BulletsSpawner : MonoBehaviour
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
 	}
-//	IEnumerator Shoot()
-//	{
-//		while (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("RButton"))
-//		{
-//			_bulletPool.GetObjectFromPool();
-//			yield return new WaitForSeconds(cooldown / 10f);
-//		}
-//	}
 	private Bullet BulletFactory()
 	{
 		return Instantiate<Bullet>(bulletPrefab);

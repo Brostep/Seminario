@@ -1,19 +1,23 @@
 using UnityEngine;
 
-public class HellBullet : MonoBehaviour
+public class HellBullet : Bullet
 {
     public float movementSpeed;
 
     public float lifeTime;
 	float _timeAlive;
 
-	public void Initialize(Vector3 position,Quaternion rotation)
+	public override void Initialize()
     {
 		_timeAlive = 0f;
+
+		setTransform(HellBulletSpawner.Instance.spawnPosition, HellBulletSpawner.Instance.spawnRotation);
+	}
+	public void setTransform(Vector3 position, Quaternion rotation)
+	{
 		transform.position = position;
 		transform.rotation = rotation;
-    }
-
+	}
     void Update()
     {
 		_timeAlive += Time.deltaTime;
@@ -30,15 +34,4 @@ public class HellBullet : MonoBehaviour
 			HellBulletSpawner.Instance.ReturnBulletToPool(this);
 		}
     }
-
-	public static void InitializeBullet(HellBullet bulletObj)
-	{
-		bulletObj.gameObject.SetActive(true);
-		bulletObj.Initialize(HellBulletSpawner.Instance.spawnPosition, HellBulletSpawner.Instance.spawnRotation);
-	}
-
-	public static void DisposeBullet(HellBullet bulletObj)
-	{
-		bulletObj.gameObject.SetActive(false);
-	}
 }

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 54037310593962960}
   - component: {fileID: 136914146174597108}
   - component: {fileID: 114661625236070582}
+  - component: {fileID: 114648706075325420}
   m_Layer: 10
   m_Name: FlyWorm
   m_TagString: Untagged
@@ -95,8 +96,20 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 10
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &114648706075325420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353750987372782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b8b3c8d306d934aae58ac2cb4e0361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 1.5
 --- !u!114 &114661625236070582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,7 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  test: {fileID: 0}
   velocityLimit: 5
   forceLimit: 10
   arrivalRadius: 5

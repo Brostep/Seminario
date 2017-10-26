@@ -13,8 +13,10 @@ public class EnemySpawner : MonoBehaviour
     public GameObject door;
 	public bool allSpawnerDeads;
     public int enemiesAlive;
-    public Enemy enemyPrefab;
-    private Pool<Enemy> enemyPool;
+    public Worm wormPrefab;
+    public FlyWorm flyWormPrefab;
+    private Pool<Worm> wormPool;
+    private Pool<FlyWorm> flyWormPool;
 
     int enemiesPerWave;
     int wave = 0;
@@ -25,7 +27,8 @@ public class EnemySpawner : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        enemyPool = new Pool<Enemy>(totalEnemies, EnemyFactory, Worm.InitializeEnemy, Worm.DisposeEnemy, true);
+        wormPool = new Pool<Worm>(totalEnemies, WormFactory, wormPrefab.InitializePool, wormPrefab.DisposePool, true);
+		flyWormPool = new Pool<FlyWorm>(totalEnemies/3, FlyWormFactory, flyWormPrefab.InitializePool, flyWormPrefab.DisposePool, true);
     }
 
     void Start()
@@ -78,21 +81,32 @@ public class EnemySpawner : MonoBehaviour
                 Utility.KnuthShuffle<GameObject>(spawners);
                 enemiesSpawned = 0;
             }
+			if (spawners[enemiesSpawned].transform.position.y > 5)
+				flyWormPool.GetPoolObject();
+			else
+				wormPool.GetObjectFromPool();
 
-            enemyPool.GetObjectFromPool();
             enemiesAlive++;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 
-    private Enemy EnemyFactory()
+    private Worm WormFactory()
     {
-        return Instantiate<Enemy>(enemyPrefab);
+        return Instantiate<Worm>(wormPrefab);
+    }
+    private FlyWorm FlyWormFactory()
+    {
+        return Instantiate<FlyWorm>(flyWormPrefab);
     }
 
-    public void ReturnBulletToPool(Enemy enemy)
+    public void ReturnWormToPool(Worm worm)
     {
-        enemyPool.DisablePoolObject(enemy);
+        wormPool.DisablePoolObject(worm);
+    }
+    public void ReturnFlyWormToPool(FlyWorm flyWorm)
+    {
+        flyWormPool.DisablePoolObject(flyWorm);
     }
 }

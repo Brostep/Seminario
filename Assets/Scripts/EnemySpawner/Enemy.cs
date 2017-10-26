@@ -1,10 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public abstract class Enemy : MonoBehaviour, IPooleable<Enemy> {
 
 	public float life;
 
-	virtual public void Initialize() { }
+	public void DisposePool(Enemy enemyObj)
+	{
+		enemyObj.gameObject.SetActive(false);
+	}
+
+	public virtual void Initialize() { }
+
+	public void InitializePool(Enemy enemyObj)
+	{
+		enemyObj.gameObject.SetActive(true);
+		enemyObj.Initialize();
+	}
 }

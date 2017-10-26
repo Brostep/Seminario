@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WormWhander : Enemy {
+public class WormWander : Enemy {
 
 	GameManager gm;
 	private void Start()
@@ -12,14 +12,14 @@ public class WormWhander : Enemy {
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
-			life -= c.gameObject.GetComponent<Bullet>().damage;
+			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
 	}
 	private void Update()
 	{
 		if (life <= 0)
 		{
 			gm.enemiesDead++;
-			Destroy(this.gameObject);
+			this.gameObject.SetActive(false);
 		}
 	}
 }

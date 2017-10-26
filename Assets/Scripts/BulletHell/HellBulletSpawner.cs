@@ -31,7 +31,7 @@ public class HellBulletSpawner : MonoBehaviour
 	void Start()
     {
 		_instance = this;
-		_hellBulletPool = new Pool<HellBullet>(80, BulletFactory, HellBullet.InitializeBullet, HellBullet.DisposeBullet, true);
+		_hellBulletPool = new Pool<HellBullet>(80, BulletFactory, hellBulletPrefab.InitializePool, hellBulletPrefab.DisposePool, true);
 		lastIndex = -1;
     }
 

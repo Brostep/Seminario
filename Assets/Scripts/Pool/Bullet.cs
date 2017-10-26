@@ -1,67 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour, IPooleable<Bullet>
 {
-	public float speed;
-	public float lifeSpan;
-	public float damage;
-	float _timeAlive;
-	private bool _alive;
-	Vector3 dir;
-	Vector3 enemyPos;
-	ThirdPersonCameraController tPCC;
-	bool lockedOnTarget;
-    void Update()
+	public void DisposePool(Bullet obj)
 	{
-		_timeAlive += Time.deltaTime;
-		if (_timeAlive >= lifeSpan)
-			BulletsSpawner.Instance.ReturnBulletToPool(this);
-		else
-		{
-			if (lockedOnTarget)
-			{
-				transform.position +=  dir * speed * Time.deltaTime;
-			}
-			else
-				transform.position += transform.forward * speed * Time.deltaTime;
-		}
-
-	}
-	void OnCollisionEnter(Collision c)
-	{
-		BulletsSpawner.Instance.ReturnBulletToPool(this);
-	}
-	public void Initialize()
-	{
-		_timeAlive = 0;
-		dir = new Vector3(0f, 0f, 0f);
-		enemyPos = new Vector3(0f, 0f, 0f);
-		lockedOnTarget = false;
-
-		//busca el bullet spawner y copia su direccion y rotacion y spawnea ahi.
-		var bulletSpawner = FindObjectOfType<BulletsSpawner>().gameObject;
-		tPCC = FindObjectOfType<ThirdPersonCameraController>();
-		if (tPCC.isTargeting)
-		{
-			enemyPos = tPCC.nearestEnemy.transform.position;
-		
-			lockedOnTarget = true;
-		}
-		transform.position = bulletSpawner.transform.position;
-        transform.rotation = bulletSpawner.transform.rotation;
-		dir = (enemyPos - transform.position).normalized;
-
+		obj.gameObject.SetActive(false);
 	}
 
-	public static void InitializeBullet(Bullet bulletObj)
+	public void InitializePool(Bullet obj)
 	{
-		bulletObj.gameObject.SetActive(true);
-		bulletObj.Initialize();
+		obj.gameObject.SetActive(true);
+		obj.Initialize();
 	}
-
-	public static void DisposeBullet(Bullet bulletObj)
-	{
-		bulletObj.gameObject.SetActive(false);
-	}
+	public virtual void Initialize() { }
 }

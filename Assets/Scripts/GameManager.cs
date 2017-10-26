@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+
 	public GameObject activateEnemySpawners;
 	public GameObject spawnerObj;
 	public int cantSpawners;
 	PlayerController player;
 	public List<GameObject> spawners;
-	public List<WormWhander> enemiesOnStart;
+	public List<WormWander> enemiesOnStart;
+
 	[HideInInspector]
 	public EnemySpawner enemySpawners;
 	[HideInInspector]
 	public int enemiesDead;
-	bool activated;
+	[HideInInspector]
 	public int spawnersAlive;
+
+	bool activated;
 	private void Start()
 	{
 		player = FindObjectOfType<PlayerController>();
