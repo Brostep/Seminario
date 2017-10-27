@@ -94,6 +94,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 50
   spawners: []
+  particlesWhileInGround: {fileID: 1310960302838532, guid: a41e21d2747353e45ab5f16e70f118c2,
+    type: 2}
+  particlesSpeed: 10
+  LayerSpawner:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!136 &136442115614705632
 CapsuleCollider:
   m_ObjectHideFlags: 1

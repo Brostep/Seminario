@@ -2,13 +2,10 @@ using UnityEngine;
 
 public class HellBullet : Bullet
 {
-    public float movementSpeed;
-
-    public float lifeTime;
 	float _timeAlive;
 
 	public override void Initialize()
-    {
+	{
 		_timeAlive = 0f;
 
 		setTransform(HellBulletSpawner.Instance.spawnPosition, HellBulletSpawner.Instance.spawnRotation);
@@ -18,20 +15,25 @@ public class HellBullet : Bullet
 		transform.position = position;
 		transform.rotation = rotation;
 	}
-    void Update()
-    {
+	void Update()
+	{
 		_timeAlive += Time.deltaTime;
-		if (_timeAlive >= lifeTime)
+
+	}
+
+	private void FixedUpdate()
+	{
+		if (_timeAlive >= lifeSpan)
 			HellBulletSpawner.Instance.ReturnBulletToPool(this);
 		else
-			transform.position += transform.forward * movementSpeed * Time.deltaTime;
-    }
+			transform.position += transform.forward * speed * Time.deltaTime;
+	}
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == 9)
-        {
+	void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.layer == 9)
+		{
 			HellBulletSpawner.Instance.ReturnBulletToPool(this);
 		}
-    }
+	}
 }

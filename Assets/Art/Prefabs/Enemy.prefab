@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33932183806487160}
   - component: {fileID: 136884388005723264}
   - component: {fileID: 23427025825816582}
-  - component: {fileID: 114458560375841252}
   - component: {fileID: 114249648491719524}
   m_Layer: 10
   m_Name: Enemy
@@ -102,29 +101,23 @@ MonoBehaviour:
   wanderRandomRadius: 5
   wanderPeriod: 0
   wanderRandomStrength: 30
-  obstacleRadius: 8
-  obstacle:
+  columnRadius: 5
+  wallRadius: 5
+  wanderFly: 0
+  wall:
     serializedVersion: 2
-    m_Bits: 4096
-  obstacleLayer: 0
+    m_Bits: 0
+  column:
+    serializedVersion: 2
+    m_Bits: 0
+  wallLayer: 0
+  columnLayer: 0
   neighborhoodRadius: 5
   separationRadius: 1.2
   alignmentMult: 0.2
   cohesionMult: 0.5
   separationMult: 1
   drawFlockingGizmos: 0
---- !u!114 &114458560375841252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1671987016145126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540d3271a258b0848b09568f7a8ee24d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 5
 --- !u!136 &136884388005723264
 CapsuleCollider:
   m_ObjectHideFlags: 1

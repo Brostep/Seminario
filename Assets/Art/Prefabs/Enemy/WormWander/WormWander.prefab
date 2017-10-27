@@ -151,6 +151,7 @@ MonoBehaviour:
   wanderRandomStrength: 8
   columnRadius: 8
   wallRadius: 15
+  wanderFly: 0
   wall:
     serializedVersion: 2
     m_Bits: 8192
