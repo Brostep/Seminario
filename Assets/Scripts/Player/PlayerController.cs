@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	Vector3 velocity;
 	Rigidbody rb;
 	public Image crosshair;
+	public float movementSpeed;
 
 	void Start()
 	{
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
+		movementSpeed = thirdPersonController.movementSpeed;
 	}
 	void Update()
 	{

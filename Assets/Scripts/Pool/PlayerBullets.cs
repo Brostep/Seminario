@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class PlayerBullets : Bullet {
 
-	public float speed;
-	public float lifeSpan;
-	public float damage;
 	float _timeAlive;
-	private bool _alive;
 	Vector3 dir;
 	Vector3 enemyPos;
 	ThirdPersonCameraController tPCC;

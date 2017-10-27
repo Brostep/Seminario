@@ -5,21 +5,18 @@ using UnityEngine;
 
 public class Worm : Enemy{
 
-	float _life;
 	EnemySpawner enemySpawner;
-	private void Start()
-	{
-		enemySpawner = FindObjectOfType<EnemySpawner>();
-		_life = life;
-	}
+	GameManager gameManager;
+
 	public override void Initialize()
 	{
-		var spawners = FindObjectOfType<EnemySpawner>().spawners;
-		var index = FindObjectOfType<EnemySpawner>().enemiesSpawned;
+		enemySpawner = FindObjectOfType<EnemySpawner>();
+		gameManager = FindObjectOfType<GameManager>();
+		var spawners = enemySpawner.spawners;
+		var index = enemySpawner.enemiesSpawned;
 		transform.position = spawners[index].transform.position;
-		life = 5;
+		life = gameManager.wormLife;
 	}
-
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
@@ -33,5 +30,9 @@ public class Worm : Enemy{
 			enemySpawner.enemiesAlive--;
 			EnemySpawner.Instance.ReturnWormToPool(this);
 		}
+	}
+	public Worm Factory(Worm obj)
+	{
+		return Instantiate<Worm>(obj);
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IPooleable<Enemy> {
 
 	public float life;
-
+	
 	public void DisposePool(Enemy enemyObj)
 	{
 		enemyObj.gameObject.SetActive(false);

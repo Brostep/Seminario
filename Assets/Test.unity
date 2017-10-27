@@ -172,6 +172,10 @@ MonoBehaviour:
   - {fileID: 244665537}
   - {fileID: 158987107}
   - {fileID: 1637195441}
+  wormLife: 3
+  flyWormLife: 1.5
+  FlyWormBulletPrefab: {fileID: 114521447176444710, guid: 2bb4064d4ab5e7a4d9158c4832065902,
+    type: 2}
   enemySpawners: {fileID: 0}
   enemiesDead: 0
   spawnersAlive: 0
@@ -3081,7 +3085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1487806160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3586,6 +3590,34 @@ Transform:
   - {fileID: 678922438}
   m_Father: {fileID: 1930688846}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1754231265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1754231266}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1754231266
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1754231265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.37, y: 6.9505568, z: 3.886037}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1766518423
 GameObject:

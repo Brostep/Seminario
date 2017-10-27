@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> spawners;
 	public List<WormWander> enemiesOnStart;
 
+	public float wormLife;
+	public float flyWormLife;
+
+	public Pool<FlyWormBullets> FlyWormBulletPool;
+	public FlyWormBullets FlyWormBulletPrefab;
+
 	[HideInInspector]
 	public EnemySpawner enemySpawners;
 	[HideInInspector]
@@ -19,6 +25,16 @@ public class GameManager : MonoBehaviour {
 	public int spawnersAlive;
 
 	bool activated;
+
+	private static GameManager _instance;
+	public static GameManager Instance { get { return _instance; } }
+
+	private void Awake()
+	{
+		if(_instance == null)
+			_instance = this;
+		FlyWormBulletPool = new Pool<FlyWormBullets>(30, BulletFactory, FlyWormBulletPrefab.InitializePool, FlyWormBulletPrefab.DisposePool, false);
+	}
 	private void Start()
 	{
 		player = FindObjectOfType<PlayerController>();
@@ -43,5 +59,14 @@ public class GameManager : MonoBehaviour {
 		{
 			enemySpawners.allSpawnerDeads = true;
 		}
+	}
+	private FlyWormBullets BulletFactory()
+	{
+		return Instantiate<FlyWormBullets>(FlyWormBulletPrefab);
+	}
+
+	public void ReturnBulletToPool(FlyWormBullets bullet)
+	{
+		FlyWormBulletPool.DisablePoolObject(bullet);
 	}
 }

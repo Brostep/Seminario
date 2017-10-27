@@ -18,7 +18,8 @@ public class BulletsSpawner : MonoBehaviour
 
 	void Awake()
 	{
-		_instance = this;
+		if (_instance == null)
+			_instance = this;
 		_bulletPool = new Pool<Bullet>(20, BulletFactory, bulletPrefab.InitializePool, bulletPrefab.DisposePool, true);
 		Vector3 rot = transform.localRotation.eulerAngles;
 		rotY = rot.y;

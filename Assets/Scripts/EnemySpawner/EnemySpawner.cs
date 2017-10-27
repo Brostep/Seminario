@@ -20,7 +20,6 @@ public class EnemySpawner : MonoBehaviour
 
     int enemiesPerWave;
     int wave = 0;
-	int currentWave;
 
     List<int> spawnPerVawe = new List<int>();
 
