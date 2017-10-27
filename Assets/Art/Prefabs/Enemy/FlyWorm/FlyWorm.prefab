@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 1.5
-  fireRate: 1.5
+  fireRate: 3
 --- !u!114 &114661625236070582
 MonoBehaviour:
   m_ObjectHideFlags: 1

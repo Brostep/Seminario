@@ -2519,6 +2519,7 @@ MonoBehaviour:
   heavyAttackDamage: 2.5
   cameraChange: 0
   crosshair: {fileID: 2032861850}
+  movementSpeed: 0
 --- !u!114 &1211449786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3085,7 +3086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1487806160
 MonoBehaviour:
   m_ObjectHideFlags: 0
