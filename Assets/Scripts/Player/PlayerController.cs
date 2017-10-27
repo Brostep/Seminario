@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
 			topDownCamera.SetActive(false);
 			thirdPersonController.enabled = true;
 			thirdPersonCamera.SetActive(true);
+			thirdPersonCamera.GetComponentInParent<ThirdPersonCameraController>().setCameraAtTheBack();
 			crosshair.enabled = true;
 			cameraChange = false;
 		}

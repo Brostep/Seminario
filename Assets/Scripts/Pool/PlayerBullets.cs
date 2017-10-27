@@ -15,16 +15,15 @@ public class PlayerBullets : Bullet {
 		_timeAlive += Time.deltaTime;
 		if (_timeAlive >= lifeSpan)
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
-		else
+	}
+	void FixedUpdate()
+	{
+		if (lockedOnTarget)
 		{
-			if (lockedOnTarget)
-			{
-				transform.position += dir * speed * Time.deltaTime;
-			}
-			else
-				transform.position += transform.forward * speed * Time.deltaTime;
+			transform.position += dir * speed * Time.deltaTime;
 		}
-
+		else
+			transform.position += transform.forward * speed * Time.deltaTime;
 	}
 	void OnCollisionEnter(Collision c)
 	{

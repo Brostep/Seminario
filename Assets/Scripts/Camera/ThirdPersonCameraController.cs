@@ -65,23 +65,6 @@ public class ThirdPersonCameraController : MonoBehaviour
         }
 
         LockOnEnemy();
-
-        /* deteccion por sphere collider
-		 List<GameObject> enemiesInRadius = new List<GameObject>();
-			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
-			float distanceNearestEnemy = 0f;
-			foreach (var item in hitColliders)
-			{
-				if (item.gameObject.layer == 10)
-				{
-					var distance = Vector3.Distance(transform.position, item.transform.localPosition);
-					if (distance < distanceNearestEnemy || distanceNearestEnemy == 0f)
-					{
-						distanceNearestEnemy = distance;
-						nearestEnemy = item.gameObject;
-					}
-				}
-			}*/
     }
     void LockOnEnemy()
     {
@@ -175,14 +158,18 @@ public class ThirdPersonCameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("R3"))
         {
-            transform.rotation = CameraFollowObj.transform.rotation;
-            Vector3 rot = transform.rotation.eulerAngles;
-            rotX = rot.x;
-            rotY = rot.y;
+			setCameraAtTheBack();
         }
 
         auxRotation = transform.rotation;
     }
+	public void setCameraAtTheBack()
+	{
+		transform.rotation = CameraFollowObj.transform.rotation;
+		Vector3 rot = transform.rotation.eulerAngles;
+		rotX = rot.x;
+		rotY = rot.y;
+	} 
     void FixedUpdate()
     {
         CameraUpdater();

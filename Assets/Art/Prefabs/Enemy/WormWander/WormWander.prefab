@@ -98,7 +98,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!95 &95954092031340460
 Animator:
@@ -160,12 +160,18 @@ MonoBehaviour:
     m_Bits: 4096
   wallLayer: 0
   columnLayer: 0
-  neighborhoodRadius: 10
+  gm: {fileID: 0}
+  neighborhoodRadius: 3
   separationRadius: 3
-  alignmentMult: 0
+  seekRadius: 7
+  alignmentMult: 0.1
   cohesionMult: 0.2
   separationMult: 1
   drawFlockingGizmos: 0
+  seeking: 0
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!136 &136218323464494412
 CapsuleCollider:
   m_ObjectHideFlags: 1

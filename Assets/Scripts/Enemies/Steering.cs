@@ -35,6 +35,7 @@ public class Steering : MonoBehaviour, ISteerable
 	public int wallLayer;
 	[HideInInspector]
 	public int columnLayer;
+	public GameManager gm;
 	//public GameObject test;
 	int nHits;
 
@@ -46,6 +47,7 @@ public class Steering : MonoBehaviour, ISteerable
 	virtual protected void Start()
 	{
 		target = FindObjectOfType<PlayerController>().gameObject.transform;
+		gm = FindObjectOfType<GameManager>();
 		wallLayer = Utility.LayerMaskToInt(wall);
 		columnLayer = Utility.LayerMaskToInt(column);
 	}

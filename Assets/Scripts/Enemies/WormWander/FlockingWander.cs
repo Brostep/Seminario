@@ -5,12 +5,15 @@ public class FlockingWander : Steering
 {
 	public float neighborhoodRadius = 10f;
 	public float separationRadius = 2f;
+	public float seekRadius = 2f;
 	public float alignmentMult = 1f;
 	public float cohesionMult = 1f;
 	public float separationMult = 1f;
 
 	public bool drawFlockingGizmos = false;
-	
+	[HideInInspector]
+	public bool seeking;
+	public LayerMask playerMask;
 	Vector3 _alignment, _cohesion, _separation;
 
 	void FixedUpdate()
@@ -67,7 +70,29 @@ public class FlockingWander : Steering
 			AddForce(_cohesion * cohesionMult);
 			AddForce(_separation * separationMult);
 		}
-		AddForce(WanderWithStateTimed(wanderDistanceAhead, wanderRandomRadius, wanderRandomStrength));
+
+		if (!seeking)
+		{
+			var hitSeekRadius = Physics.OverlapSphere(transform.position, seekRadius);
+			for (int i = 0; i < hitSeekRadius.Length; i++)
+			{
+				if (hitSeekRadius[i].gameObject.layer == Utility.LayerMaskToInt(playerMask) || gameObject.GetComponent<WormWander>().life < gm.wormLife)
+				{
+					seeking = true;
+					velocityLimit += 5f;
+					forceLimit += 5f;
+					AddForce(Seek(target.transform.position));
+					break;
+				}
+			}
+
+			AddForce(WanderWithStateTimed(wanderDistanceAhead, wanderRandomRadius, wanderRandomStrength));
+		}
+		else
+			AddForce(Seek(target.transform.position));
+
+
+		
 		ApplyForces();
 
 	}
