@@ -179,6 +179,7 @@ MonoBehaviour:
   enemySpawners: {fileID: 0}
   enemiesDead: 0
   spawnersAlive: 0
+  spawn: 1
 --- !u!4 &65861570
 Transform:
   m_ObjectHideFlags: 0
@@ -201,6 +202,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 65974160}
+  - component: {fileID: 65974161}
   m_Layer: 8
   m_Name: CameraFollow
   m_TagString: Player
@@ -222,6 +224,17 @@ Transform:
   m_Father: {fileID: 1211449784}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &65974161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 65974159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d3481d480170048946e76daaf24733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &94361060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,6 +2561,7 @@ MonoBehaviour:
   cameraChange: 0
   crosshair: {fileID: 2032861850}
   movementSpeed: 0
+  _life: 20
 --- !u!114 &1211449786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2978,11 +2992,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114339567605826010, guid: 7080391e9b44a7b4b9de20643e39786d,
-        type: 2}
-      propertyPath: dontClipWith.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4024903704941996, guid: 7080391e9b44a7b4b9de20643e39786d, type: 2}
       propertyPath: m_LocalPosition.x
       value: 3.51
@@ -3015,21 +3024,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 23786609859863952, guid: 7080391e9b44a7b4b9de20643e39786d,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b8ce2d4e75d5db64396bd7126da105fb, type: 2}
     - target: {fileID: 114246360250028812, guid: 7080391e9b44a7b4b9de20643e39786d,
         type: 2}
       propertyPath: CameraFollowObj
       value: 
       objectReference: {fileID: 65974159}
-    - target: {fileID: 114339567605826010, guid: 7080391e9b44a7b4b9de20643e39786d,
+    - target: {fileID: 23786609859863952, guid: 7080391e9b44a7b4b9de20643e39786d,
         type: 2}
-      propertyPath: dontClipWith.Array.data[3].m_Bits
-      value: 16384
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b8ce2d4e75d5db64396bd7126da105fb, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7080391e9b44a7b4b9de20643e39786d, type: 2}
   m_IsPrefabParent: 0

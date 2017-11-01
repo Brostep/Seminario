@@ -6,10 +6,13 @@ public class FlyWormBullets : Bullet {
 
 	float _timeAlive;
 	Vector3 dir;
+	Vector3 distance;
 	Vector3 targetPosition;
 	GameObject player;
 	ThirdPersonCameraController tPCC;
 	public bool placed;
+	public float playerRadiusDetection;
+	bool stopChasing;
 
 	public void setTransform(Vector3 position, Quaternion rotation)
 	{
@@ -17,8 +20,9 @@ public class FlyWormBullets : Bullet {
 		{
 			transform.position = position;
 			transform.rotation = rotation;
-			var deltaPos = player.transform.position - transform.position;
-			targetPosition = player.transform.position + player.GetComponent<Rigidbody>().velocity * deltaPos.magnitude / player.GetComponent<PlayerController>().movementSpeed;
+			targetPosition = player.transform.position;
+			//var deltaPos = player.transform.position - transform.position;
+
 		}
 	}
 
@@ -37,14 +41,29 @@ public class FlyWormBullets : Bullet {
 			if (_timeAlive >= lifeSpan)
 				GameManager.Instance.ReturnBulletToPool(this);
 			else
-			{
-				dir = (targetPosition - transform.position).normalized;
+			{		
+				if (distance.magnitude < playerRadiusDetection&&!stopChasing)
+				{
+					targetPosition = player.transform.position + player.GetComponent<Rigidbody>().velocity * distance.magnitude / player.GetComponent<PlayerController>().movementSpeed;
+					stopChasing = true;
+				}
+				else if (!stopChasing)
+				{
+					targetPosition = player.transform.position;
+				}
+				distance = targetPosition - transform.position;
+				dir = distance.normalized;
 				transform.position += dir * speed * Time.deltaTime;
 			}
 		}
 	}
 	void OnCollisionEnter(Collision c)
 	{
+		if (c.gameObject.layer == 8)
+		{
+			c.gameObject.GetComponent<PlayerController>().life -= damage;
+		}
+
 		GameManager.Instance.ReturnBulletToPool(this);
 	}
 	public override void Initialize()

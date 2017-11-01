@@ -21,10 +21,19 @@ public class PlayerController : MonoBehaviour
 	Vector3 velocity;
 	Rigidbody rb;
 	public Image crosshair;
+	[HideInInspector]
 	public float movementSpeed;
+	[SerializeField]
+	private float _life;
+	public float life
+	{
+		set { _life = value; }
+		get { return _life; }
+	}
 
 	void Start()
 	{
+		life = _life;
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		topDownController = GetComponent<TopDownMovement>();
 		anim = GetComponent<Animator>();
@@ -35,6 +44,8 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		CheckGroundStatus();
+
+		print(_life);
 
 		if (onGround)
 		{

@@ -108,10 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a891b2a51a4dc4499ceabc536c5b79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  lifeSpan: 3
+  speed: 6
+  lifeSpan: 15
   damage: 1
   placed: 0
+  playerRadiusDetection: 2
 --- !u!135 &135152087269672284
 SphereCollider:
   m_ObjectHideFlags: 1

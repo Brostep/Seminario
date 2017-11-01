@@ -1,9 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public static class Utility
+class Utility
 {
+	public static System.Random random = new System.Random();
 	//Trunca un vector a un largo máximo
 	public static Vector3 Truncate(Vector3 vec, float maxMag)
 	{
@@ -17,7 +18,7 @@ public static class Utility
 	{
 		for (int i = 0; i < array.Count - 1; i++)
 		{
-			var j = Random.Range(i, array.Count);
+			var j = random.Next(i, array.Count);
 			if (i != j)
 			{
 				var temp = array[j];
@@ -26,7 +27,6 @@ public static class Utility
 			}
 		}
 	}
-
 	//Dibuja una flecha gizmo con dirección (en vez de solo una linea)
 	public static void GizmoArrow(Vector3 from, Vector3 to, float scale = 0.25f, float gap = 0.15f)
 	{
@@ -52,8 +52,8 @@ public static class Utility
 	//http://mathworld.wolfram.com/SpherePointPicking.html
 	public static Vector3 RandomDirection()
 	{
-		var theta = Random.Range(0f, 2f * Mathf.PI);
-		var phi = Random.Range(0f, Mathf.PI);
+		var theta = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
+		var phi = UnityEngine.Random.Range(0f, Mathf.PI);
 		var u = Mathf.Cos(phi);
 		return new Vector3(Mathf.Sqrt(1 - u * u) * Mathf.Cos(theta), Mathf.Sqrt(1 - u * u) * Mathf.Sin(theta), u);
 	}

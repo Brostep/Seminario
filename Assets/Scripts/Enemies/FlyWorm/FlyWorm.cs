@@ -7,7 +7,7 @@ public class FlyWorm : Enemy {
 	EnemySpawner enemySpawner;
 	GameManager gm;
 	public float fireRate;
-
+	public float damage;
 	private void Start()
 	{
 		StartCoroutine(Shoot());
@@ -25,6 +25,9 @@ public class FlyWorm : Enemy {
 	{
 		if (c.gameObject.layer == 9)
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
+		//player
+		if (c.gameObject.layer == 8)
+			c.gameObject.GetComponent<PlayerController>().life -= damage;
 	}
 	void Update()
 	{
@@ -39,6 +42,7 @@ public class FlyWorm : Enemy {
 			enemySpawner.enemiesAlive--;
 			EnemySpawner.Instance.ReturnFlyWormToPool(this);
 		}
+
 	}
 
 	void MoveCollider()

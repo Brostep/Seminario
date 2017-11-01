@@ -5,6 +5,7 @@ using UnityEngine;
 public class WormWander : Enemy {
 
 	GameManager gm;
+	public float damage;
 	private void Start()
 	{
 		gm = FindObjectOfType<GameManager>();
@@ -13,6 +14,9 @@ public class WormWander : Enemy {
 	{
 		if (c.gameObject.layer == 9)
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
+		//player
+		if (c.gameObject.layer == 8)
+			c.gameObject.GetComponent<PlayerController>().life -= damage;
 	}
 	private void Update()
 	{

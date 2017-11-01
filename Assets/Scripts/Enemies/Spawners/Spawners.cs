@@ -12,8 +12,9 @@ public class Spawners : Enemy {
 	GameManager gm;
 	GameObject currentParticle;
 	Renderer render;
-	float waves = 0;
+	int waves = 1;
 	float _life;
+	int currentSpawn;
 	bool alive = true;
 	Vector3 dir;
 	Vector3 offset = new Vector3(0f, 1.8f, 0f);
@@ -29,41 +30,33 @@ public class Spawners : Enemy {
 	}
 	void Update()
 	{
-		if (life < _life - 10 && waves == 0)
+		CheckSpawnerLife();
+	}
+	void CheckSpawnerLife()
+	{
+		if (life <= (_life - (waves * 12))&&alive)
 		{
 			GetComponent<MeshRenderer>().enabled = false;
 			GetComponent<Renderer>().enabled = false;
+			GetComponent<Collider>().enabled = false;
 			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
-			dir = (spawners[0].transform.position - transform.position).normalized;
-			StartCoroutine(moveParticles(dir, 0));
+			dir = (spawners[gm.cantSpawners + gm.spawn].transform.position - transform.position).normalized;
+			StartCoroutine(moveParticles(dir));
+			currentSpawn = gm.cantSpawners + gm.spawn;
 			waves++;
-		}
-		if (life < _life - 20 && waves == 1)
-		{
-			GetComponent<MeshRenderer>().enabled = false;
-			GetComponent<Renderer>().enabled = false;
-			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
-			dir = (spawners[1].transform.position - transform.position).normalized;
-			StartCoroutine(moveParticles(dir, 1));
-			waves++;
-		}
-		if (life < _life - 30 && waves == 3)
-		{
-			GetComponent<MeshRenderer>().enabled = false;
-			GetComponent<Renderer>().enabled = false;
-			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
-			dir = (spawners[2].transform.position - transform.position).normalized;
-			StartCoroutine(moveParticles(dir, 2));
-			waves++;
+			gm.spawn++;
 		}
 		if (life <= 0 && alive)
 		{
 			alive = false;
 			gm.spawnersAlive--;
-			Destroy(gameObject);
+			if (currentParticle != null)
+				Destroy(currentParticle);
+
+			Destroy(gameObject);	
 		}
 	}
-	IEnumerator moveParticles(Vector3 dir, int index)
+	IEnumerator moveParticles(Vector3 dir)
 	{
 		while (true)
 		{
@@ -75,9 +68,10 @@ public class Spawners : Enemy {
 			else
 			{
 				Destroy(currentParticle);
-				transform.position = spawners[index].transform.position;
+				transform.position = spawners[currentSpawn].transform.position;
 				GetComponent<MeshRenderer>().enabled = true;
 				GetComponent<Renderer>().enabled = true;
+				GetComponent<Collider>().enabled = true;
 				break;
 			}
 		}

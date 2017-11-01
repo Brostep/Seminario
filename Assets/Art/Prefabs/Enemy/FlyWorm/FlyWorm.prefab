@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 1.5
   fireRate: 3
+  damage: 2
 --- !u!114 &114661625236070582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,6 +143,7 @@ MonoBehaviour:
     m_Bits: 4096
   wallLayer: 0
   columnLayer: 0
+  gm: {fileID: 0}
   neighborhoodRadius: 10
   separationRadius: 2
   alignmentMult: 1
@@ -154,7 +156,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1353750987372782}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c941f622a78cdaa4eabe22bceb622e70, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5218749
