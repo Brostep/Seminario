@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour
 	{
 		CheckGroundStatus();
 
-		print(_life);
-
 		if (onGround)
 		{
 			velocity.y = 0f;
@@ -56,11 +54,6 @@ public class PlayerController : MonoBehaviour
 		else
 			velocity.y = velocity.y - 6f;
 
-		if (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("LButton"))
-		{
-			inTopDown = !inTopDown;
-			cameraChange = true;
-		}
 
 		if (cameraChange)
 			ChangeMovement();
