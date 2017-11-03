@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "TSF/BaseOutline1"
 {
     Properties 
@@ -56,7 +54,7 @@ Shader "TSF/BaseOutline1"
                 v2f o;
 			    o.pos = v.vertex;
 			    o.pos.xyz += normalize(v.normal.xyz) *_Outline*0.01;
-			    o.pos = UnityObjectToClipPos(o.pos);
+			    o.pos = mul(UNITY_MATRIX_MVP, o.pos);
 			    return o;
             }
             
