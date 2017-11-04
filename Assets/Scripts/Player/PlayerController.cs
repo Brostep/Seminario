@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(TopDownMovement))]
 public class PlayerController : MonoBehaviour
 {
+	public Camera Cam;
 	ThirdPersonController thirdPersonController;
 	TopDownMovement topDownController;
 	public GameObject thirdPersonCamera;
@@ -30,6 +31,18 @@ public class PlayerController : MonoBehaviour
 		set { _life = value; }
 		get { return _life; }
 	}
+
+	[Header("TopDown Camera Settings")]
+	public float nearClipPlaneTD;
+	public float farClipPlaneTD;
+	[Range(1f, 179f)]
+	public float fieldOfViewTD;
+
+	[Header("ThirdPerson Camera Settings")]
+	public float nearClipPlaneTP;
+	public float farClipPlaneTP;
+	[Range(1f, 179f)]
+	public float fieldOfViewTP;
 
 	void Start()
 	{
@@ -82,9 +95,10 @@ public class PlayerController : MonoBehaviour
 		if (inTopDown)
 		{
 			//TOP DOWN
+			SetCameraForTopDown();
+			
 			thirdPersonCamera.SetActive(false);
 			thirdPersonController.enabled = false;
-			topDownCamera.SetActive(true);
 			topDownController.enabled = true;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
@@ -93,10 +107,10 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
+			SetCameraForThirdPerson();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			topDownController.enabled = false;
-			topDownCamera.SetActive(false);
 			thirdPersonController.enabled = true;
 			thirdPersonCamera.SetActive(true);
 			thirdPersonCamera.GetComponentInParent<ThirdPersonCameraController>().setCameraAtTheBack();
@@ -104,7 +118,22 @@ public class PlayerController : MonoBehaviour
 			cameraChange = false;
 		}
 	}
-
+	void SetCameraForTopDown()
+	{
+		Cam.transform.SetParent(topDownCamera.transform);
+		Cam.transform.rotation = topDownCamera.transform.rotation;
+		Cam.nearClipPlane = nearClipPlaneTD;
+		Cam.farClipPlane = farClipPlaneTD;
+		Cam.fieldOfView = fieldOfViewTD;
+	}
+	void SetCameraForThirdPerson()
+	{
+		Cam.transform.SetParent(thirdPersonCamera.transform);
+		Cam.transform.rotation = thirdPersonCamera.transform.rotation;
+		Cam.nearClipPlane = nearClipPlaneTP;
+		Cam.farClipPlane = farClipPlaneTP;
+		Cam.fieldOfView = fieldOfViewTP;
+	}
 	void CheckGroundStatus()
 	{
 		RaycastHit hitInfo;

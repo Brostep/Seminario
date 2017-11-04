@@ -189,7 +189,7 @@ public class ThirdPersonCameraController : MonoBehaviour
             return;
 
         if (target.transform.position == stoped)
-            transform.position = Vector3.Lerp(transform.position, target.position, (Time.deltaTime * (CameraMoveSpeed / 1.5f)));
+            transform.position = Vector3.Lerp(transform.position, target.position , (Time.deltaTime * (CameraMoveSpeed / 1.5f)));
         else
         {
             stoped = target.transform.position;
