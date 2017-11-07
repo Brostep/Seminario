@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
 	public Camera Cam;
 	ThirdPersonController thirdPersonController;
 	TopDownMovement topDownController;
-	public GameObject thirdPersonCamera;
-	public GameObject topDownCamera;
+	public GameObject thirdPersonCameraBase;
+	public GameObject thirdPersonCameraPivot;
+	public GameObject topDownCameraBase;
+	public GameObject cameraFollow;
 	public static bool inTopDown = false;
 	public Transform melee;
 	public float meleeRadius;
@@ -26,6 +28,9 @@ public class PlayerController : MonoBehaviour
 	public float movementSpeed;
 	[SerializeField]
 	private float _life;
+
+	public float timeLerp;
+
 	public float life
 	{
 		set { _life = value; }
@@ -44,6 +49,9 @@ public class PlayerController : MonoBehaviour
 	[Range(1f, 179f)]
 	public float fieldOfViewTP;
 
+
+	Quaternion saveCamRot;
+	Vector3 saveCamPos;
 	void Start()
 	{
 		life = _life;
@@ -58,7 +66,7 @@ public class PlayerController : MonoBehaviour
 	{
 		CheckGroundStatus();
 
-		print(_life);
+	//	print(_life);
 
 		if (onGround)
 		{
@@ -73,10 +81,9 @@ public class PlayerController : MonoBehaviour
 		{
 			inTopDown = !inTopDown;
 			cameraChange = true;
+			turnOffSettings();
 		}
 
-		if (cameraChange)
-			ChangeMovement();
 		// chekea si esta en el piso, no aplica gravedad
 		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetButton("AButton"))) && !isJumping)
 		{
@@ -90,46 +97,107 @@ public class PlayerController : MonoBehaviour
 	{
 		rb.velocity = velocity;
 	}
+	private void LateUpdate()
+	{
+		if (cameraChange)
+		{
+			if (inTopDown)
+			{
+				Cam.transform.position = Vector3.Slerp(Cam.transform.position, topDownCameraBase.transform.position, Time.deltaTime * timeLerp);
+				Cam.transform.rotation = Quaternion.Slerp(Cam.transform.rotation, topDownCameraBase.transform.rotation, Time.deltaTime * timeLerp);
+				var distance = topDownCameraBase.transform.position - Cam.transform.position;
+
+				if (distance.magnitude <5f)
+				{
+					ChangeMovement();
+				}
+			}
+			else
+			{
+				Cam.transform.position = Vector3.Slerp(Cam.transform.position, thirdPersonCameraBase.transform.position, Time.deltaTime * timeLerp);
+				Cam.transform.rotation = Quaternion.Slerp(Cam.transform.rotation, thirdPersonCameraBase.transform.rotation, Time.deltaTime * timeLerp);
+				var distance = topDownCameraBase.transform.position - Cam.transform.position;
+			
+				if (distance.magnitude < 0.5f)
+				{
+					ChangeMovement();
+				}
+			
+			}
+		
+		}
+	}
+	void turnOffSettings()
+	{
+		if (inTopDown)
+		{
+			//TOP DOWN	
+			print("in1");
+			SetCameraForTopDown();
+			saveCamPos = Cam.transform.position;
+			saveCamRot = Cam.transform.rotation;
+			Cam.transform.parent = null;
+			Cam.transform.position = saveCamPos;
+			Cam.transform.rotation = saveCamRot;
+			Cam.GetComponent<ThirdPersonCameraCollision>().enabled = false;
+			thirdPersonCameraPivot.GetComponentInParent<ThirdPersonCameraController>().enabled = false;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			crosshair.enabled = false;		
+		}
+		else
+		{
+
+			SetCameraForThirdPerson();
+			saveCamPos = Cam.transform.position;
+			saveCamRot = Cam.transform.rotation;
+			Cam.transform.parent = null;
+			Cam.transform.position = saveCamPos;
+			Cam.transform.rotation = saveCamRot;
+			topDownController.enabled = false;
+			thirdPersonController.enabled = true;
+			thirdPersonCameraBase.SetActive(true);
+			crosshair.enabled = true;
+		}
+
+	}
 	void ChangeMovement()
 	{
 		if (inTopDown)
 		{
-			//TOP DOWN
-			SetCameraForTopDown();
-			
-			thirdPersonCamera.SetActive(false);
+			//TOP DOWN		
+			thirdPersonCameraPivot.SetActive(false);
 			thirdPersonController.enabled = false;
 			topDownController.enabled = true;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
 			crosshair.enabled = false;
 			cameraChange = false;
 		}
 		else
 		{
-			SetCameraForThirdPerson();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			topDownController.enabled = false;
 			thirdPersonController.enabled = true;
-			thirdPersonCamera.SetActive(true);
-			thirdPersonCamera.GetComponentInParent<ThirdPersonCameraController>().setCameraAtTheBack();
+			thirdPersonCameraPivot.SetActive(true);
+			Cam.GetComponent<ThirdPersonCameraCollision>().enabled = true;
+			thirdPersonCameraPivot.GetComponentInParent<ThirdPersonCameraController>().enabled = true;
+			thirdPersonCameraPivot.GetComponentInParent<ThirdPersonCameraController>().setCameraAtTheBack();
 			crosshair.enabled = true;
 			cameraChange = false;
 		}
 	}
 	void SetCameraForTopDown()
 	{
-		Cam.transform.SetParent(topDownCamera.transform);
-		Cam.transform.rotation = topDownCamera.transform.rotation;
+		Cam.transform.SetParent(topDownCameraBase.transform);
+		Cam.transform.rotation = topDownCameraBase.transform.rotation;
 		Cam.nearClipPlane = nearClipPlaneTD;
 		Cam.farClipPlane = farClipPlaneTD;
 		Cam.fieldOfView = fieldOfViewTD;
 	}
 	void SetCameraForThirdPerson()
 	{
-		Cam.transform.SetParent(thirdPersonCamera.transform);
-		Cam.transform.rotation = thirdPersonCamera.transform.rotation;
+		Cam.transform.SetParent(thirdPersonCameraBase.transform);
+		Cam.transform.rotation = thirdPersonCameraBase.transform.rotation;
 		Cam.nearClipPlane = nearClipPlaneTP;
 		Cam.farClipPlane = farClipPlaneTP;
 		Cam.fieldOfView = fieldOfViewTP;
@@ -150,7 +218,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.E)||Input.GetButton("XButton"))
 		{
 			if(!inTopDown)
-				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z,thirdPersonCamera.transform.rotation.w);
+				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCameraBase.transform.rotation.y, transform.rotation.z,thirdPersonCameraBase.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)
 			{
@@ -165,7 +233,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
 		{
 			if (!inTopDown)
-				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCameraBase.transform.rotation.y, transform.rotation.z, thirdPersonCameraBase.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)
 			{
