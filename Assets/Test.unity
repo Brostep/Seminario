@@ -325,34 +325,6 @@ Transform:
   m_Father: {fileID: 968880134}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &122873519
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 122873520}
-  m_Layer: 0
-  m_Name: Transition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &122873520
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 122873519}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &133851754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,9 +2583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cam: {fileID: 1682897561}
-  thirdPersonCameraBase: {fileID: 1657155678}
-  topDownCameraBase: {fileID: 470725204}
-  cameraFollow: {fileID: 65974159}
+  thirdPersonCamera: {fileID: 1657155678}
+  topDownCamera: {fileID: 470725204}
   melee: {fileID: 1129573679}
   meleeRadius: 0.7
   lightAttackDamage: 1
@@ -2622,7 +2593,6 @@ MonoBehaviour:
   crosshair: {fileID: 2032861850}
   movementSpeed: 0
   _life: 20
-  timeLerp: 0.8
   nearClipPlaneTD: 0.3
   farClipPlaneTD: 200
   fieldOfViewTD: 15
