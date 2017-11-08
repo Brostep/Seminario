@@ -18,12 +18,12 @@ public class PlayerBullets : Bullet {
 	}
 	void FixedUpdate()
 	{
+	
 		if (lockedOnTarget)
-		{
 			transform.position += dir * speed * Time.deltaTime;
-		}
 		else
-			transform.position += transform.forward * speed * Time.deltaTime;
+			transform.position += dir * speed * Time.deltaTime;
+			
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -45,10 +45,19 @@ public class PlayerBullets : Bullet {
 
 			lockedOnTarget = true;
 		}
-		transform.position = bulletSpawner.transform.position;
-		transform.rotation = bulletSpawner.transform.rotation;
-		dir = (enemyPos - transform.position).normalized;
 
+		transform.position = bulletSpawner.transform.parent.position;
+		transform.rotation = bulletSpawner.transform.rotation;
+
+		if (lockedOnTarget)
+			dir = (enemyPos - transform.position).normalized;
+		else if (bulletSpawner.transform.rotation.x > 5f)
+			dir = tPCC.GetComponentInChildren<Camera>().transform.forward.normalized;
+		else
+			dir = transform.forward.normalized;
+
+	
+		
 	}
 
 }

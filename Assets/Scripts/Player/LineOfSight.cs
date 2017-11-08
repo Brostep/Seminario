@@ -58,7 +58,7 @@ public class LineOfSight : MonoBehaviour
 			}
 		}		
 	}
-	void OnDrawGizmos()
+/*	void OnDrawGizmos()
 	{
 		var p = transform.position;
 		var f = transform.forward;
@@ -89,5 +89,5 @@ public class LineOfSight : MonoBehaviour
 			Gizmos.DrawLine(p + Vector3.up, inSight.position);
 		}
 
-	}
+	}*/
 }
