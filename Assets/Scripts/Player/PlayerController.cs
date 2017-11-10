@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	TopDownMovement topDownController;
 	public GameObject thirdPersonCamera;
 	public GameObject topDownCamera;
+
 	public static bool inTopDown = false;
 	public Transform melee;
 	public float meleeRadius;

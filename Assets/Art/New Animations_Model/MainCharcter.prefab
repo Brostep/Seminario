@@ -1839,7 +1839,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1796824876457346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.3, z: -24.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4134606098118134}
@@ -2303,7 +2303,7 @@ MonoBehaviour:
   dashSpeed: 14
   dashDuration: 0.7
   smoothRoof: 0.15
-  head: {fileID: 0}
+  head: {fileID: 1388121838797728}
   roofAlpha: {fileID: 2100000, guid: 1fed24a95cc449e4fb3ac60f3e3e8c6d, type: 2}
   roof:
     serializedVersion: 2
@@ -2327,7 +2327,7 @@ MonoBehaviour:
   lightAttackDamage: 1
   heavyAttackDamage: 2.5
   cameraChange: 0
-  boop: 350
+  boop: 420
   crosshair: {fileID: 0}
   movementSpeed: 0
   _life: 20

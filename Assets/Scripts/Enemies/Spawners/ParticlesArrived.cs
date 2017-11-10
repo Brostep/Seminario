@@ -6,7 +6,7 @@ public class ParticlesArrived : MonoBehaviour {
 	public bool arrived;
 	public LayerMask particleLayer;
 	public bool canCollision;
-	float exitTimer = 1f;
+	float exitTimer = 2.5f;
 	float timeAlive;
 
 	private void Update()
