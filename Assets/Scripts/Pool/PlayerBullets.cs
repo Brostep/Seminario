@@ -46,18 +46,17 @@ public class PlayerBullets : Bullet {
 			lockedOnTarget = true;
 		}
 
-		transform.position = bulletSpawner.transform.parent.position;
+		transform.position = FindObjectOfType<EyeBehaviour>().gameObject.transform.position;
 		transform.rotation = bulletSpawner.transform.rotation;
+
+		var player = FindObjectOfType<PlayerController>();
 
 		if (lockedOnTarget)
 			dir = (enemyPos - transform.position).normalized;
-		else if (bulletSpawner.transform.rotation.x > 5f)
+		else if (bulletSpawner.transform.rotation.x < 5f && !PlayerController.inTopDown)
 			dir = tPCC.GetComponentInChildren<Camera>().transform.forward.normalized;
-		else
-			dir = transform.forward.normalized;
-
-	
-		
+		else if (PlayerController.inTopDown)
+			dir = player.transform.forward.normalized;
 	}
 
 }

@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
 			for (int i = 0; i < cantSpawners; i++)
 			{
 				Instantiate(spawnerObj, spawners[i].transform.position, Quaternion.identity);
+				spawners[i].GetComponent<Spawner>().open = false;
 			}
 			//make transition
 		//	PlayerController.inTopDown = !PlayerController.inTopDown;

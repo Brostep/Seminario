@@ -9,7 +9,7 @@ public class BulletsSpawner : MonoBehaviour
 	public float clampAngle = 0f;
 	float cd;
 	float rotX, rotY;
-
+	public GameObject eye;
 	public GameObject firePoint;
 	private Pool<Bullet> _bulletPool;
 
@@ -36,8 +36,13 @@ public class BulletsSpawner : MonoBehaviour
 
 		if (((Input.GetKey(KeyCode.Mouse0)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
 		{
+			eye.GetComponent<MeshRenderer>().enabled = true;
 			_bulletPool.GetObjectFromPool();
 			cd = 0f;
+		}
+		else if ((cooldown / 10f) < cd)
+		{
+			eye.GetComponent<MeshRenderer>().enabled = false;
 		}
 	}
 	void RotateSpawner()
@@ -48,7 +53,7 @@ public class BulletsSpawner : MonoBehaviour
 		if (rotX <= 360 && rotX >= 360 - clampAngle)
 			rotX = rotX - 360;
 
-		rotX = Mathf.Clamp(rotX, -clampAngle, 5f);
+		rotX = Mathf.Clamp(rotX, -clampAngle, 10f);
 		Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
 		transform.rotation = localRotation;
 	}

@@ -11,9 +11,9 @@ public class BossRoom : MonoBehaviour {
 		// is the player? set camera promedy on and turn off normal movement
 		if (c.gameObject.layer == 8)
 		{
-			var playerController = c.gameObject.GetComponent<PlayerController>();
-			playerController.topDownCamera.GetComponentInParent<TopDownCameraController>().enabled=false;
-			playerController.topDownCamera.GetComponentInParent<TopDownPromedyTargets>().enabled=true;
+			var playerController = FindObjectOfType<PlayerController>();
+			playerController.topDownCamera.GetComponent<TopDownCameraController>().enabled=false;
+			playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled=true;
 			FindObjectOfType<HellBulletSpawner>().inRoom = true;
 			bridge.SetActive(false);
 		}

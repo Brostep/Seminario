@@ -16,9 +16,17 @@ public class PlayerController : MonoBehaviour
 	public float lightAttackDamage;
 	public float heavyAttackDamage;
 	Animator anim;
+	int runHash;
+	int onAttack1Hash;
+	int onAttack2Hash;
+	int onAttack3Hash;
+	int onHeavyAttackHash;
+
+	float timeBetweenAttacks;
 	bool isJumping;
 	bool onGround;
 	public bool cameraChange;
+	public float boop;
 	Vector3 velocity;
 	Rigidbody rb;
 	public Image crosshair;
@@ -53,12 +61,27 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
+
+		runHash = Animator.StringToHash("Run");
+		runHash = Animator.StringToHash("Run");
+		onAttack1Hash = Animator.StringToHash("OnAttack1");
+		onAttack2Hash = Animator.StringToHash("OnAttack2");
+		onAttack3Hash = Animator.StringToHash("OnAttack3");
+		onHeavyAttackHash = Animator.StringToHash("OnHeavyAttack");
 	}
 	void Update()
 	{
 		CheckGroundStatus();
 
-		print(_life);
+		//print(_life);
+
+		timeBetweenAttacks += Time.deltaTime;
+		if (timeBetweenAttacks > 0.75f)
+		{
+			anim.SetBool(onAttack3Hash, false);
+			anim.SetBool(onAttack2Hash, false);
+			anim.SetBool(onAttack1Hash, false);
+		}
 
 		if (onGround)
 		{
@@ -118,7 +141,7 @@ public class PlayerController : MonoBehaviour
 			cameraChange = false;
 		}
 	}
-	void SetCameraForTopDown()
+	public void SetCameraForTopDown()
 	{
 		Cam.transform.SetParent(topDownCamera.transform);
 		Cam.transform.rotation = topDownCamera.transform.rotation;
@@ -126,7 +149,7 @@ public class PlayerController : MonoBehaviour
 		Cam.farClipPlane = farClipPlaneTD;
 		Cam.fieldOfView = fieldOfViewTD;
 	}
-	void SetCameraForThirdPerson()
+	public void SetCameraForThirdPerson()
 	{
 		Cam.transform.SetParent(thirdPersonCamera.transform);
 		Cam.transform.rotation = thirdPersonCamera.transform.rotation;
@@ -145,25 +168,15 @@ public class PlayerController : MonoBehaviour
 				onGround = false;
 		}
 	}
+
 	void MeleeHit()
 	{
-		if (Input.GetKeyDown(KeyCode.E)||Input.GetButton("XButton"))
+		if (Input.GetKeyDown(KeyCode.E) || Input.GetButton("XButton"))
 		{
-			if(!inTopDown)
-				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z,thirdPersonCamera.transform.rotation.w);
-			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
-			if (enemiesHited.Length > 0)
-			{
-				foreach (var enemy in enemiesHited)
-				{
-					var currEnemy = enemy.GetComponent<Enemy>();
-					if (currEnemy.transform.position.y < 3f)
-						currEnemy.life -= lightAttackDamage;
-				}
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
-		{
+			//print ("ESTOY ATACANDO");
+			EnterAnimationAttack(true);
+			anim.SetFloat("timeBetweenAttacks", 0f);
+			timeBetweenAttacks = 0f;
 			if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
@@ -171,13 +184,80 @@ public class PlayerController : MonoBehaviour
 			{
 				foreach (var enemy in enemiesHited)
 				{
-					var currEnemy = enemy.GetComponent<Enemy>();
-					if (currEnemy.transform.position.y < 3f)
-						currEnemy.life -= heavyAttackDamage;
+					enemy.GetComponent<Enemy>().life -= lightAttackDamage;
+					if (enemy.GetComponent<Rigidbody>()!=null)
+						enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
+				}
+					
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
+		{
+			anim.SetBool(onHeavyAttackHash, true);
+
+			if (!inTopDown)
+				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
+			if (enemiesHited.Length > 0)
+			{
+				foreach (var enemy in enemiesHited)
+				{
+					enemy.GetComponent<Enemy>().life -= heavyAttackDamage;
+					if (enemy.GetComponent<Rigidbody>() != null)	
+						enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * (boop*1.5f));
 				}
 				
 			}
 		}
+	}
+
+	void EnterAnimationAttack(bool isPlay)
+	{
+		if (isPlay)
+		{
+			if (!anim.GetBool(onAttack1Hash) && timeBetweenAttacks<1.5f)
+			{
+				anim.SetBool(onAttack1Hash, true);
+			}
+			else if (anim.GetBool(onAttack1Hash) && !anim.GetBool(onAttack2Hash) && timeBetweenAttacks < 1.5f)
+			{
+				anim.SetBool(onAttack2Hash, true);
+			}
+			else if (anim.GetBool(onAttack2Hash) && anim.GetBool(onAttack1Hash) && timeBetweenAttacks < 1.5f)
+			{
+				anim.SetBool(onAttack3Hash, true);
+			}
+		}
+	}
+
+	void EndAttack1(AnimationEvent e)
+	{
+		if (timeBetweenAttacks > 1.5f)
+			anim.SetBool(onAttack1Hash, false);
+	}
+
+	void EndAttack2(AnimationEvent e)
+	{
+		if (timeBetweenAttacks > 1.5f)
+		{
+			anim.SetBool(onAttack2Hash, false);
+			anim.SetBool(onAttack1Hash, false);
+		}
+		
+	}
+	void EndAttack3(AnimationEvent e)
+	{
+		if (timeBetweenAttacks > 1.5f)
+		{
+			anim.SetBool(onAttack3Hash, false);
+			anim.SetBool(onAttack2Hash, false);
+			anim.SetBool(onAttack1Hash, false);
+		}
+	}
+
+	void EndHeavyAttack(AnimationEvent e)
+	{
+		anim.SetBool(onHeavyAttackHash, false);
 	}
 	void OnDrawGizmos()
 	{
