@@ -36,13 +36,8 @@ public class BulletsSpawner : MonoBehaviour
 
 		if (((Input.GetKey(KeyCode.Mouse0)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
 		{
-			eye.GetComponent<MeshRenderer>().enabled = true;
 			_bulletPool.GetObjectFromPool();
 			cd = 0f;
-		}
-		else if ((cooldown / 10f) < cd)
-		{
-			eye.GetComponent<MeshRenderer>().enabled = false;
 		}
 	}
 	void RotateSpawner()

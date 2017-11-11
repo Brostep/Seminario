@@ -17,6 +17,7 @@ public class Spawners : Enemy {
 	int totalSpawners;
 	bool alive = true;
 	bool onGround = false;
+	bool startMoving = false;
 	Vector3 dir;
 	Vector3 offset = new Vector3(0f, 1.8f, 0f);
 	private void Start()
@@ -28,6 +29,7 @@ public class Spawners : Enemy {
 	void Update()
 	{
 		CheckSpawnerLife();
+		moveParticles();
 	}
 	void CheckSpawnerLife()
 	{
@@ -53,39 +55,48 @@ public class Spawners : Enemy {
 			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
 			do
 			{
-				if (gm.spawners[totalSpawners].GetComponent<Spawner>().open&&totalSpawners!=gm.currentSpawn)
+				if (totalSpawners < gm.spawners.Count)
 				{
-					dir = (gm.spawners[totalSpawners].transform.position - transform.position).normalized;
-             
-					StartCoroutine(moveParticles(dir));
-					gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
-                    gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
+					if (gm.spawners[totalSpawners].GetComponent<Spawner>().open && totalSpawners != gm.currentSpawn)
+					{
+						dir = (gm.spawners[totalSpawners].transform.position - transform.position).normalized;
 
-                    gm.currentSpawn = totalSpawners;
-					waves++;
-					onGround = true;
+						if (dir != new Vector3(0f, 0f, 0f))
+						{
+							gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
+							gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
+
+							gm.currentSpawn = totalSpawners;
+							waves++;
+							startMoving = true;
+							onGround = true;
+						}
+					}
+					else
+					{
+						totalSpawners++;
+					}
+
 				}
 				else
 				{
-					totalSpawners++;
+					throw new System.Exception("error con los spawn location ninguna esta libre");
 				}
-			
+
 			} while (!onGround);		
 		}	
 	}
-	IEnumerator moveParticles(Vector3 dir)
+	void moveParticles()
 	{
-		while (true)
+		if (startMoving)
 		{
 			if (!currentParticle.GetComponent<ParticlesArrived>().arrived && alive)
 			{
 				currentParticle.transform.position += dir * particlesSpeed * Time.deltaTime;
-				yield return new WaitForEndOfFrame();
 			}
-			else if(!alive&&!currentParticle.GetComponent<ParticlesArrived>().arrived )
+			else if (!alive && !currentParticle.GetComponent<ParticlesArrived>().arrived)
 			{
 				Destroy(currentParticle.gameObject);
-				break;
 			}
 			else
 			{
@@ -98,14 +109,13 @@ public class Spawners : Enemy {
 					Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
 				}
 				transform.position = gm.spawners[gm.currentSpawn].transform.position;
-                gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
-             //   gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
-                GetComponent<MeshRenderer>().enabled = true;
+				startMoving = false;
+				GetComponent<MeshRenderer>().enabled = true;
 				GetComponent<Renderer>().enabled = true;
 				GetComponent<Collider>().enabled = true;
 				Utility.KnuthShuffle<GameObject>(gm.spawners);
-				break;
 			}
 		}
+
 	}
 }
