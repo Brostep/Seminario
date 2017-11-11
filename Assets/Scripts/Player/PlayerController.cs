@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 		{
 			velocity.y = 0f;
 			isJumping = false;
-			anim.SetBool("OnJump", false);
+		//	anim.SetBool("OnJump", false);
 		}
 		else
 			velocity.y = velocity.y - 6f;
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
 		{
 			//print ("ESTOY ATACANDO");
 			EnterAnimationAttack(true);
-			anim.SetFloat("timeBetweenAttacks", 0f);
+		//	anim.SetFloat("timeBetweenAttacks", 0f);
 			timeBetweenAttacks = 0f;
 			if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);

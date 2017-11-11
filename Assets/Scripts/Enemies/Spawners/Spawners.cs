@@ -5,7 +5,6 @@ using UnityEngine;
 public class Spawners : Enemy {
 
 	[HideInInspector]
-	public List<GameObject> spawners;
 	public GameObject particlesWhileInGround;
 	public float particlesSpeed;
 	public LayerMask LayerSpawner;
@@ -15,7 +14,6 @@ public class Spawners : Enemy {
 	Renderer render;
 	int waves = 1;
 	float _life;
-	int currentSpawn;
 	int totalSpawners;
 	bool alive = true;
 	bool onGround = false;
@@ -25,11 +23,7 @@ public class Spawners : Enemy {
 	{
 		_life = life;
 		gm = FindObjectOfType<GameManager>();
-		for (int i = 0; i < gm.spawners.Count; i++)
-		{
-			spawners.Add(gm.spawners[i]);
-		}
-		Utility.KnuthShuffle<GameObject>(spawners);
+		Utility.KnuthShuffle<GameObject>(gm.spawners);
 	}
 	void Update()
 	{
@@ -44,7 +38,7 @@ public class Spawners : Enemy {
 			totalSpawners = 0;
 
 			if (currentParticle != null)
-				Destroy(currentParticle);
+				Destroy(currentParticle.gameObject);
 
 			Destroy(gameObject);
 		}
@@ -59,13 +53,15 @@ public class Spawners : Enemy {
 			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
 			do
 			{
-				if (spawners[totalSpawners].GetComponent<Spawner>().open)
+				if (gm.spawners[totalSpawners].GetComponent<Spawner>().open&&totalSpawners!=gm.currentSpawn)
 				{
-					dir = (spawners[totalSpawners].transform.position - transform.position).normalized;
+					dir = (gm.spawners[totalSpawners].transform.position - transform.position).normalized;
+             
 					StartCoroutine(moveParticles(dir));
-					spawners[totalSpawners].GetComponent<Spawner>().open = false;
-		
-					currentSpawn = totalSpawners;
+					gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
+                    gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
+
+                    gm.currentSpawn = totalSpawners;
 					waves++;
 					onGround = true;
 				}
@@ -88,25 +84,26 @@ public class Spawners : Enemy {
 			}
 			else if(!alive&&!currentParticle.GetComponent<ParticlesArrived>().arrived )
 			{
-				Destroy(currentParticle);
+				Destroy(currentParticle.gameObject);
 				break;
 			}
 			else
 			{
-				Destroy(currentParticle);
+				Destroy(currentParticle.gameObject);
 				for (int i = 0; i < 3; i++)
 				{
-					var randPosX = Random.Range(spawners[currentSpawn].transform.position.x - 3, spawners[currentSpawn].transform.position.x + 3);
-					var randPosZ = Random.Range(spawners[currentSpawn].transform.position.z - 3, spawners[currentSpawn].transform.position.z + 3);
+					var randPosX = Random.Range(gm.spawners[gm.currentSpawn].transform.position.x - 3, gm.spawners[gm.currentSpawn].transform.position.x + 3);
+					var randPosZ = Random.Range(gm.spawners[gm.currentSpawn].transform.position.z - 3, gm.spawners[gm.currentSpawn].transform.position.z + 3);
 					var randPos = new Vector3(randPosX, 0, randPosZ);
 					Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
 				}
-				transform.position = spawners[currentSpawn].transform.position;	
-				spawners[currentSpawn].GetComponent<Spawner>().open = true;
-				GetComponent<MeshRenderer>().enabled = true;
+				transform.position = gm.spawners[gm.currentSpawn].transform.position;
+                gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
+             //   gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
+                GetComponent<MeshRenderer>().enabled = true;
 				GetComponent<Renderer>().enabled = true;
 				GetComponent<Collider>().enabled = true;
-				Utility.KnuthShuffle<GameObject>(spawners);
+				Utility.KnuthShuffle<GameObject>(gm.spawners);
 				break;
 			}
 		}

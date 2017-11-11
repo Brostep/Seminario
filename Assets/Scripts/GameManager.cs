@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
 	bool activated;
 	[HideInInspector]
 	public int spawn = 1;
+    public int currentSpawn;
 	private static GameManager _instance;
 	public static GameManager Instance { get { return _instance; } }
 
