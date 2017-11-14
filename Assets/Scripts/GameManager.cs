@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 
 	public float wormLife;
 	public float flyWormLife;
-
+	public Vector3 offsetSpawner;
 	public Pool<FlyWormBullets> FlyWormBulletPool;
 	public FlyWormBullets FlyWormBulletPrefab;
 
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
 			activated = true;
 			for (int i = 0; i < cantSpawners; i++)
 			{
-				Instantiate(spawnerObj, spawners[i].transform.position, Quaternion.identity);
+				Instantiate(spawnerObj, spawners[i].transform.position - offsetSpawner, Quaternion.identity);
 				spawners[i].GetComponent<Spawner>().open = false;
 			}
 			//make transition

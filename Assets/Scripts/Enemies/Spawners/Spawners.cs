@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Spawners : Enemy {
 
-	[HideInInspector]
 	public GameObject particlesWhileInGround;
 	public float particlesSpeed;
 	public LayerMask LayerSpawner;
@@ -12,6 +11,7 @@ public class Spawners : Enemy {
 	GameManager gm;
 	GameObject currentParticle;
 	Renderer render;
+	Animator anim;
 	int waves = 1;
 	float _life;
 	int totalSpawners;
@@ -19,12 +19,13 @@ public class Spawners : Enemy {
 	bool onGround = false;
 	bool startMoving = false;
 	Vector3 dir;
-	Vector3 offset = new Vector3(0f, 1.8f, 0f);
+	Vector3 offset = new Vector3(0f, 2.65f, 0f);
 	private void Start()
 	{
 		_life = life;
 		gm = FindObjectOfType<GameManager>();
-		Utility.KnuthShuffle<GameObject>(gm.spawners);
+		anim = GetComponent<Animator>();
+
 	}
 	void Update()
 	{
@@ -47,12 +48,11 @@ public class Spawners : Enemy {
 
 		if (life <= (_life - (waves * 12))&&alive)
 		{
-			GetComponent<MeshRenderer>().enabled = false;
-			GetComponent<Renderer>().enabled = false;
-			GetComponent<Collider>().enabled = false;
+			anim.SetBool("Dig", true);
+			GetComponent<CapsuleCollider>().enabled = false;
 			totalSpawners = 0;
 			onGround = false;
-			currentParticle = Instantiate(particlesWhileInGround, transform.position - offset, transform.rotation);
+		
 			do
 			{
 				if (totalSpawners < gm.spawners.Count)
@@ -88,7 +88,7 @@ public class Spawners : Enemy {
 	}
 	void moveParticles()
 	{
-		if (startMoving)
+		if (startMoving&&currentParticle!=null)
 		{
 			if (!currentParticle.GetComponent<ParticlesArrived>().arrived && alive)
 			{
@@ -108,7 +108,9 @@ public class Spawners : Enemy {
 					var randPos = new Vector3(randPosX, 0, randPosZ);
 					Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
 				}
-				transform.position = gm.spawners[gm.currentSpawn].transform.position;
+				transform.position = gm.spawners[gm.currentSpawn].transform.position-offset;
+		
+				anim.SetBool("DigOut", true);
 				startMoving = false;
 				GetComponent<MeshRenderer>().enabled = true;
 				GetComponent<Renderer>().enabled = true;
@@ -118,4 +120,16 @@ public class Spawners : Enemy {
 		}
 
 	}
+	void EndDig()
+	{
+		anim.SetBool("Dig", false);
+		currentParticle = Instantiate(particlesWhileInGround, transform.position-new Vector3(0f,0.3f,0f), transform.rotation);
+	}
+	void EndDigOut()
+	{
+		anim.SetBool("DigOut", false);
+		GetComponent<CapsuleCollider>().enabled = true;
+		transform.LookAt(gm.transform);
+	}
+
 }
