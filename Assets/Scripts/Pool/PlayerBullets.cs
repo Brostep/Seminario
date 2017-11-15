@@ -9,7 +9,6 @@ public class PlayerBullets : Bullet {
 	Vector3 enemyPos;
 	ThirdPersonCameraController tPCC;
 	bool lockedOnTarget;
-
 	void Update()
 	{
 		_timeAlive += Time.deltaTime;
@@ -54,7 +53,15 @@ public class PlayerBullets : Bullet {
 		if (lockedOnTarget)
 			dir = (enemyPos - transform.position).normalized;
 		else if (bulletSpawner.transform.rotation.x < 5f && !PlayerController.inTopDown)
-			dir = tPCC.GetComponentInChildren<Camera>().transform.forward.normalized;
+		{
+			var layerMask = ~(1 << 8);
+			RaycastHit hit;
+			if(Physics.Raycast(tPCC.GetComponentInChildren<Camera>().transform.position, tPCC.GetComponentInChildren<Camera>().transform.forward,out hit, float.MaxValue, layerMask))
+			{
+				dir = (hit.point - transform.position).normalized;
+				print(dir);
+			}
+		}
 		else if (PlayerController.inTopDown)
 			dir = player.transform.forward.normalized;
 	}

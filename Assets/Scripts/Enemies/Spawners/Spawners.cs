@@ -61,7 +61,7 @@ public class Spawners : Enemy {
 					{
 						dir = (gm.spawners[totalSpawners].transform.position - transform.position).normalized;
 
-						if (dir != new Vector3(0f, 0f, 0f))
+						if (dir != new Vector3(0f, 0f, 0f)&& dir.y<0.5f)
 						{
 							gm.spawners[totalSpawners].GetComponent<Spawner>().open = false;
 							gm.spawners[gm.currentSpawn].GetComponent<Spawner>().open = true;
