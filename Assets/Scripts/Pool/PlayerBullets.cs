@@ -56,12 +56,13 @@ public class PlayerBullets : Bullet {
 		{
 			var layerMask = ~(1 << 8);
 			RaycastHit hit;
-			if(Physics.Raycast(tPCC.GetComponentInChildren<Camera>().transform.position, tPCC.GetComponentInChildren<Camera>().transform.forward,out hit, float.MaxValue, layerMask))
+			if(Physics.Raycast(transform.position, tPCC.GetComponentInChildren<Camera>().transform.forward,out hit, float.MaxValue, layerMask))
 			{
-				dir = (hit.point - transform.position).normalized;
-				print(dir);
-			}
-		}
+                dir = (hit.point - transform.position).normalized;
+            }
+            else
+                dir = tPCC.GetComponentInChildren<Camera>().transform.forward.normalized;
+        }
 		else if (PlayerController.inTopDown)
 			dir = player.transform.forward.normalized;
 	}

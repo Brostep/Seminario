@@ -38,6 +38,7 @@ public class ThirdPersonController : MonoBehaviour {
 	{
 		if (roofShader.GetFloat("_AlphaValue") < 0.5f)
 			roofShader.SetFloat("_AlphaValue", 1f);
+
 	}
 	void FixedUpdate()
 	{
@@ -108,23 +109,28 @@ public class ThirdPersonController : MonoBehaviour {
 	
 		// mientras que mantega apretado el input del dash, si no esta en cd y si no cumplio la duracion del dash
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("RTrigger") < 0 && dashTimer > dashCd && dashDuration > 0f && onePress)
-			isDashing = true; // estoy dasheando
-
+        {
+            isDashing = true; // estoy dasheando
+            anim.SetBool("OnDash", true);
+        }
+	
 		// estoy dasheando ? y todavia hay duracion
 		if (isDashing && dashDuration > 0f)
 		{
 			relVel = relMove * dashSpeed;
 			dashDuration -= Time.deltaTime;
-			return relVel;
+            return relVel;
 		} // si solte el botton o me quede si duracion reseteo el dash.
 		else if (!isDashing && dashDuration < dashDurationAux)
 		{
 			dashDuration = dashDurationAux;
 			dashTimer = 0f;
 			onePress = false;
-		}
-		// sino.. retorno la velocidad normal del player
-		return relVel = relMove * movementSpeed;
+            anim.SetBool("OnDash", false);
+        }
+        anim.SetBool("OnDash", false);
+        // sino.. retorno la velocidad normal del player
+        return relVel = relMove * movementSpeed;
 	}
 
 	void CheckGroundStatus()

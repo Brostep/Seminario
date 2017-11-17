@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 		timeBetweenAttacks += Time.deltaTime;
 		if (timeBetweenAttacks > 0.75f)
 		{
-			anim.SetBool(onAttack3Hash, false);
+			//anim.SetBool(onAttack3Hash, false);
 			anim.SetBool(onAttack2Hash, false);
 			anim.SetBool(onAttack1Hash, false);
 		}
@@ -172,11 +172,12 @@ public class PlayerController : MonoBehaviour
 
 	void MeleeHit()
 	{
-		if (Input.GetKeyDown(KeyCode.E) || Input.GetButton("XButton"))
+		if (Input.GetMouseButtonDown(0) /*Input.GetKeyDown(KeyCode.E)*/ || Input.GetButton("XButton"))
 		{
 			//print ("ESTOY ATACANDO");
 			EnterAnimationAttack(true);
-		//	anim.SetFloat("timeBetweenAttacks", 0f);
+            //	anim.SetFloat("timeBetweenAttacks", 0f);
+            thirdPersonController.movementSpeed = 2f;
 			timeBetweenAttacks = 0f;
 			if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
@@ -192,11 +193,11 @@ public class PlayerController : MonoBehaviour
 					
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.F) || Input.GetButton("YButton"))
+		if (Input.GetMouseButtonDown(1)/*Input.GetKeyDown(KeyCode.F)*/ || Input.GetButton("YButton"))
 		{
 			anim.SetBool(onHeavyAttackHash, true);
-
-			if (!inTopDown)
+            thirdPersonController.movementSpeed = 2f;
+            if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
 			if (enemiesHited.Length > 0)
@@ -224,7 +225,7 @@ public class PlayerController : MonoBehaviour
 			{
 				anim.SetBool(onAttack2Hash, true);
 			}
-			else if (anim.GetBool(onAttack2Hash) && anim.GetBool(onAttack1Hash) && timeBetweenAttacks < 1.5f)
+			else if (anim.GetBool(onAttack2Hash) && anim.GetBool(onAttack1Hash))
 			{
 				anim.SetBool(onAttack3Hash, true);
 			}
@@ -235,7 +236,9 @@ public class PlayerController : MonoBehaviour
 	{
 		if (timeBetweenAttacks > 1.5f)
 			anim.SetBool(onAttack1Hash, false);
-	}
+
+        thirdPersonController.movementSpeed = 8f;
+    }
 
 	void EndAttack2(AnimationEvent e)
 	{
@@ -244,22 +247,29 @@ public class PlayerController : MonoBehaviour
 			anim.SetBool(onAttack2Hash, false);
 			anim.SetBool(onAttack1Hash, false);
 		}
-		
-	}
-	void EndAttack3(AnimationEvent e)
+        thirdPersonController.movementSpeed = 8f;
+
+    }
+    void EndJump()
+    {
+        anim.SetBool("OnJump",false);
+    }
+    void EndAttack3(AnimationEvent e)
 	{
-		if (timeBetweenAttacks > 1.5f)
-		{
+		/*if (timeBetweenAttacks > 1.5f)
+		{*/
 			anim.SetBool(onAttack3Hash, false);
 			anim.SetBool(onAttack2Hash, false);
 			anim.SetBool(onAttack1Hash, false);
-		}
-	}
+        /*}*/
+        thirdPersonController.movementSpeed = 8f;
+    }
 
 	void EndHeavyAttack(AnimationEvent e)
 	{
 		anim.SetBool(onHeavyAttackHash, false);
-	}
+        thirdPersonController.movementSpeed = 8f;
+    }
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.cyan;

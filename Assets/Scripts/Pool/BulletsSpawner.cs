@@ -34,7 +34,7 @@ public class BulletsSpawner : MonoBehaviour
 
 		cd += Time.deltaTime;
 
-		if (((Input.GetKey(KeyCode.Mouse0)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
+		if (((Input.GetMouseButton(2)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
 		{
 			_bulletPool.GetObjectFromPool();
 			cd = 0f;
