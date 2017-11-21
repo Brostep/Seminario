@@ -403,9 +403,10 @@ ModelImporter:
       curves: []
       events:
       - time: 0.502439
-        functionName: EndAttack1
+        functionName: EndAttack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 4b8fdb88d80d3e54a91ea47b81ec401a,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -597,9 +598,10 @@ ModelImporter:
       curves: []
       events:
       - time: 0.50731707
-        functionName: EndAttack2
+        functionName: EndAttack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 4b8fdb88d80d3e54a91ea47b81ec401a,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -791,9 +793,10 @@ ModelImporter:
       curves: []
       events:
       - time: 0.502439
-        functionName: EndAttack3
+        functionName: EndAttack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 4b8fdb88d80d3e54a91ea47b81ec401a,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

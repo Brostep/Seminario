@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 	public Camera Cam;
 	ThirdPersonController thirdPersonController;
 	TopDownMovement topDownController;
+	AnimationControllerPlayer animController;
 	public GameObject thirdPersonCamera;
 	public GameObject topDownCamera;
 
@@ -17,11 +18,6 @@ public class PlayerController : MonoBehaviour
 	public float lightAttackDamage;
 	public float heavyAttackDamage;
 	Animator anim;
-	int runHash;
-	int onAttack1Hash;
-	int onAttack2Hash;
-	int onAttack3Hash;
-	int onHeavyAttackHash;
 
 	float timeBetweenAttacks;
 	bool isJumping;
@@ -59,30 +55,16 @@ public class PlayerController : MonoBehaviour
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		topDownController = GetComponent<TopDownMovement>();
 		anim = GetComponent<Animator>();
+		animController = GetComponent<AnimationControllerPlayer>();
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
 
-		runHash = Animator.StringToHash("Run");
-		runHash = Animator.StringToHash("Run");
-		onAttack1Hash = Animator.StringToHash("OnAttack1");
-		onAttack2Hash = Animator.StringToHash("OnAttack2");
-		onAttack3Hash = Animator.StringToHash("OnAttack3");
-		onHeavyAttackHash = Animator.StringToHash("OnHeavyAttack");
+	
 	}
 	void Update()
 	{
 		CheckGroundStatus();
-
-		//print(_life);
-
-		timeBetweenAttacks += Time.deltaTime;
-		if (timeBetweenAttacks > 0.75f)
-		{
-			//anim.SetBool(onAttack3Hash, false);
-			anim.SetBool(onAttack2Hash, false);
-			anim.SetBool(onAttack1Hash, false);
-		}
 
 		if (onGround)
 		{
@@ -172,11 +154,9 @@ public class PlayerController : MonoBehaviour
 
 	void MeleeHit()
 	{
-		if (Input.GetMouseButtonDown(0) /*Input.GetKeyDown(KeyCode.E)*/ || Input.GetButton("XButton"))
+		if (Input.GetMouseButtonDown(0) || Input.GetButton("XButton"))
 		{
-			//print ("ESTOY ATACANDO");
-			EnterAnimationAttack(true);
-            //	anim.SetFloat("timeBetweenAttacks", 0f);
+			animController.EnterAnimationLightAttack();
             thirdPersonController.movementSpeed = 2f;
 			timeBetweenAttacks = 0f;
 			if (!inTopDown)
@@ -193,10 +173,12 @@ public class PlayerController : MonoBehaviour
 					
 			}
 		}
-		if (Input.GetMouseButtonDown(1)/*Input.GetKeyDown(KeyCode.F)*/ || Input.GetButton("YButton"))
+		if (Input.GetMouseButtonDown(1) || Input.GetButton("YButton"))
 		{
-			anim.SetBool(onHeavyAttackHash, true);
-            thirdPersonController.movementSpeed = 2f;
+			//animController.actionRegister.Add(2);
+			//animController.EnterAnimationAttack();
+			timeBetweenAttacks = 0f;
+			thirdPersonController.movementSpeed = 2f;
             if (!inTopDown)
 				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
 			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
@@ -213,29 +195,11 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void EnterAnimationAttack(bool isPlay)
+	/*
+	void EndAttack1()
 	{
-		if (isPlay)
-		{
-			if (!anim.GetBool(onAttack1Hash) && timeBetweenAttacks<1.5f)
-			{
-				anim.SetBool(onAttack1Hash, true);
-			}
-			else if (anim.GetBool(onAttack1Hash) && !anim.GetBool(onAttack2Hash) && timeBetweenAttacks < 1.5f)
-			{
-				anim.SetBool(onAttack2Hash, true);
-			}
-			else if (anim.GetBool(onAttack2Hash) && anim.GetBool(onAttack1Hash))
-			{
-				anim.SetBool(onAttack3Hash, true);
-			}
-		}
-	}
-
-	void EndAttack1(AnimationEvent e)
-	{
-		if (timeBetweenAttacks > 1.5f)
-			anim.SetBool(onAttack1Hash, false);
+		//if (timeBetweenAttacks > 1.5f)
+		anim.SetBool(onAttack1Hash, false);
 
         thirdPersonController.movementSpeed = 8f;
     }
@@ -250,18 +214,15 @@ public class PlayerController : MonoBehaviour
         thirdPersonController.movementSpeed = 8f;
 
     }
-    void EndJump()
-    {
-        anim.SetBool("OnJump",false);
-    }
+   
     void EndAttack3(AnimationEvent e)
 	{
 		/*if (timeBetweenAttacks > 1.5f)
-		{*/
+		{
 			anim.SetBool(onAttack3Hash, false);
 			anim.SetBool(onAttack2Hash, false);
 			anim.SetBool(onAttack1Hash, false);
-        /*}*/
+        }
         thirdPersonController.movementSpeed = 8f;
     }
 
@@ -269,7 +230,11 @@ public class PlayerController : MonoBehaviour
 	{
 		anim.SetBool(onHeavyAttackHash, false);
         thirdPersonController.movementSpeed = 8f;
-    }
+    }*/
+	void EndJump()
+	{
+		anim.SetBool("OnJump", false);
+	}
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.cyan;

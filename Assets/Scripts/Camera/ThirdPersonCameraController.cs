@@ -156,7 +156,7 @@ public class ThirdPersonCameraController : MonoBehaviour
         else
             tickSinceNoRotation = 0f;
 
-        if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("R3"))
+        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetButtonDown("R3"))
         {
 			setCameraAtTheBack();
         }
