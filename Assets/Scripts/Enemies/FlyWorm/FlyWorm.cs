@@ -24,7 +24,11 @@ public class FlyWorm : Enemy {
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
+		{
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
+			Instantiate(gm.bloodWorm, head.transform);
+		}
+		
 		//player
 		if (c.gameObject.layer == 8)
 			c.gameObject.GetComponent<PlayerController>().life -= damage;

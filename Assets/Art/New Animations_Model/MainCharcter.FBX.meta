@@ -3,7 +3,7 @@ guid: b8baa5f03cbcb354faef75e19f51a11d
 timeCreated: 1510253623
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: CATRig1Bone001
     100002: CATRig1Bone001Bone001
@@ -159,26 +159,42 @@ ModelImporter:
     7400000: HeavyAttack
     9500000: //RootNode
     13700000: MainCharacter
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default_Fabric_FRONT_3688
+    second: {fileID: 2100000, guid: f11beda8c3c2fe447bc1ebed953c79b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: defaultMat
+    second: {fileID: 2100000, guid: c2345f72e75d5e6489e06f56bb38eead, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: HeavyAttack
@@ -208,6 +224,14 @@ ModelImporter:
         functionName: EndHeavyAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.49655825
+        functionName: DoDamageHeavyAttack1
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ffb406f166b9f66478502f8db7733d97,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -376,7 +400,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -392,6 +419,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

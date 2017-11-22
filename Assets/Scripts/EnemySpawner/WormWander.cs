@@ -13,7 +13,11 @@ public class WormWander : Enemy {
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9)
+		{
+			Instantiate(gm.bloodWorm, head.transform);
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
+		}
+		
 		//player
 		if (c.gameObject.layer == 8)
 			c.gameObject.GetComponent<PlayerController>().life -= damage;

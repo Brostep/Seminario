@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject activateEnemySpawners;
 	public GameObject spawnerObj;
+	public GameObject bloodWorm;
+
 	public int cantSpawners;
 	PlayerController player;
 	public List<GameObject> spawners;

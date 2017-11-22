@@ -34,7 +34,11 @@ public class Worm : Enemy{
 	{
 		//player bullet
 		if (c.gameObject.layer == 9)
+		{
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
+			Instantiate(gameManager.bloodWorm, head.transform);
+		}
+		
 		//player
 		if (c.gameObject.layer == 8)
 			c.gameObject.GetComponent<PlayerController>().life -= damage;

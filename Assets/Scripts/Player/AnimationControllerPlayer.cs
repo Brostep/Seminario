@@ -10,6 +10,7 @@ public class AnimationControllerPlayer : MonoBehaviour {
 	public List<int> actionRegister;
 	List<int> actionsDone;
 	List<int> lightAttacks;
+	List<int> heavyAttacks;
 	public float timeBeforeResetBasic = 2.5f;
 
 	Animator anim;
@@ -27,6 +28,7 @@ public class AnimationControllerPlayer : MonoBehaviour {
 		actionRegister = new List<int>();
 		actionsDone = new List<int>();
 		lightAttacks = new List<int>();
+		heavyAttacks = new List<int>();
 		anim = GetComponent<Animator>();
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		//hash actions
@@ -35,63 +37,135 @@ public class AnimationControllerPlayer : MonoBehaviour {
 		onLightAttack2 = Animator.StringToHash("OnAttack2");
 		onLightAttack3 = Animator.StringToHash("OnAttack3");
 		onHeavyAttack1 = Animator.StringToHash("OnHeavyAttack");
+		heavyAttacks.Add(onHeavyAttack1);
+		//light
 		lightAttacks.Add(onLightAttack1);
 		lightAttacks.Add(onLightAttack2);
 		lightAttacks.Add(onLightAttack3);
 	}
-
-	void Update ()
+	private void Update()
 	{
-		if (actionsDone.Count>0)
+		timeBetweenAttacks += Time.deltaTime;
+		if (timeBetweenAttacks >= timeBeforeResetBasic)
 		{
-			timeBetweenAttacks += Time.deltaTime;
-			if (timeBetweenAttacks >= timeBeforeResetBasic)
+			currentAnim = 0;
+			for (int i = 0; i < lightAttacks.Count; i++)
 			{
-				anim.SetBool(actionsDone[0], false);
-				actionsDone.RemoveAt(0);
-				currentAnim = 0;
-				timeBetweenAttacks = 0f;
+				if (anim.GetBool(lightAttacks[i]))
+					anim.SetBool(lightAttacks[i], false);
+			}
+			for (int i = 0; i < heavyAttacks.Count; i++)
+			{
+				if (anim.GetBool(heavyAttacks[i]))
+					anim.SetBool(heavyAttacks[i], false);
 			}
 		}
 	}
 	public void EnterAnimationLightAttack()
-	{	
-		for (int i = 0; i < lightAttacks.Count; i++)
-		{ 
-			if (!anim.GetBool(lightAttacks[i]))
-			{
-				actionRegister.Add(lightAttacks[i]);
-				currentAnim = i+1;
-				break;		
-			}
-		}
-
-		if (actionsDone.Count>0 && timeBetweenAttacks < timeBeforeResetBasic)
+	{
+		currentAnim++;
+		for (int i = 0; i < currentAnim; i++)
 		{
-			print("caca");
-			for (int i = 0; i < currentAnim; i++)
-			{
-				print(i);
-				anim.SetBool(actionsDone[i], true);
-			}
+			if (i<lightAttacks.Count)
+				anim.SetBool(lightAttacks[i], true);
 		}
-
-		if (!anim.GetBool(actionRegister[0]))
-			anim.SetBool(actionRegister[0], true);
-
 		timeBetweenAttacks = 0f;
 	}
-	/*void playNextAnim()
+	public void EnterAnimationHeavyAttack()
 	{
-		anim.SetBool(actionRegister.Dequeue(), false);
-		anim.SetBool(actionRegister.Peek(), true);
-	}*/
-	void EndAttack()
-	{
+		currentAnim++;
+		for (int i = 0; i < currentAnim; i++)
+		{
+			if (i< heavyAttacks.Count)
+				anim.SetBool(heavyAttacks[i], true);
+		}
 		timeBetweenAttacks = 0f;
-		anim.SetBool(actionRegister[0], false);
-		actionsDone.Add(actionRegister[0]);
-		actionRegister.RemoveAt(0);
+	}
+	void EndAttack1()
+	{
+		anim.SetBool(onLightAttack1, false);
 		thirdPersonController.movementSpeed = 8f;
+		timeBetweenAttacks = 0f;
 	}
-}
+
+	void EndAttack2(AnimationEvent e)
+	{
+		anim.SetBool(onLightAttack2, false);
+		anim.SetBool(onLightAttack1, false);
+		thirdPersonController.movementSpeed = 8f;
+		timeBetweenAttacks = 0f;
+	}
+
+	void EndAttack3(AnimationEvent e)
+	{
+		anim.SetBool(onLightAttack1, false);
+		anim.SetBool(onLightAttack2, false);
+		anim.SetBool(onLightAttack3, false);
+        thirdPersonController.movementSpeed = 8f;
+	}
+
+	void EndHeavyAttack(AnimationEvent e)
+	{
+		anim.SetBool(onHeavyAttack1, false);
+        thirdPersonController.movementSpeed = 8f;
+		timeBetweenAttacks = 0f;
+	}
+
+
+
+		/*
+			void Update ()
+			{
+				if (actionsDone.Count>0)
+				{
+					timeBetweenAttacks += Time.deltaTime;
+					if (timeBetweenAttacks >= timeBeforeResetBasic)
+					{
+						anim.SetBool(actionsDone[0], false);
+						actionsDone.RemoveAt(0);
+						currentAnim = 0;
+						timeBetweenAttacks = 0f;
+					}
+				}
+			}
+			public void EnterAnimationLightAttack()
+			{	
+				for (int i = 0; i < lightAttacks.Count; i++)
+				{ 
+					if (!anim.GetBool(lightAttacks[i]))
+					{
+						actionRegister.Add(lightAttacks[i]);
+						currentAnim = i+1;
+						break;		
+					}
+				}
+
+				if (actionsDone.Count>0 && timeBetweenAttacks < timeBeforeResetBasic)
+				{
+					print("caca");
+					for (int i = 0; i < actionsDone.Count; i++)
+					{
+						print(i);
+						anim.SetBool(actionsDone[i], true);
+					}
+				}
+
+				if (!anim.GetBool(actionRegister[0]))
+					anim.SetBool(actionRegister[0], true);
+
+				timeBetweenAttacks = 0f;
+			}
+			/*void playNextAnim()
+			{
+				anim.SetBool(actionRegister.Dequeue(), false);
+				anim.SetBool(actionRegister.Peek(), true);
+			}
+			void EndAttack()
+			{
+				timeBetweenAttacks = 0f;
+				anim.SetBool(actionRegister[0], false);
+				actionsDone.Add(actionRegister[0]);
+				actionRegister.RemoveAt(0);
+				thirdPersonController.movementSpeed = 8f;
+			}*/
+	}

@@ -13,18 +13,18 @@ public class PlayerController : MonoBehaviour
 	public GameObject topDownCamera;
 
 	public static bool inTopDown = false;
-	public Transform melee;
+	public Transform meleeFront;
 	public float meleeRadius;
 	public float lightAttackDamage;
 	public float heavyAttackDamage;
 	Animator anim;
 
-	float timeBetweenAttacks;
 	bool isJumping;
 	bool onGround;
 	public bool cameraChange;
 	public float boop;
 	Vector3 velocity;
+	public GameObject bloodHit;
 	Rigidbody rb;
 	public Image crosshair;
 	[HideInInspector]
@@ -157,80 +157,89 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) || Input.GetButton("XButton"))
 		{
 			animController.EnterAnimationLightAttack();
-            thirdPersonController.movementSpeed = 2f;
-			timeBetweenAttacks = 0f;
-			if (!inTopDown)
-				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
-			if (enemiesHited.Length > 0)
-			{
-				foreach (var enemy in enemiesHited)
-				{
-					enemy.GetComponent<Enemy>().life -= lightAttackDamage;
-					if (enemy.GetComponent<Rigidbody>()!=null)
-						enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
-				}
-					
-			}
+            thirdPersonController.movementSpeed = 2f;		
 		}
 		if (Input.GetMouseButtonDown(1) || Input.GetButton("YButton"))
 		{
-			//animController.actionRegister.Add(2);
-			//animController.EnterAnimationAttack();
-			timeBetweenAttacks = 0f;
+			animController.EnterAnimationHeavyAttack();
+
 			thirdPersonController.movementSpeed = 2f;
-            if (!inTopDown)
-				transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-			var enemiesHited = Physics.OverlapSphere(melee.position, meleeRadius, LayerMask.GetMask("Enemy"));
-			if (enemiesHited.Length > 0)
+        
+		}
+	}
+	void DoDamageLightAttack1()
+	{
+		if (!inTopDown)
+			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+		if (enemiesHited.Length > 0)
+		{
+			foreach (var enemy in enemiesHited)
 			{
-				foreach (var enemy in enemiesHited)
-				{
-					enemy.GetComponent<Enemy>().life -= heavyAttackDamage;
-					if (enemy.GetComponent<Rigidbody>() != null)	
-						enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * (boop*1.5f));
-				}
+				var e = enemy.GetComponent<Enemy>();
+				e.life -= lightAttackDamage;
+				Instantiate(bloodHit, e.head.transform);
+				if (enemy.GetComponent<Rigidbody>() != null)
+					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
 				
 			}
 		}
 	}
-
-	/*
-	void EndAttack1()
+	void DoDamageLightAttack2()
 	{
-		//if (timeBetweenAttacks > 1.5f)
-		anim.SetBool(onAttack1Hash, false);
-
-        thirdPersonController.movementSpeed = 8f;
-    }
-
-	void EndAttack2(AnimationEvent e)
-	{
-		if (timeBetweenAttacks > 1.5f)
+		if (!inTopDown)
+			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+		var enemiesHited = Physics.OverlapSphere(transform.position, meleeRadius*2, LayerMask.GetMask("Enemy"));
+		if (enemiesHited.Length > 0)
 		{
-			anim.SetBool(onAttack2Hash, false);
-			anim.SetBool(onAttack1Hash, false);
+			foreach (var enemy in enemiesHited)
+			{
+				var e = enemy.GetComponent<Enemy>();
+				e.life -= lightAttackDamage;
+				Instantiate(bloodHit, e.head.transform);
+				if (enemy.GetComponent<Rigidbody>() != null)
+					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
+			}
+
 		}
-        thirdPersonController.movementSpeed = 8f;
-
-    }
-   
-    void EndAttack3(AnimationEvent e)
+	}
+	void DoDamageLightAttack3()
 	{
-		/*if (timeBetweenAttacks > 1.5f)
+		if (!inTopDown)
+			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+		if (enemiesHited.Length > 0)
 		{
-			anim.SetBool(onAttack3Hash, false);
-			anim.SetBool(onAttack2Hash, false);
-			anim.SetBool(onAttack1Hash, false);
-        }
-        thirdPersonController.movementSpeed = 8f;
-    }
+			foreach (var enemy in enemiesHited)
+			{
+				var e = enemy.GetComponent<Enemy>();
+				e.life -= lightAttackDamage;
+				Instantiate(bloodHit, e.head.transform);
+				if (enemy.GetComponent<Rigidbody>() != null)
+					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
+			}
 
-	void EndHeavyAttack(AnimationEvent e)
+		}
+	}
+	void DoDamageHeavyAttack1()
 	{
-		anim.SetBool(onHeavyAttackHash, false);
-        thirdPersonController.movementSpeed = 8f;
-    }*/
+		if (!inTopDown)
+			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+		if (enemiesHited.Length > 0)
+		{
+			foreach (var enemy in enemiesHited)
+			{
+				var e = enemy.GetComponent<Enemy>();
+				e.life -= heavyAttackDamage;
+				Instantiate(bloodHit, e.head.transform);
+			
+				if (enemy.GetComponent<Rigidbody>() != null)
+					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop*1.5f);
+			}
+
+		}
+	}
 	void EndJump()
 	{
 		anim.SetBool("OnJump", false);
@@ -240,7 +249,7 @@ public class PlayerController : MonoBehaviour
 		Gizmos.color = Color.cyan;
 		if (Input.GetKey(KeyCode.E))
 		{
-			Gizmos.DrawSphere(melee.position, meleeRadius);
+			Gizmos.DrawSphere(meleeFront.position, meleeRadius);
 		}
 	}
 }
