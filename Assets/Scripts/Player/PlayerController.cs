@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
 	bool isJumping;
 	bool onGround;
+	public bool promedyTarget;
 	public bool cameraChange;
 	public float boop;
 	Vector3 velocity;
@@ -79,6 +80,17 @@ public class PlayerController : MonoBehaviour
 		{
 			inTopDown = !inTopDown;
 			cameraChange = true;
+
+			if (promedyTarget && !inTopDown)
+			{
+				topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = false;
+			}
+			else if (promedyTarget)
+			{
+				topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = true;
+			}
+			
+
 		}
 
 		if (cameraChange)
