@@ -23,6 +23,8 @@ public class BossRoom : MonoBehaviour {
 			vomit.SetActive(true);
 			slow.SetActive(true);
 			bridge.SetActive(false);
+
+            GetComponent<BoxCollider>().enabled = false;
 		}
 
 	}

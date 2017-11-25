@@ -98,7 +98,7 @@ public class ThirdPersonCameraController : MonoBehaviour
         else if (isTargeting && (Input.GetKeyDown(KeyCode.Tab) || onePress == false))
         {
             if (los.currentTarget != null)
-                nearestEnemy.GetComponent<Renderer>().material.color = Color.black;
+				nearestEnemy.GetComponentInChildren<Renderer>().material.color = Color.black;
             nearestEnemy = null;
             los.currentTarget = null;
             isTargeting = false;
@@ -112,7 +112,7 @@ public class ThirdPersonCameraController : MonoBehaviour
         else if (isTargeting && !los.targetalive)
         {
             if (los.currentTarget != null)
-                nearestEnemy.GetComponent<Renderer>().material.color = Color.black;
+				nearestEnemy.GetComponentInChildren<Renderer>().material.color = Color.black;
             nearestEnemy = null;
             los.currentTarget = null;
             isTargeting = false;

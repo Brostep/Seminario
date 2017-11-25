@@ -9,6 +9,8 @@ public class Worm : Enemy{
 	GameManager gameManager;
 	GameObject player;
 	GameObject playerHead;
+	Animator anim;
+	ParticleSystem deathParticles;
 	bool canAttack;
 	public float cdAttack;
 	public float leapDistance;
@@ -29,6 +31,8 @@ public class Worm : Enemy{
 		var index = enemySpawner.enemiesSpawned;
 		transform.position = spawners[index].transform.position;
 		life = gameManager.wormLife;
+		anim = GetComponent<Animator>();
+		deathParticles = GetComponentInChildren<ParticleSystem>();
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -41,7 +45,7 @@ public class Worm : Enemy{
 		
 		//player
 		if (c.gameObject.layer == 8)
-			c.gameObject.GetComponent<PlayerController>().life -= damage;
+			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
 	}
 	void Update()
 	{
@@ -54,9 +58,18 @@ public class Worm : Enemy{
 
 		if (life <= 0)
 		{
-			enemySpawner.totalEnemies--;
-			enemySpawner.enemiesAlive--;
-			EnemySpawner.Instance.ReturnWormToPool(this);
+			anim.SetBool("OnDeath", true);
+
+			if (!deathParticles.isPlaying)
+				deathParticles.Play();
+		}
+
+		//Agrego esto por si el spawn del gusano es una distancia donde no encuentra al player.
+
+		if (player == null) 
+		{
+			player = FindObjectOfType<PlayerController>().gameObject;
+			playerHead = player.GetComponentInChildren<Head>().gameObject;
 		}
 	}
 	void checkDistanceToPlayer()
@@ -82,9 +95,7 @@ public class Worm : Enemy{
 
 	void leapAttack()
 	{
-		var distance = playerHead.transform.position - transform.position;
-		var direction = distance.normalized;
-		GetComponent<Rigidbody>().AddForce((direction * leapForce * (distance.magnitude/2)));
+        anim.SetBool("OnCharge", true);
 	}
 
 	public Worm Factory(Worm obj)
@@ -95,5 +106,27 @@ public class Worm : Enemy{
 	void OnDrawGizmos()
 	{
 		Gizmos.DrawWireSphere(transform.position, leapDistance);
+	}
+
+    public void EndCharge()
+    {
+        anim.SetBool("OnCharge", false);
+
+        var distance = playerHead.transform.position - transform.position;
+        var direction = distance.normalized;
+        GetComponent<Rigidbody>().AddForce((direction * leapForce * (distance.magnitude / 2)));
+
+    }
+
+
+    public void EndDeath() 
+	{
+		Debug.Log ("DIE WORM");
+		enemySpawner.totalEnemies--;
+		enemySpawner.enemiesAlive--;
+		anim.SetBool("OnDeath", false);
+		deathParticles.Stop();
+		EnemySpawner.Instance.ReturnWormToPool(this);
+
 	}
 }

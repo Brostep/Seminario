@@ -12,6 +12,7 @@ public class LineOfSight : MonoBehaviour
 	public Transform target;
 	public GameObject currentTarget;
 	public Material enemyColor;
+	public Material enemyTrailColor;
 	Transform inSight;
 	Camera cam;
 	public bool targetalive;
@@ -48,13 +49,13 @@ public class LineOfSight : MonoBehaviour
 			if (sqrDistance < sightDistance * sightDistance && angle < sightAngle / 2f)
 			{
 				RaycastHit rch;
-				if (Physics.Raycast(my.position, deltaPos, out rch, sightDistance, targetLayer))
-				{
+				if (Physics.Raycast (my.position, deltaPos, out rch, sightDistance, targetLayer)) {
 					if (currentTarget != null)
-						currentTarget.GetComponent<Renderer>().material = enemyColor;
+						currentTarget.GetComponentInChildren<Renderer>().material = enemyColor;
 
 					currentTarget = rch.collider.gameObject;
-					currentTarget.GetComponent<Renderer>().material.color = Color.red;
+
+					currentTarget.GetComponentInChildren<Renderer>().material.color = Color.red;
 				}
 			}
 		}		

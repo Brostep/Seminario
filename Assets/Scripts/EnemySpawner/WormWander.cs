@@ -5,10 +5,19 @@ using UnityEngine;
 public class WormWander : Enemy {
 
 	GameManager gm;
+	TrailRenderer _tr;
+	Animator anim;
+	ParticleSystem deathParticles;
 	public float damage;
+
 	private void Start()
 	{
 		gm = FindObjectOfType<GameManager>();
+		anim = GetComponent<Animator>();
+		deathParticles = GetComponentInChildren<ParticleSystem>();
+
+		//Debug.Log(_tr.positionCount);
+
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -20,14 +29,24 @@ public class WormWander : Enemy {
 		
 		//player
 		if (c.gameObject.layer == 8)
-			c.gameObject.GetComponent<PlayerController>().life -= damage;
+			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
 	}
 	private void Update()
 	{
 		if (life <= 0)
 		{
-			gm.enemiesDead++;
-			this.gameObject.SetActive(false);
+			anim.SetBool("OnDeath", true);
+
+			if (!deathParticles.isPlaying)
+				deathParticles.Play();
 		}
+	}
+
+	public void EndDeath()
+	{
+		gm.enemiesDead++;
+		anim.SetBool("OnDeath", false);
+		this.gameObject.SetActive(false);
+		deathParticles.Stop();
 	}
 }

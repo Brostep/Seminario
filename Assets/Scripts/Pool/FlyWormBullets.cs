@@ -61,7 +61,7 @@ public class FlyWormBullets : Bullet {
 	{
 		if (c.gameObject.layer == 8)
 		{
-			c.gameObject.GetComponent<PlayerController>().life -= damage;
+			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
 		}
 
 		GameManager.Instance.ReturnBulletToPool(this);

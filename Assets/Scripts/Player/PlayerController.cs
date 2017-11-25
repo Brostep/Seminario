@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject bloodHit;
 	Rigidbody rb;
 	public Image crosshair;
+	public Image lifeBar;
+	private float _currentLife;
 	[HideInInspector]
 	public float movementSpeed;
 	[SerializeField]
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
 			
 
 		}
-
+			
 		if (cameraChange)
 			ChangeMovement();
 		// chekea si esta en el piso, no aplica gravedad
@@ -251,6 +253,14 @@ public class PlayerController : MonoBehaviour
 			}
 
 		}
+	}
+
+	public void TakeDamage(float damage)
+	{
+		Debug.Log ("ME ESTAN HACIENDO DAÑO");
+		damage = damage / 100;
+
+		lifeBar.fillAmount -= damage;
 	}
 	void EndJump()
 	{

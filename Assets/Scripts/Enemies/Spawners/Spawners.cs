@@ -46,7 +46,7 @@ public class Spawners : Enemy {
 			Destroy(gameObject);
 		}
 
-		if (life <= (_life - (waves * 12))&&alive)
+		if (life <= (_life - (waves * 10))&&alive)
 		{
 			anim.SetBool("Dig", true);
 			GetComponent<CapsuleCollider>().enabled = false;
@@ -106,7 +106,8 @@ public class Spawners : Enemy {
 					var randPosX = Random.Range(gm.spawners[gm.currentSpawn].transform.position.x - 3, gm.spawners[gm.currentSpawn].transform.position.x + 3);
 					var randPosZ = Random.Range(gm.spawners[gm.currentSpawn].transform.position.z - 3, gm.spawners[gm.currentSpawn].transform.position.z + 3);
 					var randPos = new Vector3(randPosX, 0, randPosZ);
-					Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
+
+					//Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
 				}
 				transform.position = gm.spawners[gm.currentSpawn].transform.position-offset;
 		
