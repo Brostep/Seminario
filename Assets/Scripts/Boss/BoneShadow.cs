@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class BoneShadow : MonoBehaviour {
 
-	void OnCollisionEnter(Collision c)
+	public Vector3 maxScale;
+	[Range(0f,1f)]
+	public float distanceNormalized = 0;
+	float currentTime;
+	public float timeLapse;
+
+	public float lifeTime;
+	float timePass;
+	private void Update()
 	{
-		if (c.gameObject.layer == 14)
+		if (currentTime < timeLapse)
 		{
-			Destroy(this.gameObject);
+			currentTime += Time.deltaTime;
+			distanceNormalized = Mathf.Lerp(0, 1, currentTime / timeLapse);
 		}
+		transform.localScale = maxScale * distanceNormalized;
+
+		timePass += Time.deltaTime;
+		if (timePass > lifeTime)
+			Destroy(this.gameObject);
 	}
 }

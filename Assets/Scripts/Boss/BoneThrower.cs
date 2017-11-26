@@ -13,14 +13,16 @@ public class BoneThrower : MonoBehaviour {
 	{
 		timePass += Time.deltaTime;
 		if (timePass> timeBeteweenSpawn)
-		{
-			var x = Random.Range(transform.position.x - 16f, transform.position.x + 16f);
-			var z = Random.Range(transform.position.z - 22f, transform.position.z + 10.5f);
+		{												//16						//16
+			var x = Random.Range(transform.position.x - 8f, transform.position.x + 8f);
+														//22						//10.5
+			var z = Random.Range(transform.position.z - 8f, transform.position.z + 8f);
 			Vector3 randPos = new Vector3(x, transform.position.y,z);
 			Vector3 randPosY = new Vector3(x, 11.53f, z);
 			Instantiate(bone, randPos, Quaternion.identity);
 			Instantiate(shadowBone, randPosY, Quaternion.identity);
 			timePass = 0f;
 		}
+
 	}
 }
