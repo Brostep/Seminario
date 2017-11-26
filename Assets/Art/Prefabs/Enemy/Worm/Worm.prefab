@@ -809,7 +809,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047171953396846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.589422, y: 0, z: -1.7534351}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4547651162454416}
@@ -1311,6 +1311,9 @@ MonoBehaviour:
   leapForce: 150
   leapProbability: 30
   damage: 2
+  meleeRadius: 1
+  boop: 280
+  range: {fileID: 1442318001696614, guid: d747afb83935041428c63f2d62ffa827, type: 2}
 --- !u!114 &114804191023005680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1348,6 +1351,7 @@ MonoBehaviour:
   alignmentMult: 1
   cohesionMult: 1
   separationMult: 1.5
+  attacking: 0
   drawFlockingGizmos: 0
 --- !u!136 &136495850103588680
 CapsuleCollider:
@@ -1361,7 +1365,7 @@ CapsuleCollider:
   m_Radius: 0.39
   m_Height: 1.68
   m_Direction: 2
-  m_Center: {x: 3.596385e-16, y: 0.4, z: 0.06}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!137 &137923994672390478
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1500,7 +1504,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 678284777
+  randomSeed: -498495526
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4817,7 +4821,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 289652559
+  randomSeed: 1983800552
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8062,7 +8066,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1229173308
+  randomSeed: 38047169
   InitialModule:
     serializedVersion: 3
     enabled: 1

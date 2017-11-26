@@ -10,9 +10,12 @@ public class EnemySpawner : MonoBehaviour
     public int waves;
     public int totalEnemies;
     public int enemiesSpawned;
-    public GameObject door;
+	public int enemiesAlive;
+	public GameObject door;
 	public bool allSpawnerDeads;
-    public int enemiesAlive;
+	public bool whanderComplete;
+	bool canUpdate;
+
     public Worm wormPrefab;
     public FlyWorm flyWormPrefab;
 	private Pool<Worm> wormPool;
@@ -30,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
 		flyWormPool = new Pool<FlyWorm>(totalEnemies/3, FlyWormFactory, flyWormPrefab.InitializePool, flyWormPrefab.DisposePool, true);
     }
 
-    void Start()
+    void SpawnFirstWave()
     {
         Utility.KnuthShuffle<GameObject>(spawners);
         enemiesPerWave = totalEnemies / waves;
@@ -55,17 +58,26 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-		if (allSpawnerDeads && enemiesAlive == 0 && door.activeSelf)
-        {
-            door.SetActive(false);
-        }
+		if (whanderComplete)
+		{
+			SpawnFirstWave();
+			canUpdate = true;
+			whanderComplete = false;
+		}
+		if (canUpdate)
+		{
+			if (allSpawnerDeads && enemiesAlive == 0 && door.activeSelf)
+			{
+				door.SetActive(false);
+			}
 
-        if (!allSpawnerDeads&&enemiesAlive == 0 && totalEnemies > 0 && wave < waves)
-        {
-            enemiesSpawned = 0;
-			wave++;
-			StartCoroutine(SpawnVawe(spawnPerVawe[wave]));
-		
+			if (!allSpawnerDeads && enemiesAlive == 0 && totalEnemies > 0 && wave < waves)
+			{
+				enemiesSpawned = 0;
+				wave++;
+				StartCoroutine(SpawnVawe(spawnPerVawe[wave]));
+
+			}
 		}
     }
 
@@ -87,7 +99,7 @@ public class EnemySpawner : MonoBehaviour
 
             enemiesAlive++;
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(1f);
         }
     }
 

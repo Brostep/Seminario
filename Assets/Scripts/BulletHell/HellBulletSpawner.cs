@@ -21,10 +21,9 @@ public class HellBulletSpawner : MonoBehaviour
 	public bool inRoom;
     private float currentTime;
 
+	//Pool
     private int lastIndex;
-
 	private Pool<HellBullet> _hellBulletPool;
-
 	private static HellBulletSpawner _instance;
 	public static HellBulletSpawner Instance { get { return _instance; } }
 
@@ -33,7 +32,7 @@ public class HellBulletSpawner : MonoBehaviour
 		_instance = this;
 		_hellBulletPool = new Pool<HellBullet>(80, BulletFactory, hellBulletPrefab.InitializePool, hellBulletPrefab.DisposePool, true);
 		lastIndex = -1;
-    }
+    }//
 
     void Update()
     {
@@ -46,7 +45,7 @@ public class HellBulletSpawner : MonoBehaviour
 				var t = currentTime / timeLapse;
 
 				var index = Mathf.FloorToInt(spawnPoints.Length * curve.Evaluate(t));
-
+				//Pool
 				if (index != lastIndex)
 				{
 					_hellBulletPool.GetObjectFromPool();
@@ -54,7 +53,7 @@ public class HellBulletSpawner : MonoBehaviour
 					spawnRotation = spawnPoints[index].transform.rotation;
 
 					lastIndex = index;
-				}
+				}//
 			}
 			else
 			{
@@ -64,6 +63,7 @@ public class HellBulletSpawner : MonoBehaviour
 			currentTime += Time.deltaTime;
 		}  
     }
+	//pool
 	private HellBullet BulletFactory()
 	{
 		return Instantiate<HellBullet>(hellBulletPrefab);

@@ -8,15 +8,20 @@ public class WormWander : Enemy {
 	TrailRenderer _tr;
 	Animator anim;
 	ParticleSystem deathParticles;
+	FlockingWander flocking;
+	PlayerController player;
+	float velocityLimit;
+	bool canAttack;
 	public float damage;
 
 	private void Start()
 	{
 		gm = FindObjectOfType<GameManager>();
+		player = FindObjectOfType<PlayerController>();
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
-
-		//Debug.Log(_tr.positionCount);
+		flocking = GetComponent<FlockingWander>();
+		velocityLimit = 4.5f;
 
 	}
 	void OnCollisionEnter(Collision c)
@@ -26,10 +31,7 @@ public class WormWander : Enemy {
 			Instantiate(gm.bloodWorm, head.transform);
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
 		}
-		
-		//player
-		if (c.gameObject.layer == 8)
-			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+
 	}
 	private void Update()
 	{
@@ -40,6 +42,16 @@ public class WormWander : Enemy {
 			if (!deathParticles.isPlaying)
 				deathParticles.Play();
 		}
+		var distance = player.transform.position - transform.position;
+		if (distance.magnitude < 1.3f)
+		{
+			transform.LookAt(player.transform);
+			flocking.velocityLimit = 6f;
+			GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, -0.3f);
+			anim.SetBool("OnMeleeAttack", true);
+			canAttack = false;
+			flocking.attacking = true;
+		}
 	}
 
 	public void EndDeath()
@@ -49,4 +61,24 @@ public class WormWander : Enemy {
 		this.gameObject.SetActive(false);
 		deathParticles.Stop();
 	}
+
+	void OnMeleeAttack()
+	{
+		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
+		var enemiesHited = Physics.OverlapBox(head.transform.position, new Vector3(0.5f, 0.5f, 1f), transform.rotation, LayerMask.GetMask("Player"));
+		if (enemiesHited.Length > 0)
+		{
+			foreach (var enemy in enemiesHited)
+			{
+				var e = enemy.GetComponent<PlayerController>();
+				e.TakeDamage(damage);
+			}
+		}
+		flocking.velocityLimit = velocityLimit;
+		canAttack = true;
+		anim.SetBool("OnMeleeAttack", false);
+		GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, 0f);
+		flocking.attacking = false;
+	}
+
 }

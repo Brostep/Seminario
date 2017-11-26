@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Worm : Enemy{
+public class Worm : Enemy
+{
 
 	EnemySpawner enemySpawner;
 	GameManager gameManager;
@@ -11,21 +12,28 @@ public class Worm : Enemy{
 	GameObject playerHead;
 	Animator anim;
 	ParticleSystem deathParticles;
+	Flocking flocking;
 	bool canAttack;
+	float velocityLimit;
 	public float cdAttack;
 	public float leapDistance;
 	float _cdAttack;
 	float _failCdAttack;
 	public float leapForce;
-	[Range(0f,100f)]
+	[Range(0f, 100f)]
 	public float leapProbability = 0.65f;
 	public float damage;
+	public float meleeRadius;
+	public float boop;
+	public GameObject range;
 
 	public override void Initialize()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
 		gameManager = FindObjectOfType<GameManager>();
 		player = FindObjectOfType<PlayerController>().gameObject;
+		flocking = GetComponent<Flocking>();
+		velocityLimit = flocking.velocityLimit;
 		playerHead = player.GetComponentInChildren<Head>().gameObject;
 		var spawners = enemySpawner.spawners;
 		var index = enemySpawner.enemiesSpawned;
@@ -42,9 +50,7 @@ public class Worm : Enemy{
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
 			Instantiate(gameManager.bloodWorm, head.transform);
 		}
-		
-		//player
-		if (c.gameObject.layer == 8)
+		if (c.gameObject.layer == 8 && anim.GetBool("OnCharge"))
 			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
 	}
 	void Update()
@@ -66,7 +72,7 @@ public class Worm : Enemy{
 
 		//Agrego esto por si el spawn del gusano es una distancia donde no encuentra al player.
 
-		if (player == null) 
+		if (player == null)
 		{
 			player = FindObjectOfType<PlayerController>().gameObject;
 			playerHead = player.GetComponentInChildren<Head>().gameObject;
@@ -75,11 +81,11 @@ public class Worm : Enemy{
 	void checkDistanceToPlayer()
 	{
 		var distance = player.transform.position - transform.position;
-		
+
 		if (distance.magnitude < leapDistance)
 		{
 			var chance = Utility.random.NextDouble();
-			if (chance < (leapProbability/100f))
+			if (chance < (leapProbability / 100f))
 			{
 				_cdAttack = 0f;
 				canAttack = false;
@@ -91,11 +97,20 @@ public class Worm : Enemy{
 				leapAttack();
 			}
 		}
+		if (distance.magnitude < 4f)
+		{
+			transform.LookAt(player.transform);
+			flocking.velocityLimit = 2.5f;
+			GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, -0.3f);
+			anim.SetBool("OnMeleeAttack", true);
+			canAttack = false;
+			flocking.attacking = true;
+		}
 	}
 
 	void leapAttack()
 	{
-        anim.SetBool("OnCharge", true);
+		anim.SetBool("OnCharge", true);
 	}
 
 	public Worm Factory(Worm obj)
@@ -106,27 +121,45 @@ public class Worm : Enemy{
 	void OnDrawGizmos()
 	{
 		Gizmos.DrawWireSphere(transform.position, leapDistance);
+		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawCube(headPos, new Vector3(1f, 1f, 2f));
 	}
 
-    public void EndCharge()
-    {
-        anim.SetBool("OnCharge", false);
-
-        var distance = playerHead.transform.position - transform.position;
-        var direction = distance.normalized;
-        GetComponent<Rigidbody>().AddForce((direction * leapForce * (distance.magnitude / 2)));
-
-    }
-
-
-    public void EndDeath() 
+	void EndCharge()
 	{
-		Debug.Log ("DIE WORM");
+		anim.SetBool("OnCharge", false);
+
+		var distance = playerHead.transform.position - transform.position;
+		var direction = distance.normalized;
+		GetComponent<Rigidbody>().AddForce((direction * leapForce * (distance.magnitude / 2)));
+
+	}
+	void EndDeath()
+	{
 		enemySpawner.totalEnemies--;
 		enemySpawner.enemiesAlive--;
 		anim.SetBool("OnDeath", false);
 		deathParticles.Stop();
 		EnemySpawner.Instance.ReturnWormToPool(this);
-
 	}
+	void OnMeleeAttack()
+	{
+		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
+		var enemiesHited = Physics.OverlapBox(head.transform.position, new Vector3(0.5f, 0.5f, 1f), transform.rotation, LayerMask.GetMask("Player"));
+		if (enemiesHited.Length > 0)
+		{
+			foreach (var enemy in enemiesHited)
+			{
+				var e = enemy.GetComponent<PlayerController>();
+				e.TakeDamage(damage);
+			}
+		}
+		flocking.velocityLimit = velocityLimit;
+		canAttack = true;
+		anim.SetBool("OnMeleeAttack", false);
+		GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, 0f);
+		flocking.attacking = false;
+	}
+
 }

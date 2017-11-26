@@ -46,11 +46,11 @@ public class GameManager : MonoBehaviour {
 		spawnersAlive = cantSpawners;
 		Utility.KnuthShuffle<GameObject>(spawners);
 	}
-	private void Update()
+	void Update()
 	{
 		if (!activated && enemiesDead >= enemiesOnStart.Count)
 		{
-			activateEnemySpawners.SetActive(true);
+			enemySpawners.whanderComplete = true;
 			activated = true;
 			for (int i = 0; i < cantSpawners; i++)
 			{
