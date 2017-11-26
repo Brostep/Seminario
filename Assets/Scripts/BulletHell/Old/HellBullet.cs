@@ -8,7 +8,7 @@ public class HellBullet : Bullet
 	{
 		_timeAlive = 0f;
 
-		setTransform(HellBulletSpawner.Instance.spawnPosition, HellBulletSpawner.Instance.spawnRotation);
+		setTransform(BulletHellSpawner.Instance.SpawnPosition, BulletHellSpawner.Instance.SpawnRotation);
 	}
 	public void setTransform(Vector3 position, Quaternion rotation)
 	{
@@ -24,16 +24,16 @@ public class HellBullet : Bullet
 	private void FixedUpdate()
 	{
 		if (_timeAlive >= lifeSpan)
-			HellBulletSpawner.Instance.ReturnBulletToPool(this);
+			BulletHellSpawner.Instance.ReturnBulletToPool(this);
 		else
 			transform.position += transform.forward * speed * Time.deltaTime;
 	}
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject.layer == 9)
+		if (collision.gameObject.layer == 9 && this.gameObject.layer == 14)
 		{
-			HellBulletSpawner.Instance.ReturnBulletToPool(this);
+			BulletHellSpawner.Instance.ReturnBulletToPool(this);
 		}
 	}
 }

@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Matcap 4
-  m_Shader: {fileID: 4800000, guid: 48156e284ba02804fbd52b20cab44714, type: 3}
+  m_Name: BulletIndestructible
+  m_Shader: {fileID: 4800000, guid: 8f74f4ff56fe3a844a89d6876bf590ba, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 1
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,10 +19,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: f9d591424f5a1a745bcd2b5a539760b4, type: 3}
+        m_Texture: {fileID: 2800000, guid: b2430f6515350fc4d97463dc18f8afc3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Float1: 0.231
+    - _Float1: 0.402
     - __dirty: 0
     m_Colors: []
