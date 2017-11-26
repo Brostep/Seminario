@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114643550377860574}
   m_Layer: 18
   m_Name: BossIndestructibleBullet
-  m_TagString: Untagged
+  m_TagString: Indestructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e21f1fd6df94e47b283a6dbce78915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 12
   lifeSpan: 5
   damage: 0
 --- !u!135 &135601531856312908

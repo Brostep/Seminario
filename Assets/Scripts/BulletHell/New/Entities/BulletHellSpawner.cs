@@ -1,167 +1,198 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletHellSpawner : MonoBehaviour
 {
-	public enum PatternStrategies
-	{
-		Pattern1,
-		Pattern2,
-		Pattern3
-	}
+    public enum PatternStrategies
+    {
+        Pattern1,
+        Pattern2,
+        Pattern3
+    }
 
-	public PatternStrategies bulletHellPatterns;
+    public PatternStrategies bulletHellPatterns;
 
-	private IPatternBehaviour bulletHellStrategy;
+    private IPatternBehaviour bulletHellStrategy;
 
-	public HellBullet prefab;
+    public HellBullet normalBullet;
 
-	public float fireRate;
+    public HellBullet godlikeBullet;
 
-	private float currentTime;
+    public float fireRate;
 
-	public Transform[] spawners;
+    private float currentTime;
 
-	private Pool<HellBullet> bulletHellPool;
+    private float currentTime2;
 
-	private static BulletHellSpawner instance;
+    public List<Transform> spawners;
 
-	public static BulletHellSpawner Instance { get { return instance; } }
+    private Pool<HellBullet> bulletHellPool;
 
-	public Vector3 SpawnPosition { get; private set; }
+    private Pool<HellBullet> godlikePool;
 
-	public Quaternion SpawnRotation { get; private set; }
+    private static BulletHellSpawner instance;
 
-	private int index;
+    public static BulletHellSpawner Instance { get { return instance; } }
 
-	private void Awake()
-	{
-		switch (bulletHellPatterns)
-		{
-			case PatternStrategies.Pattern1:
-				bulletHellStrategy = new Pattern1();
-				break;
+    public Vector3 SpawnPosition { get; private set; }
 
-			case PatternStrategies.Pattern2:
-				bulletHellStrategy = new Pattern2();
-				break;
+    public Quaternion SpawnRotation { get; private set; }
 
-			case PatternStrategies.Pattern3:
-				bulletHellStrategy = new Pattern3();
-				break;
-		}
-	}
+    private int index;
 
-	private void Start()
-	{
-		instance = this;
+    private void Awake()
+    {
+        switch (bulletHellPatterns)
+        {
+            case PatternStrategies.Pattern1:
+                bulletHellStrategy = new Pattern1();
+                break;
 
-		bulletHellPool = new Pool<HellBullet>(20, BulletFactory, prefab.InitializePool, prefab.DisposePool, true);
+            case PatternStrategies.Pattern2:
+                bulletHellStrategy = new Pattern2();
+                break;
 
-		currentTime = fireRate;
-	}
+            case PatternStrategies.Pattern3:
+                bulletHellStrategy = new Pattern3();
+                break;
+        }
+    }
 
-	private void Update()
-	{
-		currentTime += Time.deltaTime;
+    private void Start()
+    {
+        instance = this;
 
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-			bulletHellStrategy = new Pattern1();
+        bulletHellPool = new Pool<HellBullet>(20, BulletFactory, normalBullet.InitializePool, normalBullet.DisposePool, true);
 
-		else if (Input.GetKeyDown(KeyCode.Alpha2))
-			bulletHellStrategy = new Pattern2();
+        godlikePool = new Pool<HellBullet>(10, GodlikeBulletFactory, godlikeBullet.InitializePool, godlikeBullet.DisposePool, true);
 
-		else if (Input.GetKeyDown(KeyCode.Alpha3))
-			bulletHellStrategy = new Pattern3();
+        currentTime = fireRate;
+    }
 
-		if (currentTime >= fireRate)
-		{
-			PerformPattern();
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+        currentTime2 += Time.deltaTime;
 
-			currentTime = 0.0f;
-		}
-	}
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            bulletHellStrategy = new Pattern1();
 
-	public void PerformPattern()
-	{
-		switch (bulletHellStrategy.Shoot())
-		{
-			case 1:
-				SpawnPosition = spawners[0].transform.position;
-				SpawnRotation = spawners[0].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            bulletHellStrategy = new Pattern2();
 
-				SpawnPosition = spawners[1].transform.position;
-				SpawnRotation = spawners[1].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            bulletHellStrategy = new Pattern3();
 
-				SpawnPosition = spawners[2].transform.position;
-				SpawnRotation = spawners[2].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+        if (currentTime >= fireRate)
+        {
+            PerformPattern();
 
-				SpawnPosition = spawners[3].transform.position;
-				SpawnRotation = spawners[3].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+            currentTime = 0.0f;
+        }
 
-				SpawnPosition = spawners[4].transform.position;
-				SpawnRotation = spawners[4].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
-				break;
+        if (bulletHellStrategy.Shoot() == 2 && currentTime2 >= fireRate / 3)
+        {
+            ExecutePattern();
 
-			case 2:
-				StartCoroutine(ExecutePattern());
-				break;
+            currentTime2 = 0.0f;
+        }
+    }
 
-			case 3:
-				SpawnPosition = spawners[0].transform.position;
-				SpawnRotation = spawners[0].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+    public void PerformPattern()
+    {
+        switch (bulletHellStrategy.Shoot())
+        {
+            case 1:
+                SpawnPosition = spawners[0].transform.position;
+                SpawnRotation = spawners[0].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-				SpawnPosition = spawners[1].transform.position;
-				SpawnRotation = spawners[1].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
-				/*
-				SpawnPosition = spawners[2].transform.position;
-				SpawnRotation = spawners[2].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
-				*/
-				SpawnPosition = spawners[3].transform.position;
-				SpawnRotation = spawners[3].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
+                SpawnPosition = spawners[1].transform.position;
+                SpawnRotation = spawners[1].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-				SpawnPosition = spawners[4].transform.position;
-				SpawnRotation = spawners[4].transform.rotation;
-				bulletHellPool.GetObjectFromPool();
-				break;
-		}
-	}
+                SpawnPosition = spawners[2].transform.position;
+                SpawnRotation = spawners[2].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-	IEnumerator ExecutePattern()
-	{
-		SpawnPosition = spawners[index].transform.position;
-		SpawnRotation = spawners[index].transform.rotation;
-		bulletHellPool.GetObjectFromPool();
+                SpawnPosition = spawners[3].transform.position;
+                SpawnRotation = spawners[3].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-		if (index >= 0 && index < 4)
-		{
-			index++;
-		}
+                SpawnPosition = spawners[4].transform.position;
+                SpawnRotation = spawners[4].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
+                break;
 
-		else
-		{
-			index = 0;
-		}
-		
-		yield return null;
-	}
+            case 3:
+                SpawnPosition = spawners[0].transform.position;
+                SpawnRotation = spawners[0].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-	private HellBullet BulletFactory()
-	{
-		return Instantiate(prefab);
-	}
+                SpawnPosition = spawners[1].transform.position;
+                SpawnRotation = spawners[1].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
 
-	public void ReturnBulletToPool(HellBullet bullet)
-	{
-		bulletHellPool.DisablePoolObject(bullet);
-	}
+                SpawnPosition = spawners[2].transform.position;
+                SpawnRotation = spawners[2].transform.rotation;
+                godlikePool.GetObjectFromPool();
+
+                SpawnPosition = spawners[3].transform.position;
+                SpawnRotation = spawners[3].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
+
+                SpawnPosition = spawners[4].transform.position;
+                SpawnRotation = spawners[4].transform.rotation;
+                bulletHellPool.GetObjectFromPool();
+                break;
+        }
+    }
+
+    private void ExecutePattern()
+    {
+        var rndPrefab = Random.Range(0, 10);
+
+        if (rndPrefab <= 5)
+        {
+            SpawnPosition = spawners[index].transform.position;
+            SpawnRotation = spawners[index].transform.rotation;
+            bulletHellPool.GetObjectFromPool();
+        }
+
+        else
+        {
+            SpawnPosition = spawners[index].transform.position;
+            SpawnRotation = spawners[index].transform.rotation;
+            godlikePool.GetObjectFromPool();
+        }
+
+        index++;
+
+        if (index == 4)
+        {
+            spawners.Reverse();
+
+            index = 0;
+        }
+    }
+
+    private HellBullet BulletFactory()
+    {
+        return Instantiate(normalBullet);
+    }
+
+    private HellBullet GodlikeBulletFactory()
+    {
+        return Instantiate(godlikeBullet);
+    }
+
+    public void ReturnBulletToPool(HellBullet bullet)
+    {
+        bulletHellPool.DisablePoolObject(bullet);
+    }
+
+    public void ReturnGodlikeBulletToPool(HellBullet godlikeBullet)
+    {
+        godlikePool.DisablePoolObject(godlikeBullet);
+    }
 }
