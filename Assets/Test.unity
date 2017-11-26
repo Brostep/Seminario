@@ -1509,7 +1509,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 422015227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 7.96, z: 59.8}
+  m_LocalPosition: {x: 0.26, y: 7.96, z: 59.73}
   m_LocalScale: {x: 10.401791, y: 16.059898, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5910,7 +5910,7 @@ Prefab:
     - target: {fileID: 114339567605826010, guid: 7080391e9b44a7b4b9de20643e39786d,
         type: 2}
       propertyPath: dontClipWith.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4024903704941996, guid: 7080391e9b44a7b4b9de20643e39786d, type: 2}
       propertyPath: m_LocalPosition.x
@@ -5983,6 +5983,11 @@ Prefab:
       propertyPath: enemyTrailColor
       value: 
       objectReference: {fileID: 2100000, guid: 4c1663384dc62ba4db55d6ac1a6c6bfb, type: 2}
+    - target: {fileID: 114339567605826010, guid: 7080391e9b44a7b4b9de20643e39786d,
+        type: 2}
+      propertyPath: dontClipWith.Array.data[7].m_Bits
+      value: 262144
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7080391e9b44a7b4b9de20643e39786d, type: 2}
   m_IsPrefabParent: 0

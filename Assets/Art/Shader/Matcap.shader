@@ -10,7 +10,7 @@ Shader "Matcap"
 
 	SubShader
 	{
-		Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
+		Tags{ "RenderType" = "Transparent"  "Queue" = "Transparent+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
 		Cull Back
 		CGINCLUDE
 		#include "UnityShaderVariables.cginc"
@@ -40,7 +40,7 @@ Shader "Matcap"
 
 		ENDCG
 		CGPROGRAM
-		#pragma surface surf Standard keepalpha fullforwardshadows exclude_path:deferred 
+		#pragma surface surf Standard alpha:fade keepalpha fullforwardshadows exclude_path:deferred 
 
 		ENDCG
 		Pass
@@ -112,7 +112,7 @@ Shader "Matcap"
 }
 /*ASEBEGIN
 Version=13101
-292;29;1144;1014;898.365;729.9503;1.683886;True;False
+608;344;1144;1014;525.298;276.2703;1;True;False
 Node;AmplifyShaderEditor.WorldNormalVector;2;-1158.476,95.2516;Float;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;FLOAT;FLOAT;FLOAT
 Node;AmplifyShaderEditor.ViewMatrixNode;1;-1126.176,-68.15147;Float;False;0;1;FLOAT4x4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;3;-900.0703,-20.65052;Float;False;2;2;0;FLOAT4x4;0.0;False;1;FLOAT3;0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;False;1;FLOAT3
@@ -120,7 +120,7 @@ Node;AmplifyShaderEditor.RangedFloatNode;6;-875.3693,156.0528;Float;False;Consta
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;5;-673.9658,28.75036;Float;False;2;2;0;FLOAT3;0.0;False;1;FLOAT;0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SimpleAddOpNode;8;-430.5364,95.94928;Float;False;2;2;0;FLOAT3;0.0;False;1;FLOAT;0.0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SamplerNode;7;-230.0092,32.8029;Float;True;Property;_TextureSample0;Texture Sample 0;0;0;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;COLOR;FLOAT;FLOAT;FLOAT;FLOAT
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;524.5068,-117.6161;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Matcap;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Back;0;0;False;0;0;Opaque;0.5;True;True;0;False;Opaque;Geometry;ForwardOnly;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;False;0;4;10;25;False;0.5;True;0;Zero;Zero;0;Zero;Zero;Add;Add;0;False;0;0,0,0,0;VertexOffset;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;OBJECT;0.0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;251.0443,-12.02165;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Matcap;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Back;0;0;False;0;0;Transparent;0.5;True;True;0;False;Transparent;Transparent;ForwardOnly;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;False;0;4;10;25;False;0.5;True;0;Zero;Zero;0;Zero;Zero;Add;Add;0;False;0;0,0,0,0;VertexOffset;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;OBJECT;0.0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;3;0;1;0
 WireConnection;3;1;2;0
 WireConnection;5;0;3;0
@@ -130,4 +130,4 @@ WireConnection;8;1;6;0
 WireConnection;7;1;8;0
 WireConnection;0;2;7;0
 ASEEND*/
-//CHKSM=02D8CA4B95E21332DAD50619A92480F427394299
+//CHKSM=8F82501C6217F3E69616266881E139AFE52F1E00

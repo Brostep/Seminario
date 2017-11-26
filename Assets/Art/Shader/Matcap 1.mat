@@ -10,19 +10,19 @@ Material:
   m_Shader: {fileID: 4800000, guid: 48156e284ba02804fbd52b20cab44714, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-    - first:
-        name: _TextureSample0
-      second:
+    - _TextureSample0:
         m_Texture: {fileID: 2800000, guid: bdf5a7c459257f648bb1b827a58ee883, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - first:
-        name: __dirty
-      second: 0
+    - _Float1: 0.6401954
+    - __dirty: 0
     m_Colors: []

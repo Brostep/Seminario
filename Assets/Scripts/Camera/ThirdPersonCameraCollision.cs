@@ -58,7 +58,8 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 				&& cols[i].gameObject.layer != layerNumbers[3]
 				&& cols[i].gameObject.layer != layerNumbers[4]
 				&& cols[i].gameObject.layer != layerNumbers[5]
-				&& cols[i].gameObject.layer != layerNumbers[6])
+				&& cols[i].gameObject.layer != layerNumbers[6]
+				&& cols[i].gameObject.layer != layerNumbers[7])
 			{
 				initialIntersect = true;
 				break;
@@ -88,7 +89,8 @@ public class ThirdPersonCameraCollision : MonoBehaviour
 					&& hits[i].collider.gameObject.layer != layerNumbers[3]
 					&& hits[i].collider.gameObject.layer != layerNumbers[4]
 					&& hits[i].collider.gameObject.layer != layerNumbers[5]
-					&& hits[i].collider.gameObject.layer != layerNumbers[6])
+					&& hits[i].collider.gameObject.layer != layerNumbers[6]
+					&& hits[i].collider.gameObject.layer != layerNumbers[7])
 			{
 				nearest = hits[i].distance;
 				targetDist = -pivot.InverseTransformPoint(hits[i].point).z;
