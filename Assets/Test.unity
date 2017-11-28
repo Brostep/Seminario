@@ -1340,7 +1340,7 @@ GameObject:
   - component: {fileID: 393101409}
   - component: {fileID: 393101408}
   - component: {fileID: 393101407}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: BossBoundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2179,6 +2179,7 @@ MonoBehaviour:
   - {fileID: 1205914355}
   - {fileID: 332045312}
   pattern: 0
+  startShooting: 0
 --- !u!1 &519456020
 GameObject:
   m_ObjectHideFlags: 0
@@ -5536,7 +5537,7 @@ GameObject:
   m_Icon: {fileID: 7707008975528953803, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1373271627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6021,7 +6022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1459609074
 Transform:
   m_ObjectHideFlags: 0
@@ -6635,6 +6636,11 @@ Prefab:
       propertyPath: bulletHellSpawner
       value: 
       objectReference: {fileID: 518669295}
+    - target: {fileID: 114626407673421740, guid: 518f8b06cadad4a4282ec9e1b1e6f007,
+        type: 2}
+      propertyPath: boneThrower
+      value: 
+      objectReference: {fileID: 1373271626}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 518f8b06cadad4a4282ec9e1b1e6f007, type: 2}
   m_IsPrefabParent: 0

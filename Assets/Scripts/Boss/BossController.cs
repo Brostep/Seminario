@@ -5,18 +5,24 @@ using UnityEngine;
 public class BossController : MonoBehaviour {
 
 	public GameObject slowArea;
+	public GameObject boneThrower;
 	public List<GameObject> vomitLeft;
 	public List<GameObject> vomitRight;
 	public int life = 100;
 	int currentLife;
 	public BulletHellSpawner bulletHellSpawner;
+	Animator anim; 
 
 	void Start()
 	{
 		currentLife = life;
+		anim = GetComponent<Animator>();		
 	}
 	void Update ()
 	{
+		if (Input.GetKeyDown(KeyCode.Space)&&!anim.GetBool("EatingIntro"))
+			bossIntro();
+
 		if (currentLife != life)
 		{
 			currentLife = life;
@@ -31,6 +37,10 @@ public class BossController : MonoBehaviour {
 				enableVomit();
 				changeBulletPatternTo(2);
 				break;
+			case 45:
+				enableBoneThrower();
+				changeBulletPatternTo(3);
+				break;
 		}
 	}
 	void enableVomit()
@@ -38,6 +48,14 @@ public class BossController : MonoBehaviour {
 		slowArea.SetActive(true);
 		StartCoroutine(VomitingLeft());
 		StartCoroutine(VomitingRight());
+	}
+	void bossIntro()
+	{
+		anim.SetBool("EatingIntro", true);
+	}
+	void enableBoneThrower()
+	{
+		boneThrower.SetActive(true);
 	}
 	void changeBulletPatternTo(int pattern)
 	{
@@ -50,7 +68,6 @@ public class BossController : MonoBehaviour {
 			vomitLeft[i].SetActive(true);
 			yield return new WaitForSeconds(0.07f);
 		}
-
 	}
 	IEnumerator VomitingRight()
 	{
@@ -67,6 +84,10 @@ public class BossController : MonoBehaviour {
 			life--;
 			print(life);
 		}
-		
+	}
+	void StartShooting()
+	{
+		changeBulletPatternTo(1);
+		bulletHellSpawner.startShooting = true;
 	}
 }

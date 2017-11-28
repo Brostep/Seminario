@@ -42,6 +42,8 @@ public class BulletHellSpawner : MonoBehaviour
 
 	public int pattern = 0;
 
+	public bool startShooting;
+
     private void Awake()
     {
         switch (bulletHellPatterns)
@@ -73,31 +75,35 @@ public class BulletHellSpawner : MonoBehaviour
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
-        currentTime2 += Time.deltaTime;
+		if (startShooting)
+		{
+			currentTime += Time.deltaTime;
+			currentTime2 += Time.deltaTime;
 
-        if (pattern == 1)
-            bulletHellStrategy = new Pattern1();
+			if (pattern == 1)
+				bulletHellStrategy = new Pattern1();
 
-        else if (pattern == 2)
-            bulletHellStrategy = new Pattern2();
+			else if (pattern == 2)
+				bulletHellStrategy = new Pattern2();
 
-        else if (pattern == 3)
-            bulletHellStrategy = new Pattern3();
+			else if (pattern == 3)
+				bulletHellStrategy = new Pattern3();
 
-        if (currentTime >= fireRate)
-        {
-            PerformPattern();
+			if (currentTime >= fireRate)
+			{
+				PerformPattern();
 
-            currentTime = 0.0f;
-        }
+				currentTime = 0.0f;
+			}
 
-        if (bulletHellStrategy.Shoot() == 2 && currentTime2 >= fireRate / 3)
-        {
-            ExecutePattern();
+			if (bulletHellStrategy.Shoot() == 2 && currentTime2 >= fireRate / 3)
+			{
+				ExecutePattern();
 
-            currentTime2 = 0.0f;
-        }
+				currentTime2 = 0.0f;
+			}
+		}
+        
     }
 
     public void PerformPattern()
