@@ -212,7 +212,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.67671233
+      - time: 0.6259187
         functionName: EndJump
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ffb406f166b9f66478502f8db7733d97,

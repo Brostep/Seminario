@@ -100,8 +100,10 @@ public class PlayerController : MonoBehaviour
 		// chekea si esta en el piso, no aplica gravedad
 		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetButton("AButton"))) && !isJumping)
 		{
+			print("in");
+			isJumping = true;
 			anim.SetBool("OnJump", true);
-			velocity.y = 200f;
+			velocity.y = 600f;
 		}
 
 		MeleeHit();
@@ -265,6 +267,7 @@ public class PlayerController : MonoBehaviour
 	void EndJump()
 	{
 		anim.SetBool("OnJump", false);
+		isJumping = false;
 	}
 	void OnDrawGizmos()
 	{

@@ -11,7 +11,8 @@ public class BossController : MonoBehaviour {
 	public int life = 100;
 	int currentLife;
 	public BulletHellSpawner bulletHellSpawner;
-	Animator anim; 
+	Animator anim;
+	bool canTakeDamage;
 
 	void Start()
 	{
@@ -20,9 +21,6 @@ public class BossController : MonoBehaviour {
 	}
 	void Update ()
 	{
-		if (Input.GetKeyDown(KeyCode.Space)&&!anim.GetBool("EatingIntro"))
-			bossIntro();
-
 		if (currentLife != life)
 		{
 			currentLife = life;
@@ -33,13 +31,15 @@ public class BossController : MonoBehaviour {
 	{
 		switch (life)
 		{
-			case 75:
+			case 80:
 				enableVomit();
 				changeBulletPatternTo(2);
 				break;
-			case 45:
+			case 60:
 				enableBoneThrower();
 				changeBulletPatternTo(3);
+				break;
+			case 40:
 				break;
 		}
 	}
@@ -49,7 +49,7 @@ public class BossController : MonoBehaviour {
 		StartCoroutine(VomitingLeft());
 		StartCoroutine(VomitingRight());
 	}
-	void bossIntro()
+	public void bossIntro()
 	{
 		anim.SetBool("EatingIntro", true);
 	}
@@ -79,15 +79,15 @@ public class BossController : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision c)
 	{
-		if (c.gameObject.layer == 9)
+		if (c.gameObject.layer == 9 && canTakeDamage)
 		{
 			life--;
-			print(life);
 		}
 	}
 	void StartShooting()
 	{
 		changeBulletPatternTo(1);
 		bulletHellSpawner.startShooting = true;
+		canTakeDamage = true;
 	}
 }
