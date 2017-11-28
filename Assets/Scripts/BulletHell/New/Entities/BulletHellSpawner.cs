@@ -40,6 +40,8 @@ public class BulletHellSpawner : MonoBehaviour
 
     private int index;
 
+	public int pattern = 0;
+
     private void Awake()
     {
         switch (bulletHellPatterns)
@@ -74,13 +76,13 @@ public class BulletHellSpawner : MonoBehaviour
         currentTime += Time.deltaTime;
         currentTime2 += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (pattern == 1)
             bulletHellStrategy = new Pattern1();
 
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (pattern == 2)
             bulletHellStrategy = new Pattern2();
 
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (pattern == 3)
             bulletHellStrategy = new Pattern3();
 
         if (currentTime >= fireRate)

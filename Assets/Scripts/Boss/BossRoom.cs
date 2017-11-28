@@ -5,9 +5,6 @@ using UnityEngine;
 public class BossRoom : MonoBehaviour {
 
 	public GameObject bridge;
-	public List<GameObject> vomitLeft;
-	public List<GameObject> vomitRight;
-	public GameObject slow;
 
 	void OnTriggerEnter(Collider c)
 	{
@@ -15,39 +12,26 @@ public class BossRoom : MonoBehaviour {
 		if (c.gameObject.layer == 8)
 		{
 			var playerController = FindObjectOfType<PlayerController>();
-			// camera change
+			// top down normal controller apagado
 			playerController.topDownCamera.GetComponent<TopDownCameraController>().enabled=false;
+			// habilito top down promedy
 			playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled=true;
+			// booleano que arreglaba el error de acercarte la camara cuando cambiabas..
+			// deberiamos de sacarlo ya que forzamos al palyer fijate nose
 			playerController.promedyTarget = true;
+			// bools para detectar el cambio de camara en player controller.. llama a camara change 
+			// cambia el field of view y todo la wea.. de movimientos
 			playerController.cameraChange = true;
-//
 			PlayerController.inTopDown = !PlayerController.inTopDown;
-			FindObjectOfType<HellBulletSpawner>().inRoom = true;
-			StartCoroutine(VomitingLeft());
-			StartCoroutine(VomitingRight());
-			slow.SetActive(true);
-			bridge.SetActive(false);
 
+			// start shooting
+			FindObjectOfType<HellBulletSpawner>().inRoom = true;
+
+			// rompe el bridge y desavilita el trigger
+			bridge.SetActive(false);
             GetComponent<BoxCollider>().enabled = false;
 		}
 	}
 
-	IEnumerator VomitingLeft()
-	{
-		for (int i = 0; i < vomitLeft.Count; i++)
-		{
-			vomitLeft[i].SetActive(true);
-			yield return new WaitForSeconds(0.07f);
-		}
-	
-	}
-	IEnumerator VomitingRight()
-	{
-		for (int i = 0; i < vomitRight.Count; i++)
-		{
-			vomitRight[i].SetActive(true);
-			yield return new WaitForSeconds(0.07f);
-		}
-	
-	}
+
 }
