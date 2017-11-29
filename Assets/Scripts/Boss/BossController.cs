@@ -24,43 +24,86 @@ public class BossController : MonoBehaviour {
 		if (currentLife != life)
 		{
 			currentLife = life;
-			checkBossLife();
+			CheckBossLife();
 		}		
 	}
-	void checkBossLife()
+	void CheckBossLife()
 	{
 		switch (life)
 		{
 			case 80:
-				enableVomit();
-				changeBulletPatternTo(2);
+				canTakeDamage = false;
+				bulletHellSpawner.startShooting = false;
+				SimpleRage();
 				break;
 			case 60:
-				enableBoneThrower();
-				changeBulletPatternTo(3);
+				bulletHellSpawner.startShooting = false;
+				canTakeDamage = false;
+				SimpleRage();
 				break;
 			case 40:
+				canTakeDamage = false;
+				bulletHellSpawner.startShooting = false;
+				SimpleRage();
 				break;
 		}
 	}
-	void enableVomit()
+	void EnableVomit()
 	{
 		slowArea.SetActive(true);
 		StartCoroutine(VomitingLeft());
 		StartCoroutine(VomitingRight());
 	}
-	public void bossIntro()
+	public void BossIntro()
 	{
 		anim.SetBool("EatingIntro", true);
 	}
-	void enableBoneThrower()
+	void SimpleRage()
+	{
+		anim.SetBool("SimpleRage", true);
+	}
+	void EnableBoneThrower()
 	{
 		boneThrower.SetActive(true);
 	}
-	void changeBulletPatternTo(int pattern)
+	void ChangeBulletPatternTo(int pattern)
 	{
+		bulletHellSpawner.startShooting = true;
 		bulletHellSpawner.pattern = pattern;
 	}
+	void EnableFase2()
+	{
+		bulletHellSpawner.startShooting = false;
+		anim.SetBool("Slam2Hands", true);
+		//create spawners
+	}
+	void EndSlam()
+	{
+		anim.SetBool("Slam2Hands", false);
+		anim.SetBool("SimpleRage", false);
+	}
+	void EndSimpleRage()
+	{
+		switch (life)
+		{
+			case 80:
+				anim.SetBool("SimpleRage", false);
+				EnableVomit();
+				ChangeBulletPatternTo(2);
+				canTakeDamage = true;
+				break;
+			case 60:
+				anim.SetBool("SimpleRage", false);
+				EnableBoneThrower();
+				ChangeBulletPatternTo(3);
+				canTakeDamage = true;
+				break;
+			case 40:
+				EnableFase2();
+				break;
+		}
+	}
+
 	IEnumerator VomitingLeft()
 	{
 		for (int i = 0; i < vomitLeft.Count; i++)
@@ -86,7 +129,7 @@ public class BossController : MonoBehaviour {
 	}
 	void StartShooting()
 	{
-		changeBulletPatternTo(1);
+		ChangeBulletPatternTo(1);
 		bulletHellSpawner.startShooting = true;
 		canTakeDamage = true;
 	}

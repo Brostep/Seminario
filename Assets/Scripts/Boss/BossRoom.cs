@@ -25,7 +25,7 @@ public class BossRoom : MonoBehaviour {
 			PlayerController.inTopDown = !PlayerController.inTopDown;
 
 			// start shooting
-			FindObjectOfType<BossController>().bossIntro();
+			FindObjectOfType<BossController>().BossIntro();
 
 			// rompe el bridge y desavilita el trigger
 			bridge.SetActive(false);
