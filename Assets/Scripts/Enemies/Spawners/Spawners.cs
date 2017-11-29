@@ -103,9 +103,9 @@ public class Spawners : Enemy {
 				Destroy(currentParticle.gameObject);
 				for (int i = 0; i < 3; i++)
 				{
-					var randPosX = Random.Range(gm.spawners[gm.currentSpawn].transform.position.x - 3, gm.spawners[gm.currentSpawn].transform.position.x + 3);
-					var randPosZ = Random.Range(gm.spawners[gm.currentSpawn].transform.position.z - 3, gm.spawners[gm.currentSpawn].transform.position.z + 3);
-					var randPos = new Vector3(randPosX, 0, randPosZ);
+					//var randPosX = Random.Range(gm.spawners[gm.currentSpawn].transform.position.x - 3, gm.spawners[gm.currentSpawn].transform.position.x + 3);
+					//var randPosZ = Random.Range(gm.spawners[gm.currentSpawn].transform.position.z - 3, gm.spawners[gm.currentSpawn].transform.position.z + 3);
+					//var randPos = new Vector3(randPosX, 0, randPosZ);
 
 					//Instantiate(wormPrefab, randPos, wormPrefab.transform.rotation);
 				}

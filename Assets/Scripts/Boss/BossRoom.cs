@@ -5,6 +5,8 @@ using UnityEngine;
 public class BossRoom : MonoBehaviour {
 
 	public GameObject bridge;
+	public List<GameObject> spawnersLocation;
+
 
 	void OnTriggerEnter(Collider c)
 	{

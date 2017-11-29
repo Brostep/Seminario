@@ -5,6 +5,12 @@ using UnityEngine;
 public class DeathFloor : MonoBehaviour {
 
 	public Transform playerReset;
+	BossController bossController;
+
+	private void Awake()
+	{
+		bossController = FindObjectOfType<BossController>();
+	}
 
 	void OnTriggerEnter(Collider c)
 	{
@@ -13,6 +19,12 @@ public class DeathFloor : MonoBehaviour {
 		{
 			c.gameObject.transform.position = playerReset.position;
 			c.gameObject.transform.rotation = playerReset.rotation;
+		}
+
+		if(c.gameObject.layer == 10)
+		{
+			Destroy(c.gameObject);
+			bossController.SpawnWorm();
 		}
 
 	}

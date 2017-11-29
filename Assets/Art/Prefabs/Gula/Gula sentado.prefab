@@ -1733,6 +1733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowArea: {fileID: 0}
+  boneThrower: {fileID: 0}
   vomitLeft:
   - {fileID: 0}
   - {fileID: 0}
@@ -1757,6 +1758,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   life: 100
+  spawner: {fileID: 1971350017338252, guid: a51d3a76ca6e5ab49b2de9be5ce0d1b4, type: 2}
   bulletHellSpawner: {fileID: 0}
 --- !u!136 &136471692267176748
 CapsuleCollider:

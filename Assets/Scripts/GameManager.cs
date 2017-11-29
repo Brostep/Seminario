@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject bloodWorm;
 
 	public int cantSpawners;
-	PlayerController player;
+//	PlayerController player;
 	public List<GameObject> spawners;
 	public List<WormWander> enemiesOnStart;
 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 	}
 	private void Start()
 	{
-		player = FindObjectOfType<PlayerController>();
+	//	player = FindObjectOfType<PlayerController>();
 		enemySpawners = activateEnemySpawners.GetComponent<EnemySpawner>();
 		spawnersAlive = cantSpawners;
 		Utility.KnuthShuffle<GameObject>(spawners);

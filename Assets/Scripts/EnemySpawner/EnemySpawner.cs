@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     public Worm wormPrefab;
     public FlyWorm flyWormPrefab;
-	private Pool<Worm> wormPool;
+	public Pool<Worm> wormPool;
     private Pool<FlyWorm> flyWormPool;
 
     int enemiesPerWave;

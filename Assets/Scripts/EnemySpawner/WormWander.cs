@@ -11,7 +11,6 @@ public class WormWander : Enemy {
 	FlockingWander flocking;
 	PlayerController player;
 	float velocityLimit;
-	bool canAttack;
 	public float damage;
 
 	private void Start()
@@ -49,7 +48,6 @@ public class WormWander : Enemy {
 			flocking.velocityLimit = 6f;
 			GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, -0.3f);
 			anim.SetBool("OnMeleeAttack", true);
-			canAttack = false;
 			flocking.attacking = true;
 		}
 	}
@@ -64,7 +62,7 @@ public class WormWander : Enemy {
 
 	void OnMeleeAttack()
 	{
-		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
+	//	var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
 		var enemiesHited = Physics.OverlapBox(head.transform.position, new Vector3(0.5f, 0.5f, 1f), transform.rotation, LayerMask.GetMask("Player"));
 		if (enemiesHited.Length > 0)
 		{
@@ -75,7 +73,6 @@ public class WormWander : Enemy {
 			}
 		}
 		flocking.velocityLimit = velocityLimit;
-		canAttack = true;
 		anim.SetBool("OnMeleeAttack", false);
 		GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, 0f);
 		flocking.attacking = false;

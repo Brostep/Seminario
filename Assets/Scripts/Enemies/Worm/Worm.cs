@@ -13,6 +13,7 @@ public class Worm : Enemy
 	Animator anim;
 	ParticleSystem deathParticles;
 	Flocking flocking;
+	BossController bossController;
 	bool canAttack;
 	float velocityLimit;
 	public float cdAttack;
@@ -27,6 +28,19 @@ public class Worm : Enemy
 	public float boop;
 	public GameObject range;
 
+	private void Start()
+	{
+		enemySpawner = FindObjectOfType<EnemySpawner>();
+		gameManager = FindObjectOfType<GameManager>();
+		player = FindObjectOfType<PlayerController>().gameObject;
+		flocking = GetComponent<Flocking>();
+		velocityLimit = flocking.velocityLimit;
+		playerHead = player.GetComponentInChildren<Head>().gameObject;
+		life = gameManager.wormLife;
+		anim = GetComponent<Animator>();
+		deathParticles = GetComponentInChildren<ParticleSystem>();
+		bossController = FindObjectOfType<BossController>();
+	}
 	public override void Initialize()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
@@ -41,6 +55,7 @@ public class Worm : Enemy
 		life = gameManager.wormLife;
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
+		bossController = FindObjectOfType<BossController>();
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -51,7 +66,7 @@ public class Worm : Enemy
 			Instantiate(gameManager.bloodWorm, head.transform);
 		}
 		if (c.gameObject.layer == 8 && anim.GetBool("OnCharge"))
-			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+			c.gameObject.GetComponent<PlayerController>().TakeDamage(damage*2);
 	}
 	void Update()
 	{
@@ -118,14 +133,13 @@ public class Worm : Enemy
 		return Instantiate<Worm>(obj);
 	}
 
-	void OnDrawGizmos()
+/*	void OnDrawGizmos()
 	{
 		Gizmos.DrawWireSphere(transform.position, leapDistance);
 		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
 		Gizmos.color = Color.cyan;
 		Gizmos.DrawCube(headPos, new Vector3(1f, 1f, 2f));
-	}
-
+	}*/
 	void EndCharge()
 	{
 		anim.SetBool("OnCharge", false);
@@ -141,11 +155,13 @@ public class Worm : Enemy
 		enemySpawner.enemiesAlive--;
 		anim.SetBool("OnDeath", false);
 		deathParticles.Stop();
+		if (bossController.fase2Enabled)
+			Destroy(this.gameObject);
+		else
 		EnemySpawner.Instance.ReturnWormToPool(this);
 	}
 	void OnMeleeAttack()
 	{
-		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
 		var enemiesHited = Physics.OverlapBox(head.transform.position, new Vector3(0.5f, 0.5f, 1f), transform.rotation, LayerMask.GetMask("Player"));
 		if (enemiesHited.Length > 0)
 		{

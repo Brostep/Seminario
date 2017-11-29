@@ -13,7 +13,7 @@ public class LineOfSight : MonoBehaviour
 	public GameObject currentTarget;
 	public Material enemyColor;
 	public Material enemyTrailColor;
-	Transform inSight;
+	//Transform inSight;
 	Camera cam;
 	public bool targetalive;
 	ThirdPersonCameraController thirdPersonCameraController;
@@ -30,7 +30,7 @@ public class LineOfSight : MonoBehaviour
 		}
 		if (!thirdPersonCameraController.isTargeting)
 		{
-			inSight = null;
+//			inSight = null;
 
 			Transform my = transform;
 			Transform other = target;

@@ -8,7 +8,6 @@ public class AnimationControllerPlayer : MonoBehaviour {
 	//2 = Heavy Attack
 	//[HideInInspector]
 	public List<int> actionRegister;
-	List<int> actionsDone;
 	List<int> lightAttacks;
 	List<int> heavyAttacks;
 	public float timeBeforeResetBasic = 2.5f;
@@ -18,7 +17,6 @@ public class AnimationControllerPlayer : MonoBehaviour {
 	float timeBetweenAttacks;
 
 	int currentAnim;
-	int onRunnig;
 	int onLightAttack1;
 	int onLightAttack2;
 	int onLightAttack3;
@@ -26,13 +24,11 @@ public class AnimationControllerPlayer : MonoBehaviour {
 
 	void Start () {
 		actionRegister = new List<int>();
-		actionsDone = new List<int>();
 		lightAttacks = new List<int>();
 		heavyAttacks = new List<int>();
 		anim = GetComponent<Animator>();
 		thirdPersonController = GetComponent<ThirdPersonController>();
 		//hash actions
-		onRunnig = Animator.StringToHash("Run");
 		onLightAttack1 = Animator.StringToHash("OnAttack1");
 		onLightAttack2 = Animator.StringToHash("OnAttack2");
 		onLightAttack3 = Animator.StringToHash("OnAttack3");
