@@ -809,7 +809,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047171953396846}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.075239, y: 0, z: 2.4460468}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4547651162454416}
@@ -1313,7 +1313,8 @@ MonoBehaviour:
   damage: 2
   meleeRadius: 1
   boop: 280
-  range: {fileID: 1442318001696614, guid: d747afb83935041428c63f2d62ffa827, type: 2}
+  range: {fileID: 0}
+  matDissolve: {fileID: 2100000, guid: 1bf95bd3b04964049bbedd83f8bcc2bc, type: 2}
 --- !u!114 &114804191023005680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1380,7 +1381,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c709d837cca9fb048bbae908d0a5e06f, type: 2}
+  - {fileID: 2100000, guid: 1bf95bd3b04964049bbedd83f8bcc2bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

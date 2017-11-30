@@ -25,10 +25,13 @@ public class Worm : Enemy
 	public float leapProbability = 0.65f;
 	public float damage;
 	public float meleeRadius;
-	public float boop;
-	public GameObject range;
+	public float boop; 
+    Renderer matDissolve;
+    float timeFillDissolve = 3;
+    float disolveValue = 1;
+    bool isDeath;
 
-	private void Start()
+	/*private void Start()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
 		gameManager = FindObjectOfType<GameManager>();
@@ -40,7 +43,7 @@ public class Worm : Enemy
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
 		bossController = FindObjectOfType<BossController>();
-	}
+	}*/
 	public override void Initialize()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
@@ -80,19 +83,38 @@ public class Worm : Enemy
 		if (life <= 0)
 		{
 			anim.SetBool("OnDeath", true);
-
-			if (!deathParticles.isPlaying)
-				deathParticles.Play();
+            isDeath = true;
+            flocking.attacking = true;
+            if (!deathParticles.isPlaying)
+            {
+                deathParticles.Play();
+            }
+				
 		}
 
-		//Agrego esto por si el spawn del gusano es una distancia donde no encuentra al player.
+        if (isDeath)
+        {
+            matDissolve = GetComponentInChildren<Renderer>();
+            disolveValue = Mathf.Lerp(disolveValue, 0, Time.deltaTime*0.33f);
+            matDissolve.material.SetFloat("_Dissolved", disolveValue);
 
-		if (player == null)
+            if (matDissolve.material.GetFloat("_Dissolved") == 0)
+                if (bossController.fase2Enabled)
+			        Destroy(this.gameObject);
+		        else
+		            EnemySpawner.Instance.ReturnWormToPool(this);
+
+        }
+
+        //Agrego esto por si el spawn del gusano es una distancia donde no encuentra al player.
+
+        if (player == null)
 		{
 			player = FindObjectOfType<PlayerController>().gameObject;
 			playerHead = player.GetComponentInChildren<Head>().gameObject;
 		}
 	}
+
 	void checkDistanceToPlayer()
 	{
 		var distance = player.transform.position - transform.position;
@@ -155,10 +177,10 @@ public class Worm : Enemy
 		enemySpawner.enemiesAlive--;
 		anim.SetBool("OnDeath", false);
 		deathParticles.Stop();
-		if (bossController.fase2Enabled)
+		/*if (bossController.fase2Enabled)
 			Destroy(this.gameObject);
 		else
-		EnemySpawner.Instance.ReturnWormToPool(this);
+		EnemySpawner.Instance.ReturnWormToPool(this);*/
 	}
 	void OnMeleeAttack()
 	{

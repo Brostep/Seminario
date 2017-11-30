@@ -50,12 +50,12 @@ public class LineOfSight : MonoBehaviour
 			{
 				RaycastHit rch;
 				if (Physics.Raycast (my.position, deltaPos, out rch, sightDistance, targetLayer)) {
-					if (currentTarget != null)
-						currentTarget.GetComponentInChildren<Renderer>().material = enemyColor;
+					/*if (currentTarget != null)
+						currentTarget.GetComponentInChildren<Renderer>().material = enemyColor;*/
 
 					currentTarget = rch.collider.gameObject;
 
-					currentTarget.GetComponentInChildren<Renderer>().material.color = Color.red;
+					//currentTarget.GetComponentInChildren<Renderer>().material.color = Color.red;
 				}
 			}
 		}		

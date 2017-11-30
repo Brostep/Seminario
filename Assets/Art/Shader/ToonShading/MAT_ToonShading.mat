@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Matcap 4
-  m_Shader: {fileID: 4800000, guid: 48156e284ba02804fbd52b20cab44714, type: 3}
+  m_Name: MAT_ToonShading
+  m_Shader: {fileID: 4800000, guid: 6b497c6bed58c4f41a07a2f378e5de56, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 1
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -18,8 +18,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: f9d591424f5a1a745bcd2b5a539760b4, type: 3}
+    - _Diffuse:
+        m_Texture: {fileID: 2800000, guid: 157b94751c138d84bbe1768c672b5168, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonRamp:
+        m_Texture: {fileID: 2800000, guid: 3e5cb1581dfca0244a28bf671a77d8f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -27,6 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Float1: 0.231
+    - _ASEOutlineWidth: 0.001
     - __dirty: 0
-    m_Colors: []
+    m_Colors:
+    - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
