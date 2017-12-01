@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
-		Debug.Log ("ME ESTAN HACIENDO DAÑO");
+	//	Debug.Log ("ME ESTAN HACIENDO DAÑO");
 		damage = damage / 100;
 
 		lifeBar.fillAmount -= damage;

@@ -42,6 +42,11 @@ public class Worm : Enemy
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
 		bossController = FindObjectOfType<BossController>();
+		disolveValue = 1;
+		isDeath = false;
+		matDissolve = GetComponentInChildren<Renderer>();
+		matDissolve.material.SetFloat("_Dissolved", disolveValue);
+		flocking.attacking = false;
 	}
 	public override void Initialize()
 	{
@@ -59,6 +64,10 @@ public class Worm : Enemy
 		deathParticles = GetComponentInChildren<ParticleSystem>();
 		bossController = FindObjectOfType<BossController>();
 		disolveValue = 1;
+		isDeath = false;
+		matDissolve = GetComponentInChildren<Renderer>();
+		matDissolve.material.SetFloat("_Dissolved", disolveValue);
+		flocking.attacking = false;
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -95,7 +104,7 @@ public class Worm : Enemy
             matDissolve = GetComponentInChildren<Renderer>();
             disolveValue = Mathf.Lerp(disolveValue, 0, Time.deltaTime*0.33f);
             matDissolve.material.SetFloat("_Dissolved", disolveValue);
-			if (disolveValue <= 0.5f)
+			if (disolveValue <= 0.45f)
                 if (bossController.fase2Enabled)
 			        Destroy(this.gameObject);
 				else
@@ -176,10 +185,6 @@ public class Worm : Enemy
 		enemySpawner.enemiesAlive--;
 		anim.SetBool("OnDeath", false);
 		deathParticles.Stop();
-		/*if (bossController.fase2Enabled)
-			Destroy(this.gameObject);
-		else
-		EnemySpawner.Instance.ReturnWormToPool(this);*/
 	}
 	void OnMeleeAttack()
 	{
