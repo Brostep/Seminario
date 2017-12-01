@@ -1,4 +1,4 @@
-﻿public class Pattern1 : IPatternBehaviour
+public class Pattern1 : IPatternBehaviour
 {
     public int Shoot()
     {

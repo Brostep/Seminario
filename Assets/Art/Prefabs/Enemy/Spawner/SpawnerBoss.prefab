@@ -103,9 +103,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4715213731240116}
   - component: {fileID: 136555772149296270}
-  - component: {fileID: 114709425000596528}
   - component: {fileID: 95620638750811838}
   - component: {fileID: 23094949443852852}
+  - component: {fileID: 114856436543802628}
   m_Layer: 10
   m_Name: SpawnerBoss
   m_TagString: Untagged
@@ -146,7 +146,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971350017338252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4825300652490826}
@@ -411,7 +411,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114709425000596528
+--- !u!114 &114856436543802628
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971350017338252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1632e7cd9cd224381bb67449279902, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d16080927ba89443a315c8e55212b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   life: 19
@@ -430,7 +430,8 @@ MonoBehaviour:
   LayerSpawner:
     serializedVersion: 2
     m_Bits: 65536
-  wormPrefab: {fileID: 1047171953396846, guid: b69a1f6a7f818b6448986160ce94bf47, type: 2}
+  wormPrefab: {fileID: 0}
+  deadSpawner: 0
 --- !u!136 &136555772149296270
 CapsuleCollider:
   m_ObjectHideFlags: 1

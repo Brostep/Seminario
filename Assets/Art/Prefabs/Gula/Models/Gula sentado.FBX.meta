@@ -177,7 +177,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.8793651
+        functionName: endSlam
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 204d6e4f1746e16469d69ea5785609f3,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

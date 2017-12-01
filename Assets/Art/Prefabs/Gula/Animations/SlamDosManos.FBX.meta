@@ -178,8 +178,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.3873016
+        functionName: SpawnSpawners
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: daf73d7a2e6263649a0150961fdcbcd7,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.9174603
-        functionName: EndSlam
+        functionName: EndSlam2Hands
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: daf73d7a2e6263649a0150961fdcbcd7,
           type: 3}

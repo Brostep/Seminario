@@ -38,9 +38,19 @@ public class HellBullet : Bullet
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 9/* && this.gameObject.layer == 14*/)
+        if (collision.gameObject.layer == 9)
         {
-            BulletHellSpawner.Instance.ReturnBulletToPool(this);
+			if (tag != "Indestructible")
+				BulletHellSpawner.Instance.ReturnBulletToPool(this);
         }
+		if (collision.gameObject.layer == 8)
+		{
+			collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+			if (tag != "Indestructible")
+				BulletHellSpawner.Instance.ReturnBulletToPool(this);
+			else
+				BulletHellSpawner.Instance.ReturnGodlikeBulletToPool(this);
+
+		}
     }
 }

@@ -27,11 +27,10 @@ public class Worm : Enemy
 	public float meleeRadius;
 	public float boop; 
     Renderer matDissolve;
-    float timeFillDissolve = 3;
     float disolveValue = 1;
     bool isDeath;
 
-	/*private void Start()
+	private void Start()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
 		gameManager = FindObjectOfType<GameManager>();
@@ -43,7 +42,7 @@ public class Worm : Enemy
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
 		bossController = FindObjectOfType<BossController>();
-	}*/
+	}
 	public override void Initialize()
 	{
 		enemySpawner = FindObjectOfType<EnemySpawner>();
@@ -59,6 +58,7 @@ public class Worm : Enemy
 		anim = GetComponent<Animator>();
 		deathParticles = GetComponentInChildren<ParticleSystem>();
 		bossController = FindObjectOfType<BossController>();
+		disolveValue = 1;
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -88,23 +88,22 @@ public class Worm : Enemy
             if (!deathParticles.isPlaying)
             {
                 deathParticles.Play();
-            }
-				
+            }		
 		}
-
         if (isDeath)
         {
             matDissolve = GetComponentInChildren<Renderer>();
             disolveValue = Mathf.Lerp(disolveValue, 0, Time.deltaTime*0.33f);
             matDissolve.material.SetFloat("_Dissolved", disolveValue);
-
-            if (matDissolve.material.GetFloat("_Dissolved") == 0)
+			if (disolveValue <= 0.5f)
                 if (bossController.fase2Enabled)
 			        Destroy(this.gameObject);
-		        else
-		            EnemySpawner.Instance.ReturnWormToPool(this);
+				else
+				{
+					EnemySpawner.Instance.ReturnWormToPool(this);	
+				}
 
-        }
+		}
 
         //Agrego esto por si el spawn del gusano es una distancia donde no encuentra al player.
 

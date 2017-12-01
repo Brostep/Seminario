@@ -6,7 +6,7 @@ public class BossController : MonoBehaviour {
 
 	public GameObject slowArea;
 	public GameObject boneThrower;
-	public GameObject spawner;
+	public List<GameObject> spawnerLocation;
 	public GameObject worm;
 	public List<GameObject> vomitLeft;
 	public List<GameObject> vomitRight;
@@ -16,7 +16,6 @@ public class BossController : MonoBehaviour {
 	int currentLife;
 	List<GameObject> spawners;
 	Animator anim;
-	BossRoom bossRoom;
 	bool canTakeDamage;
 	public bool fase2Enabled;
 
@@ -24,7 +23,6 @@ public class BossController : MonoBehaviour {
 	{
 		currentLife = life;
 		anim = GetComponent<Animator>();
-		bossRoom = FindObjectOfType<BossRoom>();	
 		spawners = new List<GameObject>();
 	}
 	void Update ()
@@ -77,14 +75,7 @@ public class BossController : MonoBehaviour {
 	{
 		bulletHellSpawner.startShooting = false;
 		anim.SetBool("Slam2Hands", true);
-		for (int i = 0; i < 3; i++)
-		{
-			var go = Instantiate(spawner, bossRoom.spawnersLocation[i].transform);
-			spawners.Add(go);
-		//	spawners[i].transform.LookAt(player.transform);
-		}
 		fase2Enabled = true;
-		spawnWorms();
 	}
 	void spawnWorms()
 	{
@@ -123,11 +114,35 @@ public class BossController : MonoBehaviour {
 	{
 		boneThrower.SetActive(true);
 	}
-
-	void EndSlam()
+	void EndSlam2Hands()
 	{
 		anim.SetBool("Slam2Hands", false);
 		anim.SetBool("SimpleRage", false);
+	}
+	void SpawnSpawners()
+	{
+		StartCoroutine(CleanVomitingLeft());
+		StartCoroutine(CleanVomitingRight());
+		slowArea.SetActive(false);
+		for (int i = 0; i < 3; i++)
+		{
+			spawnerLocation[i].SetActive(true);
+			spawners.Add(spawnerLocation[i]);
+		}
+		spawnWorms();
+
+
+		var playerController = FindObjectOfType<PlayerController>();
+		playerController.cameraChange = true;
+		PlayerController.inTopDown = !PlayerController.inTopDown;
+		if (playerController.promedyTarget && !PlayerController.inTopDown)
+		{
+			playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = false;
+		}
+		else if (playerController.promedyTarget)
+		{
+			playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = true;
+		}
 	}
 	void EndSimpleRage()
 	{
@@ -167,12 +182,27 @@ public class BossController : MonoBehaviour {
 			yield return new WaitForSeconds(0.07f);
 		}
 	}
+	IEnumerator CleanVomitingLeft()
+	{
+		for (int i = vomitLeft.Count-1; i >= 0; i--)
+		{
+			vomitLeft[i].SetActive(false);
+			yield return new WaitForSeconds(0.07f);
+		}
+	}
+	IEnumerator CleanVomitingRight()
+	{
+		for (int i = vomitRight.Count - 1; i >= 0; i--)
+		{
+			vomitRight[i].SetActive(false);
+			yield return new WaitForSeconds(0.07f);
+		}
+	}
 	void OnCollisionEnter(Collision c)
 	{
 		if (c.gameObject.layer == 9 && canTakeDamage)
 		{
-			print(life);
-			life--;
+			life-=10;
 		}
 	}
 	void StartShooting()
@@ -180,5 +210,17 @@ public class BossController : MonoBehaviour {
 		ChangeBulletPatternTo(1);
 		bulletHellSpawner.startShooting = true;
 		canTakeDamage = true;
+	}
+	void endSlam()
+	{
+		if (GetComponentInChildren<CatchSlam>().alreadySet)
+		{
+			var catchSlam = GetComponentInChildren<CatchSlam>();
+			catchSlam.pj.transform.parent = null;
+			catchSlam.pj.transform.position = catchSlam.palmPos;
+			catchSlam.pj.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+			catchSlam.alreadySet = false;
+			catchSlam.pj.GetComponent<Rigidbody>().AddForce(new Vector3(250,125, 250), ForceMode.Impulse);
+		}
 	}
 }
