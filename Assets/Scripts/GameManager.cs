@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
 		if (spawnersAlive <= 0)
 		{
 			enemySpawners.allSpawnerDeads = true;
-			enemySpawners.enemiesAlive--;
+			//enemySpawners.enemiesAlive--;
 		}
 	}
 	private FlyWormBullets BulletFactory()
