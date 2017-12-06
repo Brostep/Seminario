@@ -265,7 +265,7 @@ public class BossController : MonoBehaviour {
 	{
 		if (c.gameObject.layer == 9 && canTakeDamage)
 		{
-			life-=10;
+			life-=damage;
 		}
 	}
 	void StartShooting()
