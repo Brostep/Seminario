@@ -179,7 +179,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.5062893
+      - time: 0.25549567
         functionName: ResetFase
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: daf73d7a2e6263649a0150961fdcbcd7,

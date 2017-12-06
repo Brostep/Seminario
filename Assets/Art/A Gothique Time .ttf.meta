@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e43717f1f02959944a68c582189ddb41
+timeCreated: 1512552312
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 'A Gothique Time '
+  fontNames:
+  - 'A Gothique Time '
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

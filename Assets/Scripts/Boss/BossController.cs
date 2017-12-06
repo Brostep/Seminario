@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour {
 
-	public GameObject slowArea;
+	public GameObject slowLeftAndRight;
+	public GameObject slowBack;
 	public GameObject boneThrower;
 	public List<GameObject> spawnerLocation;
 	public GameObject worm;
@@ -13,8 +15,10 @@ public class BossController : MonoBehaviour {
 	public GameObject Spit2;
 	public GameObject Spit3;
 	public GameObject vomit2;
+	public GameObject SlamArea;
 	public List<GameObject> vomitLeft;
 	public List<GameObject> vomitRight;
+	public List<GameObject> vomitBack;
 	public BulletHellSpawner bulletHellSpawner;
 	public List<GameObject> wormsInScene;
 	public bool spitDestroy;
@@ -28,7 +32,9 @@ public class BossController : MonoBehaviour {
 	List<GameObject> spawners;
 	Animator anim;
 	bool canTakeDamage;
+	public bool endPattern;
 	public bool fase2Enabled;
+	int damage = 1;
 
 	void Start()
 	{
@@ -59,10 +65,12 @@ public class BossController : MonoBehaviour {
 				anim.SetBool("EndFase", true);
 				ResetFase();
 			}
-			// check all worms alive;
-		}	
-
-
+			if (endPattern)
+			{
+				EndThirdPersonBulletPattern();
+				endPattern = false;
+			}
+		}
 	}
 	void CheckBossLife()
 	{
@@ -84,11 +92,14 @@ public class BossController : MonoBehaviour {
 				boneThrower.SetActive(false);
 				SimpleRage();
 				break;
+			case 0:
+				anim.SetBool("Death", true);
+				break;
 		}
 	}
 	void EnableVomit()
 	{
-		slowArea.SetActive(true);
+		slowLeftAndRight.SetActive(true);
 		StartCoroutine(VomitingLeft());
 		StartCoroutine(VomitingRight());
 	}
@@ -108,12 +119,15 @@ public class BossController : MonoBehaviour {
 		{
 			for (int j = 0; j < wormsPerSpawner; j++)
 			{
-				var randPosX = Random.Range(spawners[i].transform.position.x - 3, spawners[i].transform.position.x + 3);
-				var randPosZ = Random.Range(spawners[i].transform.position.z - 3, spawners[i].transform.position.z + 3);
-				var randPos = new Vector3(randPosX, 12.5f, randPosZ);
+				if (spawners[i].gameObject != null)
+				{
+					var randPosX = Random.Range(spawners[i].transform.position.x - 3, spawners[i].transform.position.x + 3);
+					var randPosZ = Random.Range(spawners[i].transform.position.z - 3, spawners[i].transform.position.z + 3);
+					var randPos = new Vector3(randPosX, 12.5f, randPosZ);
 
-				var go = Instantiate(worm, randPos, worm.transform.rotation);
-				wormsInScene.Add(go);
+					var go = Instantiate(worm, randPos, worm.transform.rotation);
+					wormsInScene.Add(go);
+				}	
 			}
 		}
 	
@@ -151,7 +165,7 @@ public class BossController : MonoBehaviour {
 	{
 		StartCoroutine(CleanVomitingLeft());
 		StartCoroutine(CleanVomitingRight());
-		slowArea.SetActive(false);
+		slowLeftAndRight.SetActive(false);
 		for (int i = 0; i < 3; i++)
 		{
 			spawnerLocation[i].SetActive(true);
@@ -223,6 +237,14 @@ public class BossController : MonoBehaviour {
 			yield return new WaitForSeconds(0.07f);
 		}
 	}
+	IEnumerator VomitingBack()
+	{
+		for (int i = 0; i < vomitBack.Count; i++)
+		{
+			vomitBack[i].SetActive(true);
+			yield return new WaitForSeconds(0.07f);
+		}
+	}
 	IEnumerator CleanVomitingLeft()
 	{
 		for (int i = vomitLeft.Count-1; i >= 0; i--)
@@ -273,7 +295,11 @@ public class BossController : MonoBehaviour {
 			faseCounter++;
 			anim.SetBool("RangeAttack", true);
 			thirdPersonBulletPattern.SetActive(true);
-			vomit2.SetActive(true);
+			StartCoroutine(VomitingRight());
+			StartCoroutine(VomitingLeft());
+			StartCoroutine(VomitingBack());
+			slowLeftAndRight.SetActive(true);
+			slowBack.SetActive(true);
 		}
 	}
 	void TurnOnSpit()
@@ -301,8 +327,8 @@ public class BossController : MonoBehaviour {
 		}
 		else if (faseCounter == 3)
 		{
-			Spit2.GetComponent<Spit>().canMove = true;
-			Spit2.gameObject.transform.parent = null;
+			Spit3.GetComponent<Spit>().canMove = true;
+			Spit3.gameObject.transform.parent = null;
 		}
 
 	}
@@ -310,6 +336,26 @@ public class BossController : MonoBehaviour {
 	{
 		anim.SetBool("RangeAttack", false);
 		anim.SetBool("RageFase2", false);
+		spawnWorms();
+	}
+	void EndThirdPersonBulletPattern()
+	{
+		anim.SetBool("RangeAttack", false);
+		anim.SetBool("RageFase2", false);
+		anim.SetBool("EndRage", false);
+		thirdPersonBulletPattern.SetActive(false);
+
+		if (faseCounter < 3)
+		{
+			spawnWorms();
+		}
+		else if (faseCounter == 3)
+		{
+			canTakeDamage = true;
+			anim.SetBool("Stunned", true);
+			SlamArea.SetActive(false);
+			damage = 5;
+		}
 	}
 	void endSlam()
 	{
@@ -322,5 +368,9 @@ public class BossController : MonoBehaviour {
 			catchSlam.alreadySet = false;
 			catchSlam.pj.GetComponent<Rigidbody>().AddForce(new Vector3(250,125, 250), ForceMode.Impulse);
 		}
+	}
+	void YouWin()
+	{
+		SceneManager.LoadScene("YouWin");
 	}
 }

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 75fd01cc852f0a849b9d5c3da6917be2
+timeCreated: 1512552476
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Colchester
+  fontNames:
+  - Colchester
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -42,4 +42,5 @@ Material:
     - _Dissolved: 1
     - _MaskClipValue: 0.5
     - __dirty: 0
-    m_Colors: []
+    m_Colors:
+    - _Color0: {r: 0.3602941, g: 0.21617647, b: 0, a: 0}

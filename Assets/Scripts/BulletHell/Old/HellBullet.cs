@@ -3,12 +3,14 @@ using UnityEngine;
 public class HellBullet : Bullet
 {
     float _timeAlive;
+	public bool isAPattern;
 
     public override void Initialize()
     {
         _timeAlive = 0f;
 
-        setTransform(BulletHellSpawner.Instance.SpawnPosition, BulletHellSpawner.Instance.SpawnRotation);
+		if (!isAPattern)
+			 setTransform(BulletHellSpawner.Instance.SpawnPosition, BulletHellSpawner.Instance.SpawnRotation);
     }
     public void setTransform(Vector3 position, Quaternion rotation)
     {

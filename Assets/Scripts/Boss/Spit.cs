@@ -68,6 +68,7 @@ public class Spit : MonoBehaviour {
 	{
 		if (c.gameObject.layer == 8)
 		{
+			boss.spitDestroy = true;
 			player.deathBySnuSnu = true;
 			Destroy(gameObject);
 		}
