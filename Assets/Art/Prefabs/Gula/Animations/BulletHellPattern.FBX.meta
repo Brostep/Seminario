@@ -1,0 +1,180 @@
+fileFormatVersion: 2
+guid: a984dc4eb7272c04d84bffce536884e9
+timeCreated: 1512543063
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Bullet
+    100002: Bullet001
+    100004: Bullet002
+    100006: Bullet003
+    100008: Bullet004
+    100010: Bullet005
+    100012: Bullet006
+    100014: Bullet007
+    100016: Bullet008
+    100018: Bullet009
+    100020: //RootNode
+    400000: Bullet
+    400002: Bullet001
+    400004: Bullet002
+    400006: Bullet003
+    400008: Bullet004
+    400010: Bullet005
+    400012: Bullet006
+    400014: Bullet007
+    400016: Bullet008
+    400018: Bullet009
+    400020: //RootNode
+    2300000: Bullet
+    2300002: Bullet001
+    2300004: Bullet002
+    2300006: Bullet003
+    2300008: Bullet004
+    2300010: Bullet005
+    2300012: Bullet006
+    2300014: Bullet007
+    2300016: Bullet008
+    2300018: Bullet009
+    3300000: Bullet
+    3300002: Bullet001
+    3300004: Bullet002
+    3300006: Bullet003
+    3300008: Bullet004
+    3300010: Bullet005
+    3300012: Bullet006
+    3300014: Bullet007
+    3300016: Bullet008
+    3300018: Bullet009
+    4300000: Bullet
+    4300002: Bullet001
+    4300004: Bullet002
+    4300006: Bullet003
+    4300008: Bullet004
+    4300010: Bullet005
+    4300012: Bullet006
+    4300014: Bullet007
+    4300016: Bullet008
+    4300018: Bullet009
+    7400000: Pattern
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: db6798c250b73384b9cd24d92772a889, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Pattern
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 1
+        functionName: EndThirdPersonBulletPattern
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: daf73d7a2e6263649a0150961fdcbcd7,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

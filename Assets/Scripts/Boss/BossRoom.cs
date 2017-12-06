@@ -20,6 +20,7 @@ public class BossRoom : MonoBehaviour {
 			playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled=true;
 			// booleano que arreglaba el error de acercarte la camara cuando cambiabas..
 			// deberiamos de sacarlo ya que forzamos al palyer fijate nose
+			playerController.inBossFight = true;
 			playerController.promedyTarget = true;
 			// bools para detectar el cambio de camara en player controller.. llama a camara change 
 			// cambia el field of view y todo la wea.. de movimientos

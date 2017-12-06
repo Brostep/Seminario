@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
 	public static bool inTopDown = false;
 	public Transform meleeFront;
+	public Transform playerResetBoss;
+	public Transform playerResetRoom;
 	public float meleeRadius;
 	public float lightAttackDamage;
 	public float heavyAttackDamage;
@@ -21,8 +23,11 @@ public class PlayerController : MonoBehaviour
 
 	bool isJumping;
 	bool onGround;
+	bool playDeathAnim;
 	public bool promedyTarget;
 	public bool cameraChange;
+	public bool deathBySnuSnu;
+	public bool inBossFight;
 	public float boop;
 	Vector3 velocity;
 	public GameObject bloodHit;
@@ -69,6 +74,16 @@ public class PlayerController : MonoBehaviour
 	{
 		CheckGroundStatus();
 
+		if (deathBySnuSnu&&life>0)
+		{
+			TakeDamage(1);
+		}
+		if (deathBySnuSnu || life <= 0 && !playDeathAnim)
+		{
+			playDeathAnim = true;
+			anim.SetBool("Death", true);
+		}
+
 		if (onGround)
 		{
 			velocity.y = 0f;
@@ -100,7 +115,6 @@ public class PlayerController : MonoBehaviour
 		// chekea si esta en el piso, no aplica gravedad
 		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetButton("AButton"))) && !isJumping)
 		{
-			print("in");
 			isJumping = true;
 			anim.SetBool("OnJump", true);
 			velocity.y = 600f;
@@ -259,7 +273,8 @@ public class PlayerController : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
-	//	Debug.Log ("ME ESTAN HACIENDO DAÑO");
+		//	Debug.Log ("ME ESTAN HACIENDO DAÑO");
+		life -= damage;
 		damage = damage / 100;
 
 		lifeBar.fillAmount -= damage;
@@ -268,6 +283,35 @@ public class PlayerController : MonoBehaviour
 	{
 		anim.SetBool("OnJump", false);
 		isJumping = false;
+	}
+
+	void EndDeath()
+	{
+		anim.SetBool("OnJump", false);
+		anim.SetBool("Run", false);
+		anim.SetBool("OnAttack1", false);
+		anim.SetBool("OnAttack2", false);
+		anim.SetBool("OnAttack3", false);
+		anim.SetBool("OnHeavyAttack", false);
+		anim.SetBool("OnDash", false);
+		anim.SetBool("Death", false);
+		anim.SetBool("Alive", true);
+		life = 100;
+		lifeBar.fillAmount = 100;
+		playDeathAnim = false;
+		deathBySnuSnu = false;
+		if (inBossFight)
+			ResetBoss();
+		else
+			ResetRoom();
+	}
+	void ResetBoss()
+	{
+		transform.position = playerResetBoss.position;
+	}
+	void ResetRoom()
+	{
+		transform.position = playerResetRoom.position;
 	}
 	void OnDrawGizmos()
 	{

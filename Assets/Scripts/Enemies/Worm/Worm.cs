@@ -29,24 +29,31 @@ public class Worm : Enemy
     Renderer matDissolve;
     float disolveValue = 1;
     bool isDeath;
+	bool wormFromBoss;
+	bool alreadyInitialized;
 
 	private void Start()
 	{
-		enemySpawner = FindObjectOfType<EnemySpawner>();
-		gameManager = FindObjectOfType<GameManager>();
-		player = FindObjectOfType<PlayerController>().gameObject;
-		flocking = GetComponent<Flocking>();
-		velocityLimit = flocking.velocityLimit;
-		playerHead = player.GetComponentInChildren<Head>().gameObject;
-		life = gameManager.wormLife;
-		anim = GetComponent<Animator>();
-		deathParticles = GetComponentInChildren<ParticleSystem>();
-		bossController = FindObjectOfType<BossController>();
-		disolveValue = 1;
-		isDeath = false;
-		matDissolve = GetComponentInChildren<Renderer>();
-		matDissolve.material.SetFloat("_Dissolved", disolveValue);
-		flocking.attacking = false;
+		if (!alreadyInitialized)
+		{
+			enemySpawner = FindObjectOfType<EnemySpawner>();
+			gameManager = FindObjectOfType<GameManager>();
+			player = FindObjectOfType<PlayerController>().gameObject;
+			flocking = GetComponent<Flocking>();
+			velocityLimit = flocking.velocityLimit;
+			playerHead = player.GetComponentInChildren<Head>().gameObject;
+			life = gameManager.wormLife;
+			anim = GetComponent<Animator>();
+			deathParticles = GetComponentInChildren<ParticleSystem>();
+			bossController = FindObjectOfType<BossController>();
+			disolveValue = 1;
+			isDeath = false;
+			matDissolve = GetComponentInChildren<Renderer>();
+			matDissolve.material.SetFloat("_Dissolved", disolveValue);
+			flocking.attacking = false;
+			wormFromBoss = true;
+		}
+		
 	}
 	public override void Initialize()
 	{
@@ -68,6 +75,7 @@ public class Worm : Enemy
 		matDissolve = GetComponentInChildren<Renderer>();
 		matDissolve.material.SetFloat("_Dissolved", disolveValue);
 		flocking.attacking = false;
+		alreadyInitialized = true;
 	}
 	void OnCollisionEnter(Collision c)
 	{
@@ -91,6 +99,8 @@ public class Worm : Enemy
 
 		if (life <= 0)
 		{
+			if (wormFromBoss)
+				bossController.wormsInScene.Remove(gameObject);
 			anim.SetBool("OnDeath", true);
             isDeath = true;
             flocking.attacking = true;
@@ -162,14 +172,6 @@ public class Worm : Enemy
 	{
 		return Instantiate<Worm>(obj);
 	}
-
-/*	void OnDrawGizmos()
-	{
-		Gizmos.DrawWireSphere(transform.position, leapDistance);
-		var headPos = head.transform.position + new Vector3(0f, 0f, 1f);
-		Gizmos.color = Color.cyan;
-		Gizmos.DrawCube(headPos, new Vector3(1f, 1f, 2f));
-	}*/
 	void EndCharge()
 	{
 		anim.SetBool("OnCharge", false);

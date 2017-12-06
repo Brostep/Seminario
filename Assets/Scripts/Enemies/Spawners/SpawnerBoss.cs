@@ -11,6 +11,7 @@ public class SpawnerBoss : Enemy
 	GameObject currentParticle;
 	Renderer render;
 	Animator anim;
+	BossController boss;
 	int waves = 1;
 	float _life;
 	bool alive = true;
@@ -19,7 +20,8 @@ public class SpawnerBoss : Enemy
 	private void Start()
 	{
 		_life = life;
-		anim = GetComponent<Animator>();	
+		anim = GetComponent<Animator>();
+		boss = FindObjectOfType<BossController>();
 	}
 	void Update()
 	{
@@ -32,6 +34,7 @@ public class SpawnerBoss : Enemy
 		{
 			if (currentParticle != null)
 				Destroy(currentParticle.gameObject);
+			boss.spawnersAlive--;
 
 			Destroy(gameObject);
 		}

@@ -23,6 +23,7 @@ public class DeathFloor : MonoBehaviour {
 
 		if(c.gameObject.layer == 10)
 		{
+			bossController.wormsInScene.Remove(c.gameObject);
 			Destroy(c.gameObject);
 			bossController.SpawnWorm();
 		}

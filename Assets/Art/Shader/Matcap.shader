@@ -34,7 +34,9 @@ Shader "Matcap"
 
 		void surf( Input i , inout SurfaceOutputStandard o )
 		{
-			o.Emission = tex2D( _TextureSample0, ( ( mul( UNITY_MATRIX_V , float4( i.worldNormal , 0.0 ) ) * 0.48 ) + 0.48 ).xy ).rgb;
+			float4 tex2DNode7 = tex2D( _TextureSample0, ( ( mul( UNITY_MATRIX_V , float4( i.worldNormal , 0.0 ) ) * 0.48 ) + 0.48 ).xy );
+			o.Albedo = tex2DNode7.rgb;
+			o.Emission = tex2DNode7.rgb;
 			o.Alpha = 1;
 		}
 
@@ -112,11 +114,11 @@ Shader "Matcap"
 }
 /*ASEBEGIN
 Version=13101
--12;451;975;529;1823.557;470.2958;2.437988;True;False
-Node;AmplifyShaderEditor.ViewMatrixNode;1;-1126.176,-68.15147;Float;False;0;1;FLOAT4x4
+7;29;1051;522;423.9136;416.7316;1.222589;True;True
 Node;AmplifyShaderEditor.WorldNormalVector;2;-1158.476,95.2516;Float;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;FLOAT;FLOAT;FLOAT
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;3;-900.0703,-20.65052;Float;False;2;2;0;FLOAT4x4;0.0;False;1;FLOAT3;0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;False;1;FLOAT3
+Node;AmplifyShaderEditor.ViewMatrixNode;1;-1126.176,-68.15147;Float;False;0;1;FLOAT4x4
 Node;AmplifyShaderEditor.RangedFloatNode;6;-875.3693,156.0528;Float;False;Constant;_Float0;Float 0;0;0;0.48;0;1;0;1;FLOAT
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;3;-900.0703,-20.65052;Float;False;2;2;0;FLOAT4x4;0.0;False;1;FLOAT3;0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;5;-673.9658,28.75036;Float;False;2;2;0;FLOAT3;0.0;False;1;FLOAT;0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SimpleAddOpNode;8;-430.5364,95.94928;Float;False;2;2;0;FLOAT3;0.0;False;1;FLOAT;0.0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SamplerNode;7;-163.089,-64.78914;Float;True;Property;_TextureSample0;Texture Sample 0;0;0;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;COLOR;FLOAT;FLOAT;FLOAT;FLOAT
@@ -128,6 +130,7 @@ WireConnection;5;1;6;0
 WireConnection;8;0;5;0
 WireConnection;8;1;6;0
 WireConnection;7;1;8;0
+WireConnection;0;0;7;0
 WireConnection;0;2;7;0
 ASEEND*/
-//CHKSM=90B6DDE8CA676711214286FF29F5420C4C32692C
+//CHKSM=9D863EE7AD46070C4159A1004C793F7B4BE9A765
