@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject thirdPersonCamera;
 	public GameObject topDownCamera;
 
-	public static bool inTopDown = false;
+	public static bool inTopDown;
 	public Transform meleeFront;
 	public Transform playerResetBoss;
 	public Transform playerResetRoom;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 	bool onGround;
 	bool playDeathAnim;
 	public bool promedyTarget;
-	public bool cameraChange;
+	public bool cameraChange { get; set; }
 	public bool deathBySnuSnu;
 	public bool inBossFight;
 	public float boop;
@@ -68,13 +68,13 @@ public class PlayerController : MonoBehaviour
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
 
-	
+
 	}
 	void Update()
 	{
 		CheckGroundStatus();
 
-		if (deathBySnuSnu&&life>0)
+		if (deathBySnuSnu && life > 0)
 		{
 			TakeDamage(1);
 		}
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 		{
 			velocity.y = 0f;
 			isJumping = false;
-		//	anim.SetBool("OnJump", false);
+			//	anim.SetBool("OnJump", false);
 		}
 		else
 			velocity.y = velocity.y - 6f;
@@ -99,17 +99,12 @@ public class PlayerController : MonoBehaviour
 			cameraChange = true;
 
 			if (promedyTarget && !inTopDown)
-			{
 				topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = false;
-			}
-			else if (promedyTarget)
-			{
-				topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = true;
-			}
-			
 
+			else if (promedyTarget)
+				topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = true;
 		}
-			
+
 		if (cameraChange)
 			ChangeMovement();
 		// chekea si esta en el piso, no aplica gravedad
@@ -122,17 +117,17 @@ public class PlayerController : MonoBehaviour
 
 		MeleeHit();
 	}
+
 	private void FixedUpdate()
 	{
 		rb.velocity = velocity;
 	}
+
 	void ChangeMovement()
 	{
 		if (inTopDown)
 		{
-			//TOP DOWN
 			SetCameraForTopDown();
-			
 			thirdPersonCamera.SetActive(false);
 			thirdPersonController.enabled = false;
 			topDownController.enabled = true;
@@ -141,6 +136,7 @@ public class PlayerController : MonoBehaviour
 			crosshair.enabled = false;
 			cameraChange = false;
 		}
+
 		else
 		{
 			SetCameraForThirdPerson();
@@ -154,6 +150,7 @@ public class PlayerController : MonoBehaviour
 			cameraChange = false;
 		}
 	}
+
 	public void SetCameraForTopDown()
 	{
 		Cam.transform.SetParent(topDownCamera.transform);
@@ -162,6 +159,7 @@ public class PlayerController : MonoBehaviour
 		Cam.farClipPlane = farClipPlaneTD;
 		Cam.fieldOfView = fieldOfViewTD;
 	}
+
 	public void SetCameraForThirdPerson()
 	{
 		Cam.transform.SetParent(thirdPersonCamera.transform);
@@ -170,6 +168,7 @@ public class PlayerController : MonoBehaviour
 		Cam.farClipPlane = farClipPlaneTP;
 		Cam.fieldOfView = fieldOfViewTP;
 	}
+
 	void CheckGroundStatus()
 	{
 		RaycastHit hitInfo;
@@ -187,16 +186,17 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) || Input.GetButton("XButton"))
 		{
 			animController.EnterAnimationLightAttack();
-            thirdPersonController.movementSpeed = 2f;		
+			thirdPersonController.movementSpeed = 2f;
 		}
 		if (Input.GetMouseButtonDown(1) || Input.GetButton("YButton"))
 		{
 			animController.EnterAnimationHeavyAttack();
 
 			thirdPersonController.movementSpeed = 2f;
-        
+
 		}
 	}
+
 	void DoDamageLightAttack1()
 	{
 		if (!inTopDown)
@@ -211,15 +211,16 @@ public class PlayerController : MonoBehaviour
 				Instantiate(bloodHit, e.head.transform);
 				if (enemy.GetComponent<Rigidbody>() != null)
 					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop);
-				
+
 			}
 		}
 	}
+
 	void DoDamageLightAttack2()
 	{
 		if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-		var enemiesHited = Physics.OverlapSphere(transform.position, meleeRadius*2, LayerMask.GetMask("Enemy"));
+		var enemiesHited = Physics.OverlapSphere(transform.position, meleeRadius * 2, LayerMask.GetMask("Enemy"));
 		if (enemiesHited.Length > 0)
 		{
 			foreach (var enemy in enemiesHited)
@@ -233,6 +234,7 @@ public class PlayerController : MonoBehaviour
 
 		}
 	}
+
 	void DoDamageLightAttack3()
 	{
 		if (!inTopDown)
@@ -251,7 +253,8 @@ public class PlayerController : MonoBehaviour
 
 		}
 	}
-	void DoDamageHeavyAttack1()
+
+	private void DoDamageHeavyAttack1()
 	{
 		if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
@@ -263,9 +266,9 @@ public class PlayerController : MonoBehaviour
 				var e = enemy.GetComponent<Enemy>();
 				e.life -= heavyAttackDamage;
 				Instantiate(bloodHit, e.head.transform);
-			
+
 				if (enemy.GetComponent<Rigidbody>() != null)
-					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop*1.5f);
+					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop * 1.5f);
 			}
 
 		}
@@ -279,13 +282,14 @@ public class PlayerController : MonoBehaviour
 
 		lifeBar.fillAmount -= damage;
 	}
-	void EndJump()
+
+	private void EndJump()
 	{
 		anim.SetBool("OnJump", false);
 		isJumping = false;
 	}
 
-	void EndDeath()
+	private void EndDeath()
 	{
 		anim.SetBool("OnJump", false);
 		anim.SetBool("Run", false);
@@ -300,25 +304,29 @@ public class PlayerController : MonoBehaviour
 		lifeBar.fillAmount = 100;
 		playDeathAnim = false;
 		deathBySnuSnu = false;
+
 		if (inBossFight)
 			ResetBoss();
+
 		else
 			ResetRoom();
 	}
-	void ResetBoss()
+
+	private void ResetBoss()
 	{
 		transform.position = playerResetBoss.position;
 	}
-	void ResetRoom()
+
+	private void ResetRoom()
 	{
 		transform.position = playerResetRoom.position;
 	}
-	void OnDrawGizmos()
+
+	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.cyan;
+
 		if (Input.GetKey(KeyCode.E))
-		{
 			Gizmos.DrawSphere(meleeFront.position, meleeRadius);
-		}
 	}
 }
