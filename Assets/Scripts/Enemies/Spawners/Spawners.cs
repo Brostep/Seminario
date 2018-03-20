@@ -12,6 +12,7 @@ public class Spawners : Enemy {
 	GameObject currentParticle;
 	Renderer render;
 	Animator anim;
+    ParticleSystem ps;
 	int waves = 1;
 	float _life;
 	int totalSpawners;
@@ -20,18 +21,21 @@ public class Spawners : Enemy {
 	bool startMoving = false;
 	Vector3 dir;
 	Vector3 offset = new Vector3(0f, 2.65f, 0f);
+
 	private void Start()
 	{
 		_life = life;
 		gm = FindObjectOfType<GameManager>();
 		anim = GetComponent<Animator>();
-
+        ps = GetComponentInChildren<ParticleSystem>();
 	}
+
 	void Update()
 	{
 		CheckSpawnerLife();
 		moveParticles();
 	}
+
 	void CheckSpawnerLife()
 	{
 		if (life <= 0 && alive)
@@ -86,6 +90,7 @@ public class Spawners : Enemy {
 			} while (!onGround);		
 		}	
 	}
+
 	void moveParticles()
 	{
 		if (startMoving&&currentParticle!=null)
@@ -121,6 +126,14 @@ public class Spawners : Enemy {
 		}
 
 	}
+
+    void OnCollisionEnter(Collision c)
+    {
+        if (c.gameObject.layer == 9)
+            ps.Play(true);
+    }
+    
+
 	void EndDig()
 	{
 		anim.SetBool("Dig", false);
