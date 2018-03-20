@@ -5489,13 +5489,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 198602154827404018, guid: 54d4532539a961547b328d2c231f273d,
         type: 2}
-      propertyPath: randomSeed
-      value: -1405534187
+      propertyPath: LightsModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198602154827404018, guid: 54d4532539a961547b328d2c231f273d,
         type: 2}
-      propertyPath: LightsModule.enabled
-      value: 1
+      propertyPath: randomSeed
+      value: 2116965636
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54d4532539a961547b328d2c231f273d, type: 2}
@@ -6064,11 +6064,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25
+      value: -19.5
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalRotation.x

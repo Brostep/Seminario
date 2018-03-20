@@ -4,6 +4,12 @@ public class HellBullet : Bullet
 {
     float _timeAlive;
 	public bool isAPattern;
+    ParticleSystem ps;
+
+    void Start()
+    {
+        ps = GetComponentInChildren<ParticleSystem>();
+    }
 
     public override void Initialize()
     {
@@ -11,6 +17,7 @@ public class HellBullet : Bullet
 
 		if (!isAPattern)
 			 setTransform(BulletHellSpawner.Instance.SpawnPosition, BulletHellSpawner.Instance.SpawnRotation);
+
     }
     public void setTransform(Vector3 position, Quaternion rotation)
     {
@@ -40,10 +47,16 @@ public class HellBullet : Bullet
 
     void OnCollisionEnter(Collision collision)
     {
+
         if (collision.gameObject.layer == 9)
         {
-			if (tag != "Indestructible")
-				BulletHellSpawner.Instance.ReturnBulletToPool(this);
+			if (tag == "Indestructible")
+            {
+                ps.Play();
+                print("COLISIONO");
+            }
+            else
+                BulletHellSpawner.Instance.ReturnBulletToPool(this);
         }
 		if (collision.gameObject.layer == 8)
 		{
