@@ -51,10 +51,7 @@ public class HellBullet : Bullet
         if (collision.gameObject.layer == 9)
         {
 			if (tag == "Indestructible")
-            {
                 ps.Play();
-                print("COLISIONO");
-            }
             else
                 BulletHellSpawner.Instance.ReturnBulletToPool(this);
         }

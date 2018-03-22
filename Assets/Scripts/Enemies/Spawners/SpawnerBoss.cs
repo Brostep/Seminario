@@ -12,6 +12,7 @@ public class SpawnerBoss : Enemy
 	Renderer render;
 	Animator anim;
 	BossController boss;
+    ParticleSystem ps;
 	int waves = 1;
 	float _life;
 	bool alive = true;
@@ -22,6 +23,7 @@ public class SpawnerBoss : Enemy
 		_life = life;
 		anim = GetComponent<Animator>();
 		boss = FindObjectOfType<BossController>();
+        ps = GetComponentInChildren<ParticleSystem>();
 	}
 	void Update()
 	{
@@ -74,7 +76,15 @@ public class SpawnerBoss : Enemy
 		}
 
 	}
-	void EndDig()
+
+    void OnCollisionEnter(Collision c)
+    {
+        if (c.gameObject.layer == 9)
+            ps.Play(true);
+            
+    }
+
+    void EndDig()
 	{
 		anim.SetBool("Dig", false);
 		currentParticle = Instantiate(particlesWhileInGround, transform.position - new Vector3(0f, 0.3f, 0f), transform.rotation);
