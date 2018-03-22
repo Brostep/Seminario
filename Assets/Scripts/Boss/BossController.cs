@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
-
     public GameObject slowLeftAndRight;
     public GameObject slowBack;
     public GameObject boneThrower;
-    public List<GameObject> spawnerLocation;
+    public List<GameObject> spawnersPosition;
     public GameObject worm;
     public GameObject Food;
     public GameObject Spit;
@@ -25,12 +24,15 @@ public class BossController : MonoBehaviour
     public List<GameObject> wormsInScene;
     public bool spitDestroy;
     public GameObject thirdPersonBulletPattern;
-    public int life = 200;
+
+    public int healthPoints;
+    private int _currentHealthPoints;
+
     public Image lifeBar;
     public Image totalLifeBar;
     public Image bossBackBar;
+
     public int wormsPerSpawner;
-    int currentLife;
     int currentSpawners;
     int faseCounter;
     public int spawnersAlive;
@@ -41,9 +43,9 @@ public class BossController : MonoBehaviour
     public bool fase2Enabled;
     int damage = 1;
 
-    void Start()
+    private void Start()
     {
-        currentLife = life;
+        _currentHealthPoints = healthPoints;
         anim = GetComponent<Animator>();
         spawners = new List<GameObject>();
         wormsInScene = new List<GameObject>();
@@ -51,12 +53,12 @@ public class BossController : MonoBehaviour
         totalLifeBar.enabled = false;
         bossBackBar.enabled = false;
     }
-    void Update()
+
+    private void Update()
     {
-        if (currentLife != life)
+        if (canTakeDamage)
         {
-            currentLife = life;
-            CheckBossLife();
+            CheckHealthPoints();
         }
 
         if (fase2Enabled)
@@ -80,9 +82,10 @@ public class BossController : MonoBehaviour
             }
         }
     }
-    void CheckBossLife()
+
+    private void CheckHealthPoints()
     {
-        switch (life)
+        switch (_currentHealthPoints)
         {
             case 160:
                 canTakeDamage = false;
@@ -105,23 +108,67 @@ public class BossController : MonoBehaviour
                 break;
         }
     }
-    void EnableVomit()
+
+    private void SimpleRage()
+    {
+        anim.SetBool("SimpleRage", true);
+    }
+
+    private void EndSimpleRage()
+    {
+        switch (_currentHealthPoints)
+        {
+            case 160:
+                anim.SetBool("SimpleRage", false);
+                EnableVomit();
+                ChangeBulletHellPatternTo(2);
+                _currentHealthPoints--;
+                canTakeDamage = true;
+                break;
+            case 120:
+                anim.SetBool("SimpleRage", false);
+                EnableBoneThrower();
+                ChangeBulletHellPatternTo(3);
+                _currentHealthPoints--;
+                canTakeDamage = true;
+                break;
+            case 80:
+                EnableFase2();
+                break;
+        }
+    }
+
+    private void EnableVomit()
     {
         slowLeftAndRight.SetActive(true);
         StartCoroutine(VomitingLeft());
         StartCoroutine(VomitingRight());
     }
-    void ChangeBulletPatternTo(int pattern)
+
+    private void ChangeBulletHellPatternTo(int p)
     {
         bulletHellSpawner.startShooting = true;
-        bulletHellSpawner.pattern = pattern;
+        bulletHellSpawner.pattern = p;
     }
-    void EnableFase2()
+
+    private void EnableFase2()
     {
         bulletHellSpawner.startShooting = false;
         anim.SetBool("Slam2Hands", true);
     }
-    void spawnWorms()
+
+    public void SpawnWorm()
+    {
+        var i = Random.Range(0, spawners.Count - 1);
+        var randPosX = Random.Range(spawners[i].transform.position.x - 3, spawners[i].transform.position.x + 3);
+        var randPosZ = Random.Range(spawners[i].transform.position.z - 3, spawners[i].transform.position.z + 3);
+        var randPos = new Vector3(randPosX, 12.5f, randPosZ);
+
+        var go = Instantiate(worm, randPos, worm.transform.rotation);
+        wormsInScene.Add(go);
+    }
+
+    private void SpawnWorms()
     {
         for (int i = 0; i < spawners.Count; i++)
         {
@@ -140,29 +187,17 @@ public class BossController : MonoBehaviour
         }
 
     }
-    public void SpawnWorm()
-    {
-        var i = Random.Range(0, spawners.Count - 1);
-        var randPosX = Random.Range(spawners[i].transform.position.x - 3, spawners[i].transform.position.x + 3);
-        var randPosZ = Random.Range(spawners[i].transform.position.z - 3, spawners[i].transform.position.z + 3);
-        var randPos = new Vector3(randPosX, 12.5f, randPosZ);
-
-        var go = Instantiate(worm, randPos, worm.transform.rotation);
-        wormsInScene.Add(go);
-    }
 
     public void BossIntro()
     {
         anim.SetBool("EatingIntro", true);
     }
-    void SimpleRage()
-    {
-        anim.SetBool("SimpleRage", true);
-    }
+
     void EnableBoneThrower()
     {
         boneThrower.SetActive(true);
     }
+
     void EndSlam2Hands()
     {
         anim.SetBool("Slam2Hands", false);
@@ -176,13 +211,12 @@ public class BossController : MonoBehaviour
         slowLeftAndRight.SetActive(false);
         for (int i = 0; i < 3; i++)
         {
-            spawnerLocation[i].SetActive(true);
-            spawners.Add(spawnerLocation[i]);
+            spawnersPosition[i].SetActive(true);
+            spawners.Add(spawnersPosition[i]);
             currentSpawners++;
             spawnersAlive++;
         }
-        spawnWorms();
-
+        SpawnWorms();
 
         var playerController = FindObjectOfType<PlayerController>();
         playerController.cameraChange = true;
@@ -198,27 +232,7 @@ public class BossController : MonoBehaviour
 
         fase2Enabled = true;
     }
-    void EndSimpleRage()
-    {
-        switch (life)
-        {
-            case 160:
-                anim.SetBool("SimpleRage", false);
-                EnableVomit();
-                ChangeBulletPatternTo(2);
-                canTakeDamage = true;
-                break;
-            case 120:
-                anim.SetBool("SimpleRage", false);
-                EnableBoneThrower();
-                ChangeBulletPatternTo(3);
-                canTakeDamage = true;
-                break;
-            case 80:
-                EnableFase2();
-                break;
-        }
-    }
+
     void RageFase2()
     {
         anim.SetBool("RageFase2", true);
@@ -245,6 +259,7 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(0.07f);
         }
     }
+
     IEnumerator VomitingBack()
     {
         for (int i = 0; i < vomitBack.Count; i++)
@@ -253,6 +268,7 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(0.07f);
         }
     }
+
     IEnumerator CleanVomitingLeft()
     {
         for (int i = vomitLeft.Count - 1; i >= 0; i--)
@@ -261,6 +277,7 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(0.07f);
         }
     }
+
     IEnumerator CleanVomitingRight()
     {
         for (int i = vomitRight.Count - 1; i >= 0; i--)
@@ -269,17 +286,19 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(0.07f);
         }
     }
-    void OnCollisionEnter(Collision c)
+
+    private void OnCollisionEnter(Collision c)
     {
         if (c.gameObject.layer == 9 && canTakeDamage)
         {
-            life -= damage;
+            _currentHealthPoints -= damage;
             lifeBar.fillAmount -= damage / 200.0f;
         }
     }
-    void StartShooting()
+
+    private void StartShooting()
     {
-        ChangeBulletPatternTo(1);
+        ChangeBulletHellPatternTo(1);
         bulletHellSpawner.startShooting = true;
         canTakeDamage = true;
         lifeBar.enabled = true;
@@ -314,7 +333,8 @@ public class BossController : MonoBehaviour
             slowBack.SetActive(true);
         }
     }
-    void TurnOnSpit()
+
+    private void TurnOnSpit()
     {
         if (faseCounter == 1)
             Spit.SetActive(true);
@@ -323,7 +343,8 @@ public class BossController : MonoBehaviour
         else if (faseCounter == 3)
             Spit3.SetActive(true);
     }
-    void SpitCanMove()
+
+    private void SpitCanMove()
     {
         if (faseCounter == 1)
         {
@@ -344,13 +365,15 @@ public class BossController : MonoBehaviour
         }
 
     }
-    void ResetFase()
+
+    private void ResetFase()
     {
         anim.SetBool("RangeAttack", false);
         anim.SetBool("RageFase2", false);
-        spawnWorms();
+        SpawnWorms();
     }
-    void EndThirdPersonBulletPattern()
+
+    private void EndThirdPersonBulletPattern()
     {
         anim.SetBool("RangeAttack", false);
         anim.SetBool("RageFase2", false);
@@ -359,7 +382,7 @@ public class BossController : MonoBehaviour
 
         if (faseCounter < 3)
         {
-            spawnWorms();
+            SpawnWorms();
         }
         else if (faseCounter == 3)
         {
@@ -369,6 +392,7 @@ public class BossController : MonoBehaviour
             damage = 5;
         }
     }
+
     void endSlam()
     {
         if (GetComponentInChildren<CatchSlam>().alreadySet)
@@ -381,7 +405,8 @@ public class BossController : MonoBehaviour
             catchSlam.pj.GetComponent<Rigidbody>().AddForce(new Vector3(250, 125, 250), ForceMode.Impulse);
         }
     }
-    void YouWin()
+
+    private void WinScreen()
     {
         SceneManager.LoadScene("YouWin");
     }

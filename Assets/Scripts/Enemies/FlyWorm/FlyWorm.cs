@@ -53,11 +53,11 @@ public class FlyWorm : Enemy {
 	{
 		if (PlayerController.inTopDown && transform.position.y > 5f)
 		{
-			GetComponent<CapsuleCollider>().center = new Vector3(0f, -4.8f, 0f);
+			GetComponent<BoxCollider>().center = new Vector3(0f, -4.8f, 0f);
 		}
 		else if (!PlayerController.inTopDown && transform.position.y > 5f)
 		{
-			GetComponent<CapsuleCollider>().center = new Vector3(0f, 0f, 0f);
+			GetComponent<BoxCollider>().center = new Vector3(0f, 0f, 0f);
 		}
 	}
 	IEnumerator Shoot()

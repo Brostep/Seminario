@@ -37,9 +37,9 @@ GameObject:
   - component: {fileID: 33965074616931178}
   - component: {fileID: 23036130939478904}
   - component: {fileID: 54319229098096106}
-  - component: {fileID: 136914306075218522}
   - component: {fileID: 114401628075825650}
   - component: {fileID: 114230846241760208}
+  - component: {fileID: 65021852547485886}
   m_Layer: 10
   m_Name: FlyWorm
   m_TagString: Untagged
@@ -130,6 +130,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &65021852547485886
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1945612011267840}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.93953127, y: 1.6501975, z: 1.0437498}
+  m_Center: {x: -0.000000029802322, y: -0.29932252, z: -0.0060598254}
 --- !u!114 &114230846241760208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,17 +194,5 @@ MonoBehaviour:
   alignmentMult: 1
   cohesionMult: 1
   separationMult: 1
+  attacking: 0
   drawFlockingGizmos: 0
---- !u!136 &136914306075218522
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1945612011267840}
-  m_Material: {fileID: 13400000, guid: c941f622a78cdaa4eabe22bceb622e70, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5218749
-  m_Height: 1.6501975
-  m_Direction: 1
-  m_Center: {x: -0.000000029802322, y: -0.29932252, z: -0.0060598254}

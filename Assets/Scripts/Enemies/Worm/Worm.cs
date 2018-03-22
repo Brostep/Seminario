@@ -156,7 +156,7 @@ public class Worm : Enemy
 		{
 			transform.LookAt(player.transform);
 			flocking.velocityLimit = 2.5f;
-			GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, -0.3f);
+			GetComponent<BoxCollider>().center = new Vector3(0f, 0.4f, -0.3f);
 			anim.SetBool("OnMeleeAttack", true);
 			canAttack = false;
 			flocking.attacking = true;
@@ -202,7 +202,7 @@ public class Worm : Enemy
 		flocking.velocityLimit = velocityLimit;
 		canAttack = true;
 		anim.SetBool("OnMeleeAttack", false);
-		GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, 0f);
+		GetComponent<BoxCollider>().center = new Vector3(0f, 0.4f, 0f);
 		flocking.attacking = false;
 	}
 
