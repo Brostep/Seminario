@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 	public float heavyAttackDamage;
 	Animator anim;
 
+    ParticleSystem psTakeDamage;
+
 	bool isJumping;
 	bool onGround;
 	bool playDeathAnim;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
 
+        psTakeDamage = GetComponentInChildren<ParticleSystem>();
 
 	}
 	void Update()
@@ -276,12 +279,14 @@ public class PlayerController : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
-		//	Debug.Log ("ME ESTAN HACIENDO DAÑO");
 		life -= damage;
 		damage = damage / 100;
 
 		lifeBar.fillAmount -= damage;
-	}
+
+        psTakeDamage.Play();
+
+    }
 
 	private void EndJump()
 	{
