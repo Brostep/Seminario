@@ -71,8 +71,7 @@ public class PlayerController : MonoBehaviour
 		movementSpeed = thirdPersonController.movementSpeed;
 
         psTakeDamage = GetComponentInChildren<ParticleSystem>();
-
-	}
+    }
 	void Update()
 	{
 		CheckGroundStatus();
@@ -191,9 +190,9 @@ public class PlayerController : MonoBehaviour
 			animController.EnterAnimationLightAttack();
 			thirdPersonController.movementSpeed = 2f;
 		}
-		if (Input.GetMouseButtonDown(1) || Input.GetButton("YButton"))
+		if ((Input.GetMouseButtonUp(1) && animController.canUseHeavyAttack) || Input.GetButton("YButton"))
 		{
-			animController.EnterAnimationHeavyAttack();
+            animController.EnterAnimationHeavyAttack();
 
 			thirdPersonController.movementSpeed = 2f;
 

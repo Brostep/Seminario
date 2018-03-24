@@ -22,7 +22,10 @@ public class AnimationControllerPlayer : MonoBehaviour {
 	int onLightAttack3;
 	int onHeavyAttack1;
 
-	void Start () {
+    [HideInInspector]
+    public bool canUseHeavyAttack = true;
+
+    void Start () {
 		actionRegister = new List<int>();
 		lightAttacks = new List<int>();
 		heavyAttacks = new List<int>();
@@ -69,13 +72,16 @@ public class AnimationControllerPlayer : MonoBehaviour {
 	}
 	public void EnterAnimationHeavyAttack()
 	{
-		currentAnim++;
+        anim.SetTrigger("OnHeavyAttack");
+
+		/*currentAnim++;
+        canUseHeavyAttack = false;
 		for (int i = 0; i < currentAnim; i++)
 		{
 			if (i< heavyAttacks.Count)
 				anim.SetBool(heavyAttacks[i], true);
 		}
-		timeBetweenAttacks = 0f;
+		timeBetweenAttacks = 0f;*/
 	}
 	void EndAttack1()
 	{
@@ -105,6 +111,7 @@ public class AnimationControllerPlayer : MonoBehaviour {
 		anim.SetBool(onHeavyAttack1, false);
         thirdPersonController.movementSpeed = 8f;
 		timeBetweenAttacks = 0f;
+        canUseHeavyAttack = true;
 	}
 
 

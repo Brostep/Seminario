@@ -6017,11 +6017,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.9
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 86.958
+      value: -20.66
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9081,6 +9081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRegister: 
   timeBeforeResetBasic: 0.75
+  canUseHeavyAttack: 1
 --- !u!114 &1202284977
 MonoBehaviour:
   m_ObjectHideFlags: 0
