@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
 
     ParticleSystem psTakeDamage;
 
+    int runHash;
+    int jumpHash;
+    int deathHash;
+
 	bool isJumping;
 	bool onGround;
 	bool playDeathAnim;
@@ -71,6 +75,10 @@ public class PlayerController : MonoBehaviour
 		movementSpeed = thirdPersonController.movementSpeed;
 
         psTakeDamage = GetComponentInChildren<ParticleSystem>();
+
+        runHash = Animator.StringToHash("Run");
+        jumpHash = Animator.StringToHash("OnJump");
+        deathHash = Animator.StringToHash("Death");
     }
 	void Update()
 	{
@@ -83,7 +91,7 @@ public class PlayerController : MonoBehaviour
 		if (deathBySnuSnu || life <= 0 && !playDeathAnim)
 		{
 			playDeathAnim = true;
-			anim.SetBool("Death", true);
+			anim.SetBool(deathHash, true);
 		}
 
 		if (onGround)
@@ -113,7 +121,8 @@ public class PlayerController : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetButton("AButton"))) && !isJumping)
 		{
 			isJumping = true;
-			anim.SetBool("OnJump", true);
+			//anim.SetBool(jumpHash, true);
+            anim.SetTrigger("OnJump");
 			velocity.y = 600f;
 		}
 
@@ -289,20 +298,20 @@ public class PlayerController : MonoBehaviour
 
 	private void EndJump()
 	{
-		anim.SetBool("OnJump", false);
+		//anim.SetBool(jumpHash, false);
 		isJumping = false;
 	}
 
 	private void EndDeath()
 	{
-		anim.SetBool("OnJump", false);
+		//anim.SetBool(jumpHash, false);
 		anim.SetBool("Run", false);
 		anim.SetBool("OnAttack1", false);
 		anim.SetBool("OnAttack2", false);
 		anim.SetBool("OnAttack3", false);
 		anim.SetBool("OnHeavyAttack", false);
 		anim.SetBool("OnDash", false);
-		anim.SetBool("Death", false);
+		anim.SetBool(deathHash, false);
 		anim.SetBool("Alive", true);
 		life = 100;
 		lifeBar.fillAmount = 100;
