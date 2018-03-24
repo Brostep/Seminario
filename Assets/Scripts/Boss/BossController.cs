@@ -28,6 +28,8 @@ public class BossController : MonoBehaviour
     public int healthPoints;
     private int _currentHealthPoints;
 
+    ParticleSystem psTakeDamage;
+
     public Image lifeBar;
     public Image totalLifeBar;
     public Image bossBackBar;
@@ -47,6 +49,7 @@ public class BossController : MonoBehaviour
     {
         _currentHealthPoints = healthPoints;
         anim = GetComponent<Animator>();
+        psTakeDamage = GetComponentInChildren<ParticleSystem>();
         spawners = new List<GameObject>();
         wormsInScene = new List<GameObject>();
         lifeBar.enabled = false;
@@ -293,6 +296,8 @@ public class BossController : MonoBehaviour
         {
             _currentHealthPoints -= damage;
             lifeBar.fillAmount -= damage / 200.0f;
+
+            psTakeDamage.Play();
         }
     }
 
