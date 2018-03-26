@@ -53,11 +53,11 @@ public class AnimationControllerPlayer : MonoBehaviour {
 				if (anim.GetBool(lightAttacks[i]))
 					anim.SetBool(lightAttacks[i], false);
 			}
-			for (int i = 0; i < heavyAttacks.Count; i++)
+			/*for (int i = 0; i < heavyAttacks.Count; i++)
 			{
 				if (anim.GetBool(heavyAttacks[i]))
 					anim.SetBool(heavyAttacks[i], false);
-			}
+			}*/
 		}
 	}
 	public void EnterAnimationLightAttack()

@@ -197,13 +197,13 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) || Input.GetButton("XButton"))
 		{
 			animController.EnterAnimationLightAttack();
-			thirdPersonController.movementSpeed = 2f;
+			thirdPersonController.movementSpeed = 2.0f;
 		}
 		if ((Input.GetMouseButtonUp(1) && animController.canUseHeavyAttack) || Input.GetButton("YButton"))
 		{
             animController.EnterAnimationHeavyAttack();
 
-			thirdPersonController.movementSpeed = 2f;
+			thirdPersonController.movementSpeed = 0.0f;
 
 		}
 	}
@@ -265,10 +265,16 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+    void RotatePlayerAtHeavyAttack()
+    {
+        if (!inTopDown)
+            transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+    }
+
 	private void DoDamageHeavyAttack1()
 	{
-		if (!inTopDown)
-			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
+		/*if (!inTopDown)
+			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);*/
 		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
 		if (enemiesHited.Length > 0)
 		{
