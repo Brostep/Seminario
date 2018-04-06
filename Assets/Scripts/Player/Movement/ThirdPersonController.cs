@@ -25,7 +25,7 @@ public class ThirdPersonController : MonoBehaviour {
 	public Material roofShader;
 	bool onePress;
 	bool onGround;
-	bool isDashing;
+	public bool isDashing;
 	Animator anim;
 
 	void Start()

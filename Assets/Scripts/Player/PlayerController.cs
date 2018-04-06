@@ -73,7 +73,6 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
-
         psTakeDamage = GetComponentInChildren<ParticleSystem>();
 
         runHash = Animator.StringToHash("Run");
@@ -196,14 +195,21 @@ public class PlayerController : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0) || Input.GetButton("XButton"))
 		{
-			animController.EnterAnimationLightAttack();
-			thirdPersonController.movementSpeed = 2.0f;
+			if (!thirdPersonController.isDashing)
+			{
+				animController.EnterAnimationLightAttack();
+				thirdPersonController.movementSpeed = 2.0f;
+			}
+		
 		}
 		if ((Input.GetMouseButtonUp(1) && animController.canUseHeavyAttack) || Input.GetButton("YButton"))
 		{
-            animController.EnterAnimationHeavyAttack();
+			if (!thirdPersonController.isDashing)
+			{
+				animController.EnterAnimationHeavyAttack();
+				thirdPersonController.movementSpeed = 0.0f;
 
-			thirdPersonController.movementSpeed = 0.0f;
+			}
 
 		}
 	}

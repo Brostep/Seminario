@@ -25,7 +25,7 @@ public class TopDownMovement : MonoBehaviour {
 	public Material roofAlpha;
 	public LayerMask roof;
 	bool onePress;
-	bool isDashing;
+	public bool isDashing;
 	bool onGround;
 	Animator anim;
 
