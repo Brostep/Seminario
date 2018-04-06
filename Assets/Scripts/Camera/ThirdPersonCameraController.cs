@@ -158,12 +158,12 @@ public class ThirdPersonCameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetButtonDown("R3"))
         {
-			setCameraAtTheBack();
+			SetCameraAtTheBack();
         }
 
         auxRotation = transform.rotation;
     }
-	public void setCameraAtTheBack()
+	public void SetCameraAtTheBack()
 	{
 		transform.rotation = CameraFollowObj.transform.rotation;
 		Vector3 rot = transform.rotation.eulerAngles;

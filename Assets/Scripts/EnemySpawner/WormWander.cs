@@ -27,7 +27,8 @@ public class WormWander : Enemy {
 	{
 		if (c.gameObject.layer == 9)
 		{
-			Instantiate(gm.bloodWorm, head.transform);
+            Instantiate(gm.bloodWorm, head.transform);
+            
 			life -= c.gameObject.GetComponent<PlayerBullets>().damage;
 		}
 

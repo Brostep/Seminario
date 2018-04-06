@@ -27,13 +27,21 @@ public class TopDownMovement : MonoBehaviour {
 	bool onePress;
 	public bool isDashing;
 	bool onGround;
-	Animator anim;
+    bool canActiveDashParticles = true;
+
+    Animator anim;
+    List<ParticleSystem> particles;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
 		dashDurationAux = dashDuration;
+
+        particles = new List<ParticleSystem>();
+
+        GetComponentsInChildren(false, particles);
+
 	}
 	void Update()
 	{
@@ -94,11 +102,25 @@ public class TopDownMovement : MonoBehaviour {
         {
             isDashing = true; // estoy dasheando
             anim.SetBool("OnDash", true);
-        }
-			
 
-		// estoy dasheando ? y todavia hay duracion
-		if (isDashing && dashDuration > 0f)
+            if (anim.GetBool("Run") && anim.GetBool("OnDash") && canActiveDashParticles)
+            {
+                canActiveDashParticles = false;
+
+                for (int i = 0; i < particles.Count - 1; i++)
+                {
+                    if (particles[i].name == "DashParticles")
+                        if (!particles[i].isPlaying)
+                            particles[i].Play();
+                }
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            canActiveDashParticles = true;
+
+        // estoy dasheando ? y todavia hay duracion
+        if (isDashing && dashDuration > 0f)
 		{
 			relVel = relMove * dashSpeed;
 			dashDuration -= Time.deltaTime;

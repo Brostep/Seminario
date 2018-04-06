@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(ThirdPersonController))]
 [RequireComponent(typeof(TopDownMovement))]
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
 	public float heavyAttackDamage;
 	Animator anim;
 
-    ParticleSystem psTakeDamage;
+    List<ParticleSystem> particles;
 
     int runHash;
     int jumpHash;
@@ -73,7 +74,10 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		ChangeMovement();
 		movementSpeed = thirdPersonController.movementSpeed;
-        psTakeDamage = GetComponentInChildren<ParticleSystem>();
+
+        particles = new List<ParticleSystem>();
+
+        GetComponentsInChildren(false, particles);
 
         runHash = Animator.StringToHash("Run");
         jumpHash = Animator.StringToHash("OnJump");
@@ -155,7 +159,7 @@ public class PlayerController : MonoBehaviour
 			topDownController.enabled = false;
 			thirdPersonController.enabled = true;
 			thirdPersonCamera.SetActive(true);
-			thirdPersonCamera.GetComponentInParent<ThirdPersonCameraController>().setCameraAtTheBack();
+			thirdPersonCamera.GetComponentInParent<ThirdPersonCameraController>().SetCameraAtTheBack();
 			crosshair.enabled = true;
 			cameraChange = false;
 		}
@@ -304,7 +308,11 @@ public class PlayerController : MonoBehaviour
 
 		lifeBar.fillAmount -= damage;
 
-        psTakeDamage.Play();
+        for (int i = 0; i < particles.Count - 1; i++)
+        {
+            if (particles[i].name == "BloodPlayerHitEffect")
+                particles[i].Play();
+        }
 
     }
 

@@ -25,14 +25,21 @@ public class ThirdPersonController : MonoBehaviour {
 	public Material roofShader;
 	bool onePress;
 	bool onGround;
-	public bool isDashing;
+    bool canActiveDashParticles = true;
+    public bool isDashing;
 	Animator anim;
+    List<ParticleSystem> particles;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
 		dashDurationAux = dashDuration;
+
+        particles = new List<ParticleSystem>();
+
+        GetComponentsInChildren(false, particles);
+
 	}
 	void Update()
 	{
@@ -112,10 +119,25 @@ public class ThirdPersonController : MonoBehaviour {
         {
             isDashing = true; // estoy dasheando
             anim.SetBool("OnDash", true);
+
+            if (anim.GetBool("Run") && anim.GetBool("OnDash") && canActiveDashParticles)
+            {
+                canActiveDashParticles = false;
+
+                for (int i = 0; i < particles.Count - 1; i++)
+                {
+                    if (particles[i].name == "DashParticles")
+                        if (!particles[i].isPlaying)
+                            particles[i].Play();
+                }
+            }
         }
-	
-		// estoy dasheando ? y todavia hay duracion
-		if (isDashing && dashDuration > 0f)
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            canActiveDashParticles = true;
+
+        // estoy dasheando ? y todavia hay duracion
+        if (isDashing && dashDuration > 0f)
 		{
 			relVel = relMove * dashSpeed;
 			dashDuration -= Time.deltaTime;
