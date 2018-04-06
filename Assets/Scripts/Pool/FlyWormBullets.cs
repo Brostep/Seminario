@@ -45,7 +45,6 @@ public class FlyWormBullets : Bullet {
 				if (distance.magnitude < playerRadiusDetection&&!stopChasing)
 				{
 					targetPosition = player.transform.position + player.GetComponent<Rigidbody>().velocity * distance.magnitude / player.GetComponent<PlayerController>().movementSpeed;
-					stopChasing = true;
 				}
 				else if (!stopChasing)
 				{
