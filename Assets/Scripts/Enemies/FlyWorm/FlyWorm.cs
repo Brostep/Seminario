@@ -18,7 +18,7 @@ public class FlyWorm : Enemy {
 		gm = FindObjectOfType<GameManager>();
 		life = gm.flyWormLife;
 		var spawners = FindObjectOfType<EnemySpawner>().spawners;
-		var index = FindObjectOfType<EnemySpawner>().enemiesSpawned;
+		var index = FindObjectOfType<EnemySpawner>().currentSpawner;
 		transform.position = spawners[index].transform.position;
 	}
 	void OnCollisionEnter(Collision c)
@@ -42,13 +42,12 @@ public class FlyWorm : Enemy {
 	{
 		if (life <= 0)
 		{
-			enemySpawner.totalEnemies--;
+			enemySpawner.deadEnemies++;
 			enemySpawner.enemiesAlive--;
 			EnemySpawner.Instance.ReturnFlyWormToPool(this);
 		}
 
 	}
-
 	void MoveCollider()
 	{
 		if (PlayerController.inTopDown && transform.position.y > 5f)

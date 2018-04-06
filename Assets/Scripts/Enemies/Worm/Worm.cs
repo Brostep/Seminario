@@ -64,7 +64,7 @@ public class Worm : Enemy
 		velocityLimit = flocking.velocityLimit;
 		playerHead = player.GetComponentInChildren<Head>().gameObject;
 		var spawners = enemySpawner.spawners;
-		var index = enemySpawner.enemiesSpawned;
+		var index = enemySpawner.currentSpawner;
 		transform.position = spawners[index].transform.position;
 		life = gameManager.wormLife;
 		anim = GetComponent<Animator>();
@@ -183,7 +183,7 @@ public class Worm : Enemy
 	}
 	void EndDeath()
 	{
-		enemySpawner.totalEnemies--;
+		enemySpawner.deadEnemies++;
 		enemySpawner.enemiesAlive--;
 		anim.SetBool("OnDeath", false);
 		deathParticles.Stop();

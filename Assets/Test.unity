@@ -2420,7 +2420,7 @@ Transform:
   m_LocalScale: {x: 10.401791, y: 16.059898, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &428231414
 Prefab:
@@ -10393,7 +10393,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4524214802617014, guid: 5a78e9667a1747f4da5ea16ab837cc1c, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 198026325266074206, guid: 5a78e9667a1747f4da5ea16ab837cc1c,
         type: 2}
@@ -11632,17 +11632,20 @@ MonoBehaviour:
   - {fileID: 762310368}
   - {fileID: 133851754}
   - {fileID: 389611457}
-  waves: 10
-  totalEnemies: 100
-  enemiesSpawned: 0
-  enemiesAlive: 0
+  timeBeforeReSpawn: 5
+  maxEnemiesInScreen: 10
+  totalEnemiesForPool: 50
+  timeBeforeIncreaseTotalEnemies: 5
   door: {fileID: 422015227}
-  allSpawnerDeads: 0
-  whanderComplete: 0
   wormPrefab: {fileID: 114105921765491822, guid: b69a1f6a7f818b6448986160ce94bf47,
     type: 2}
   flyWormPrefab: {fileID: 114230846241760208, guid: d830b75f49701da48930dbbb9bdb0d74,
     type: 2}
+  currentSpawner: 0
+  enemiesAlive: 0
+  deadEnemies: 0
+  allSpawnerDeads: 0
+  whanderComplete: 0
 --- !u!4 &1487806161
 Transform:
   m_ObjectHideFlags: 0
