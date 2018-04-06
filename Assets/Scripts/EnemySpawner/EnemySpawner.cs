@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
 		}
 		if (canUpdate)
 		{
-			if (allSpawnerDeads && enemiesAlive == 0 && door.activeSelf)
+			if (allSpawnerDeads && enemiesAlive <= 0 && door.activeSelf)
 			{
 				door.SetActive(false);
 				doorLocked = false;
