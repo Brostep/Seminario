@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnVawe());
 		StartCoroutine(IncreaseEnemies());
 		StartCoroutine(ReSpawnEnemy());
-		enemiesAlive = maxEnemiesInScreen;
+		enemiesAlive = maxEnemiesInScreen-1;
     }
 
     void Update()
