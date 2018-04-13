@@ -1,6 +1,6 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Dissolve w Ramp"
+Shader "My Shaders/Dissolve w Ramp"
 {
 	Properties
 	{
@@ -61,7 +61,7 @@ Shader "Dissolve w Ramp"
 }
 /*ASEBEGIN
 Version=13101
-294;29;1144;1014;2183.997;1427.543;2.430812;True;False
+47;141;1032;788;2183.997;1427.543;2.430812;True;False
 Node;AmplifyShaderEditor.CommentaryNode;13;-1227.2,885.4998;Float;False;917.9009;505.0993;Dissolve;4;10;2;9;1;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RangedFloatNode;2;-1177.199,1211.599;Float;False;Property;_Dissolved;Dissolved;2;0;0;0;1;0;1;FLOAT
 Node;AmplifyShaderEditor.SamplerNode;1;-964.7999,935.4998;Float;True;Property;_DissolveNoise;Dissolve Noise;1;0;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0.0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.0;False;5;FLOAT4;FLOAT;FLOAT;FLOAT;FLOAT
@@ -82,7 +82,7 @@ Node;AmplifyShaderEditor.SamplerNode;16;-1030.898,-266.0001;Float;True;Property;
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-619.6978,-224.2009;Float;False;2;2;0;FLOAT3;0.0;False;1;FLOAT;0,0,0;False;1;FLOAT3
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-707.1982,396.4;Float;False;3;3;0;FLOAT4;0.0;False;1;FLOAT;0.0,0,0,0;False;2;FLOAT;0,0,0,0;False;1;FLOAT4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;-249.0701,-365.2783;Float;False;2;2;0;COLOR;0.0,0,0,0;False;1;FLOAT4;0.0,0,0,0;False;1;COLOR
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1.900001,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Dissolve w Ramp;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Off;0;0;False;0;0;Custom;0.5;True;True;0;True;TransparentCutout;Transparent;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;False;0;4;10;25;False;0.5;True;0;Zero;Zero;0;Zero;Zero;Add;Add;0;False;0;0,0,0,0;VertexOffset;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;OBJECT;0.0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1.900001,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;My Shaders/Dissolve w Ramp;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Off;0;0;False;0;0;Custom;0.5;True;True;0;True;TransparentCutout;Transparent;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;False;0;4;10;25;False;0.5;True;0;Zero;Zero;0;Zero;Zero;Add;Add;0;False;0;0,0,0,0;VertexOffset;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;5;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;OBJECT;0.0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;9;0;2;0
 WireConnection;10;0;1;1
 WireConnection;10;1;9;0
@@ -101,4 +101,4 @@ WireConnection;0;1;22;0
 WireConnection;0;2;19;0
 WireConnection;0;10;10;0
 ASEEND*/
-//CHKSM=84FA45CEEF4F4B4922A15C8BF10B3B49A3327765
+//CHKSM=78B0F6591EA7CEFA7E394A688D49BA0BBFA87A44

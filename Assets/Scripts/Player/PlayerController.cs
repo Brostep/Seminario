@@ -17,12 +17,16 @@ public class PlayerController : MonoBehaviour
 	public Transform meleeFront;
 	public Transform playerResetBoss;
 	public Transform playerResetRoom;
+    public Transform spawnGroundParticles;
 	public float meleeRadius;
 	public float lightAttackDamage;
 	public float heavyAttackDamage;
 	Animator anim;
-
+    
     List<ParticleSystem> particles;
+    public GameObject groundParticles;
+
+    TrailRenderer trail;
 
     int runHash;
     int jumpHash;
@@ -77,6 +81,8 @@ public class PlayerController : MonoBehaviour
 
         particles = new List<ParticleSystem>();
 
+        trail = GetComponentInChildren<TrailRenderer>();
+
         GetComponentsInChildren(false, particles);
 
         runHash = Animator.StringToHash("Run");
@@ -87,7 +93,7 @@ public class PlayerController : MonoBehaviour
 	{
 		CheckGroundStatus();
 
-		if (deathBySnuSnu && life > 0)
+        if (deathBySnuSnu && life > 0)
 		{
 			TakeDamage(1);
 		}
@@ -201,6 +207,7 @@ public class PlayerController : MonoBehaviour
 		{
 			if (!thirdPersonController.isDashing)
 			{
+                trail.gameObject.SetActive(true);
 				animController.EnterAnimationLightAttack();
 				thirdPersonController.movementSpeed = 2.0f;
 			}
@@ -210,7 +217,8 @@ public class PlayerController : MonoBehaviour
 		{
 			if (!thirdPersonController.isDashing)
 			{
-				animController.EnterAnimationHeavyAttack();
+                trail.gameObject.SetActive(true);
+                animController.EnterAnimationHeavyAttack();
 				thirdPersonController.movementSpeed = 0.0f;
 
 			}
@@ -258,7 +266,7 @@ public class PlayerController : MonoBehaviour
 
 	void DoDamageLightAttack3()
 	{
-		if (!inTopDown)
+        if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
 		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
 		if (enemiesHited.Length > 0)
@@ -283,15 +291,22 @@ public class PlayerController : MonoBehaviour
 
 	private void DoDamageHeavyAttack1()
 	{
-		/*if (!inTopDown)
+        var objParticle = ParticleManager.Instance.GetParticle(ParticleManager.GROUND_CRACKS);
+
+        objParticle.transform.position = spawnGroundParticles.position;
+        objParticle.transform.rotation = spawnGroundParticles.rotation;
+
+
+        /*if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);*/
-		var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+        var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
 		if (enemiesHited.Length > 0)
 		{
 			foreach (var enemy in enemiesHited)
 			{
 				var e = enemy.GetComponent<Enemy>();
 				e.life -= heavyAttackDamage;
+
 				Instantiate(bloodHit, e.head.transform);
 
 				if (enemy.GetComponent<Rigidbody>() != null)
