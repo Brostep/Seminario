@@ -12,6 +12,7 @@ public class ThirdPersonCameraController : MonoBehaviour
 	public float turnSpeed = 1f;
 	public float timeSinceNoRotation;
 	public float spinTurnLimit = 90;
+	public GameObject crossHair;
 	float mouseX, stickX;
     float mouseY, stickY;
     float rotY = 0f;
@@ -49,21 +50,29 @@ public class ThirdPersonCameraController : MonoBehaviour
         transform.position = target.transform.position;
         los = GetComponentInChildren<LineOfSight>();
     }
-    void Update()
-    {
-        currentTime += Time.deltaTime;
+	void Update()
+	{
+		currentTime += Time.deltaTime;
 
-        if (currentTime > timeLapse)
-        {
-            currentTime = 0.0f;
-        }
+		if (currentTime > timeLapse)
+		{
+			currentTime = 0.0f;
+		}
 
-        if (!isTargeting)
-        {
-            GetInputs();
-            RotateCamera();
-        }
-
+		if (!isTargeting)
+		{
+			GetInputs();
+			RotateCamera();
+		}
+		// eye behaviour
+		if (transform.rotation.x < 0)
+		{
+			crossHair.SetActive(true);
+		}
+		else
+		{
+			crossHair.SetActive(false);
+		}
         LockOnEnemy();
     }
     void LockOnEnemy()

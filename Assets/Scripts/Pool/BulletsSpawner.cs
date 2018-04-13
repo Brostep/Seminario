@@ -7,6 +7,7 @@ public class BulletsSpawner : MonoBehaviour
 	public float cooldown = 10f;
 	public float inputSensitivity = 150f;
 	public float clampAngle = 0f;
+	public bool isShooting = false;
 	float cd;
 	float rotX, rotY;
 	public GameObject eye;
@@ -27,6 +28,7 @@ public class BulletsSpawner : MonoBehaviour
 	}
 	void Update()
 	{
+		
 		if (!PlayerController.inTopDown)
 			RotateSpawner();
 		else
@@ -36,9 +38,12 @@ public class BulletsSpawner : MonoBehaviour
 
 		if (((Input.GetMouseButton(2)|| (Input.GetButton("RButton"))) && (cooldown/10f)<cd ))
 		{
+			isShooting = true;
 			_bulletPool.GetObjectFromPool();
 			cd = 0f;
 		}
+		else if ((cooldown / 10f) < cd)
+			isShooting = false;
 	}
 	void RotateSpawner()
 	{

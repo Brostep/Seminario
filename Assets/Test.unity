@@ -1924,6 +1924,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 261367656}
+  - component: {fileID: 261367657}
   m_Layer: 2
   m_Name: Eye
   m_TagString: Untagged
@@ -1938,7 +1939,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 261367655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1379394, y: 1.5668509, z: 0.4777794}
+  m_LocalPosition: {x: -1.92, y: 1.9, z: -20.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 642052571}
@@ -1946,6 +1947,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &261367657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 261367655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df729b983623afa458da312d289f5a5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThirdPersonCamera: {fileID: 1643644324}
+  rotationSpeed: 5
 --- !u!1 &293882099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2033,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 313832852}
   m_LocalRotation: {x: -0, y: -0.00000011920925, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7140002, z: 0.03999996}
+  m_LocalPosition: {x: -0.329, y: 1.7140002, z: 0.03999996}
   m_LocalScale: {x: 0.028889999, y: 0.028889999, z: 0.028889999}
   m_Children: []
   m_Father: {fileID: 1202284974}
@@ -3341,7 +3355,7 @@ GameObject:
   - component: {fileID: 477352685}
   - component: {fileID: 477352684}
   - component: {fileID: 477352683}
-  m_Layer: 18
+  m_Layer: 13
   m_Name: Box064
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4427,6 +4441,7 @@ MonoBehaviour:
   cooldown: 1.8
   inputSensitivity: 150
   clampAngle: 45
+  isShooting: 0
   eye: {fileID: 2011344894}
   firePoint: {fileID: 1643644324}
 --- !u!4 &663003197 stripped
@@ -10973,6 +10988,11 @@ Prefab:
       propertyPath: m_RenderingPath
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114246360250028812, guid: 7080391e9b44a7b4b9de20643e39786d,
+        type: 2}
+      propertyPath: crossHair
+      value: 
+      objectReference: {fileID: 2032861848}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7080391e9b44a7b4b9de20643e39786d, type: 2}
   m_IsPrefabParent: 0
@@ -13616,10 +13636,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!1 &1837643991 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100146, guid: d8beedb7701b99744a51caeb7a761cda, type: 3}
-  m_PrefabInternal: {fileID: 867317393}
 --- !u!1001 &1857494253
 Prefab:
   m_ObjectHideFlags: 0
@@ -13945,7 +13961,7 @@ GameObject:
   - component: {fileID: 1940218413}
   - component: {fileID: 1940218412}
   - component: {fileID: 1940218411}
-  m_Layer: 18
+  m_Layer: 13
   m_Name: Plane005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14642,7 +14658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8866b3678b02a8747939e3b74f9985dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1837643991}
+  player: {fileID: 1202284973}
+  bulletSpawner: {fileID: 642052572}
   offsetThirdPerson: {x: -1, y: 1.7, z: 0}
   offsetTopDown: {x: -1, y: 1, z: 0}
 --- !u!1 &2012560996
