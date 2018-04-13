@@ -26,8 +26,14 @@ public class PlayerBullets : Bullet {
 	}
 	void OnCollisionEnter(Collision c)
 	{
-		BulletsSpawner.Instance.ReturnBulletToPool(this);
-	}
+        if (c.gameObject.layer == 11 || c.gameObject.layer == 12 || c.gameObject.layer == 18 || c.gameObject.layer == 20)
+        {
+            var obj = ParticleManager.Instance.GetParticle(ParticleManager.BULLET_NULL_PARTICLE);
+            obj.transform.position = this.transform.position;
+        }
+
+        BulletsSpawner.Instance.ReturnBulletToPool(this);
+    }
 	public override void Initialize()
 	{
 		_timeAlive = 0;

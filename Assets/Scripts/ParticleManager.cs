@@ -18,7 +18,8 @@ public class ParticleManager : MonoBehaviour
 
     #region Names of Particles
     public const int GROUND_CRACKS = 0;
-    public const int BLOOD_DEAD_SPAWNER_EFFECT = 1;
+    public const int BLOOD_GULA_HIT_EFFECT = 1;
+    public const int BULLET_NULL_PARTICLE = 2;
 
 
     #endregion
@@ -32,7 +33,8 @@ public class ParticleManager : MonoBehaviour
     private void Start()
     {
         _dicCallBacks.Add(GROUND_CRACKS, GroundCracksParticlesFactory);
-        _dicCallBacks.Add(BLOOD_DEAD_SPAWNER_EFFECT, BloodDeadSpawnerEffectFactory);
+        _dicCallBacks.Add(BLOOD_GULA_HIT_EFFECT, BloodGulaHitEffect);
+        _dicCallBacks.Add(BULLET_NULL_PARTICLE, BulletNullParticle);
     }
 
     public GameObject GetParticle(int name)
@@ -64,9 +66,14 @@ public class ParticleManager : MonoBehaviour
         return Instantiate<GameObject>(particles[GROUND_CRACKS]);
     }
 
-    private GameObject BloodDeadSpawnerEffectFactory()
+    private GameObject BloodGulaHitEffect()
     {
-        return Instantiate<GameObject>(particles[BLOOD_DEAD_SPAWNER_EFFECT]);
+        return Instantiate<GameObject>(particles[BLOOD_GULA_HIT_EFFECT]);
+    }
+
+    private GameObject BulletNullParticle()
+    {
+        return Instantiate<GameObject>(particles[BULLET_NULL_PARTICLE]);
     }
 
     #endregion

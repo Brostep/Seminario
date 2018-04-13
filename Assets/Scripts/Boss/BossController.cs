@@ -17,6 +17,7 @@ public class BossController : MonoBehaviour
     public GameObject Spit3;
     public GameObject vomit2;
     public GameObject SlamArea;
+    public GameObject particleTakeDamage;
     public List<GameObject> vomitLeft;
     public List<GameObject> vomitRight;
     public List<GameObject> vomitBack;
@@ -49,7 +50,7 @@ public class BossController : MonoBehaviour
     {
         _currentHealthPoints = healthPoints;
         anim = GetComponent<Animator>();
-        psTakeDamage = GetComponentInChildren<ParticleSystem>();
+        //psTakeDamage = GetComponentInChildren<ParticleSystem>();
         spawners = new List<GameObject>();
         wormsInScene = new List<GameObject>();
         lifeBar.enabled = false;
@@ -297,7 +298,10 @@ public class BossController : MonoBehaviour
             _currentHealthPoints -= damage;
             lifeBar.fillAmount -= damage / 200.0f;
 
-            psTakeDamage.Play();
+            var particleObj = ParticleManager.Instance.GetParticle(ParticleManager.BLOOD_GULA_HIT_EFFECT);
+            particleObj.transform.position = c.transform.position;
+            
+            //psTakeDamage.Play();
         }
     }
 
