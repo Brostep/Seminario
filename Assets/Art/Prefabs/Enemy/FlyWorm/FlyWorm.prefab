@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b8b3c8d306d934aae58ac2cb4e0361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 1.5
+  life: 1
   head: {fileID: 1761217862548284}
   fireRate: 3
   damage: 2

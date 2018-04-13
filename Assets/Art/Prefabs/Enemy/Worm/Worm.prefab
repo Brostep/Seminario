@@ -1316,7 +1316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c51be745fe817244b2765d68cd58103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 3
+  life: 1.5
   head: {fileID: 1104410501261176}
   cdAttack: 8
   leapDistance: 16

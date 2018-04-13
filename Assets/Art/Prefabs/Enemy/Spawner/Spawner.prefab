@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1632e7cd9cd224381bb67449279902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 19
+  life: 3
   head: {fileID: 1794392873350832}
   particlesWhileInGround: {fileID: 1310960302838532, guid: a41e21d2747353e45ab5f16e70f118c2,
     type: 2}
