@@ -219,15 +219,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.95955884
-        functionName: DoDamageHeavyAttack1
+      - time: 0.89705884
+        functionName: EndHeavyAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 1
-        functionName: EndHeavyAttack
+        functionName: DoDamageHeavyAttack1
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

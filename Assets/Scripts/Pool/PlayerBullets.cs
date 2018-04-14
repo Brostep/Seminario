@@ -9,11 +9,22 @@ public class PlayerBullets : Bullet {
 	Vector3 enemyPos;
 	ThirdPersonCameraController tPCC;
 	bool lockedOnTarget;
+    GameObject objParticle;
+
+    void Start()
+    {
+        objParticle = ParticleManager.Instance.GetParticle(ParticleManager.BULLET_NULL_PARTICLE);
+        ParticleManager.Instance.DisposePool(objParticle);
+    }
+
 	void Update()
 	{
 		_timeAlive += Time.deltaTime;
 		if (_timeAlive >= lifeSpan)
 			BulletsSpawner.Instance.ReturnBulletToPool(this);
+
+        /*if (objParticle.GetComponent<ParticleSystem>().isStopped)
+            ParticleManager.Instance.ReturnParticle(ParticleManager.BULLET_NULL_PARTICLE, objParticle);*/
 	}
 	void FixedUpdate()
 	{
@@ -26,10 +37,10 @@ public class PlayerBullets : Bullet {
 	}
 	void OnCollisionEnter(Collision c)
 	{
-        if (c.gameObject.layer == 11 || c.gameObject.layer == 12 || c.gameObject.layer == 18 || c.gameObject.layer == 20)
+        if (c.gameObject.layer == 11 || c.gameObject.layer == 12 || c.gameObject.layer == 13 || c.gameObject.layer == 18 || c.gameObject.layer == 20)
         {
-            var obj = ParticleManager.Instance.GetParticle(ParticleManager.BULLET_NULL_PARTICLE);
-            obj.transform.position = this.transform.position;
+            objParticle = ParticleManager.Instance.GetParticle(ParticleManager.BULLET_NULL_PARTICLE);
+            objParticle.transform.position = this.transform.position;
         }
 
         BulletsSpawner.Instance.ReturnBulletToPool(this);

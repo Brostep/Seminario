@@ -59,6 +59,11 @@ public class ParticleManager : MonoBehaviour
         obj.SetActive(false);
     }
 
+    public void ReturnParticle(int name, GameObject obj)
+    {
+        _dicPool[name].DisablePoolObject(obj);
+    }
+
     #region Particles CallBacks
 
     private GameObject GroundCracksParticlesFactory()

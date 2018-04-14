@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public GameObject groundParticles;
 
     TrailRenderer trail;
+    GameObject objParticle;
 
     int runHash;
     int jumpHash;
@@ -85,6 +86,9 @@ public class PlayerController : MonoBehaviour
 
         GetComponentsInChildren(false, particles);
 
+        objParticle = ParticleManager.Instance.GetParticle(ParticleManager.GROUND_CRACKS);
+        ParticleManager.Instance.DisposePool(objParticle);
+
         runHash = Animator.StringToHash("Run");
         jumpHash = Animator.StringToHash("OnJump");
         deathHash = Animator.StringToHash("Death");
@@ -92,6 +96,11 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		CheckGroundStatus();
+
+        if (!objParticle.GetComponent<ParticleSystem>().isPlaying)
+            ParticleManager.Instance.ReturnParticle(ParticleManager.GROUND_CRACKS, objParticle);
+            
+
 
         if (deathBySnuSnu && life > 0)
 		{
@@ -291,11 +300,16 @@ public class PlayerController : MonoBehaviour
 
 	private void DoDamageHeavyAttack1()
 	{
-        var objParticle = ParticleManager.Instance.GetParticle(ParticleManager.GROUND_CRACKS);
+        //Fixear esto. Buscar la forma de como hacer que desactive su respectiva instancia.
+        ParticleManager.Instance.InitializePool(objParticle);
 
         objParticle.transform.position = spawnGroundParticles.position;
         objParticle.transform.rotation = spawnGroundParticles.rotation;
 
+        /* VIEJO: Recordatorio de como era antes (no perfomante).
+        var obj = ParticleManager.Instance.GetParticle(ParticleManager.GROUND_CRACKS);
+        obj.transform.position = spawnGroundParticles.position;
+        obj.transform.rotation = spawnGroundParticles.rotation;*/
 
         /*if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);*/
