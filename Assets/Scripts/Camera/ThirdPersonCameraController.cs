@@ -64,8 +64,8 @@ public class ThirdPersonCameraController : MonoBehaviour
 			GetInputs();
 			RotateCamera();
 		}
-		// eye behaviour
-		if (transform.rotation.x < 0.1)
+		float currentRotation = (((360 - transform.eulerAngles.x) * 100) / 45) / 100;
+		if (currentRotation >=0 && currentRotation <= 1 )
 		{
 			crossHair.SetActive(true);
 		}

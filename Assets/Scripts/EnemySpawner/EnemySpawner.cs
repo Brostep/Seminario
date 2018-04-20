@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
 	public int maxEnemiesInScreen; // max enemies en pantalla incrementa con el tiempo
 	public int totalEnemiesForPool; // for pool
 	public int timeBeforeIncreaseTotalEnemies; // 1 per call
+	public float radiusOfTheRoom;
 
 	[Header("Prefabs")]
 	public GameObject door;
@@ -29,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
 
 	bool canUpdate;
 	bool doorLocked = true;
+	bool checkEnemiesSpawned;
 
     void Awake()
     {
@@ -43,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnVawe());
 		StartCoroutine(IncreaseEnemies());
 		StartCoroutine(ReSpawnEnemy());
-		enemiesAlive = maxEnemiesInScreen-1;
+		enemiesAlive = maxEnemiesInScreen;
     }
 
     void Update()
@@ -61,10 +63,47 @@ public class EnemySpawner : MonoBehaviour
 				door.SetActive(false);
 				doorLocked = false;
 			}
+			if (allSpawnerDeads && !checkEnemiesSpawned)
+			{
+				int enemiesInScreen = 0;
+				var hits = Physics.OverlapSphere(transform.position, radiusOfTheRoom);
+				foreach (var hit in hits)
+				{
+					if (hit.gameObject.layer == 10)
+						enemiesInScreen++;
+				}
+				if(enemiesAlive < enemiesInScreen)
+				{
+					int missingEnemies = enemiesInScreen - enemiesAlive;
+					SpawnMissingEnemies(missingEnemies);
+				}
+				checkEnemiesSpawned = true;
+				print(enemiesAlive);
+				print(enemiesInScreen);
+				print(enemiesAlive);
+			}
 		}
     }
+	void SpawnMissingEnemies(int missingEnemies)
+	{
+		for (int i = 0; i < missingEnemies; i++)
+		{
+			currentSpawner++;
+			enemiesAlive++;
+			if (currentSpawner >= spawners.Count)
+			{
+				Utility.KnuthShuffle<GameObject>(spawners);
+				currentSpawner = 0;
+			}
+			if (spawners[currentSpawner].transform.position.y > 5)
+				flyWormPool.GetPoolObject();
+			else
+				wormPool.GetObjectFromPool();
 
-    IEnumerator SpawnVawe()
+		}
+	}
+
+	IEnumerator SpawnVawe()
     {
 		for (int i = 0; i < maxEnemiesInScreen; i++)
 		{
@@ -86,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
 
 	IEnumerator ReSpawnEnemy()
 	{
-		while (doorLocked)
+		do
 		{
 			if (allSpawnerDeads)
 			{
@@ -115,7 +154,7 @@ public class EnemySpawner : MonoBehaviour
 			{
 				yield return null;
 			}
-		}
+		} while (doorLocked);
 	}
 
 	IEnumerator IncreaseEnemies()
@@ -128,7 +167,20 @@ public class EnemySpawner : MonoBehaviour
 				timeBeforeReSpawn -= 0.05f; // menos tiempo de re spawn more difficult
 		}	
 	}
+	public void CreateNewGroundEnemy(Vector3 newPos)
+	{
+		currentSpawner++;
 
+		if (currentSpawner >= spawners.Count)
+		{
+			Utility.KnuthShuffle<GameObject>(spawners);
+			currentSpawner = 0;
+		}
+		Vector3 prevPos = spawners[currentSpawner].transform.position;
+		spawners[currentSpawner].transform.position = newPos;
+		wormPool.GetObjectFromPool();
+		spawners[currentSpawner].transform.position = prevPos;
+	}
 	// POOLS 
 	private Worm WormFactory()
     {

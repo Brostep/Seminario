@@ -1960,6 +1960,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThirdPersonCamera: {fileID: 1643644324}
   rotationSpeed: 5
+  bulletSpawner: {fileID: 642052572}
+  player: {fileID: 1202284973}
 --- !u!1 &293882099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,6 +2027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d3481d480170048946e76daaf24733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Eye: {fileID: 261367655}
+  Character: {fileID: 1202284973}
+  ThirdPersonCamera: {fileID: 1643644326}
 --- !u!4 &313832854
 Transform:
   m_ObjectHideFlags: 0
@@ -2277,7 +2282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &393101407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11032,6 +11037,7 @@ MonoBehaviour:
   maxEnemiesInScreen: 10
   totalEnemiesForPool: 50
   timeBeforeIncreaseTotalEnemies: 5
+  radiusOfTheRoom: 70
   door: {fileID: 422015227}
   wormPrefab: {fileID: 114105921765491822, guid: b69a1f6a7f818b6448986160ce94bf47,
     type: 2}
@@ -12003,6 +12009,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1862552947952742, guid: 7080391e9b44a7b4b9de20643e39786d,
     type: 2}
   m_PrefabInternal: {fileID: 1437656875}
+--- !u!114 &1643644326 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114246360250028812, guid: 7080391e9b44a7b4b9de20643e39786d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1437656875}
+  m_Script: {fileID: 11500000, guid: 7ef859c35c7459841b1cd06e23a3c03f, type: 3}
 --- !u!1 &1648761738
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,8 +42,7 @@ public class FlyWorm : Enemy {
 	{
 		if (life <= 0)
 		{
-			enemySpawner.deadEnemies++;
-			enemySpawner.enemiesAlive--;
+			enemySpawner.CreateNewGroundEnemy(transform.position);
 			EnemySpawner.Instance.ReturnFlyWormToPool(this);
 		}
 
