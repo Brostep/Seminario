@@ -229,9 +229,7 @@ public class PlayerController : MonoBehaviour
                 trail.gameObject.SetActive(true);
                 animController.EnterAnimationHeavyAttack();
 				thirdPersonController.movementSpeed = 0.0f;
-
 			}
-
 		}
 	}
 
@@ -313,20 +311,27 @@ public class PlayerController : MonoBehaviour
 
         /*if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);*/
-        var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
-		if (enemiesHited.Length > 0)
+        var hits = Physics.OverlapSphere(meleeFront.position, meleeRadius);
+		if (hits.Length > 0)
 		{
-			foreach (var enemy in enemiesHited)
-			{
-				var e = enemy.GetComponent<Enemy>();
-				e.life -= heavyAttackDamage;
+			foreach (var hit in hits)
+			{	// enemy layer
+				if (hit.gameObject.layer == 10)
+				{
+					var e = hit.GetComponent<Enemy>();
+					e.life -= heavyAttackDamage;
 
-				Instantiate(bloodHit, e.head.transform);
+					Instantiate(bloodHit, e.head.transform);
 
-				if (enemy.GetComponent<Rigidbody>() != null)
-					enemy.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop * 1.5f);
+					if (hit.GetComponent<Rigidbody>() != null)
+						hit.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * boop * 1.5f);
+				}
+				//bala indestructible layer
+				else if (hit.gameObject.layer == 18)
+				{
+					hit.transform.forward = hit.transform.forward * -1;
+				}
 			}
-
 		}
 	}
 
