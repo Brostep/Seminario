@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class Spawner : MonoBehaviour {
+public class Spawner : MonoBehaviour
+{
+    [HideInInspector]
+    public bool open;
 
-	public bool open;
-	void Start()
-	{
-		open = true;
-	}
+    private void Start()
+    {
+        open = true;
+    }
 }

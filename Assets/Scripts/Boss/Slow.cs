@@ -18,7 +18,7 @@ public class Slow : MonoBehaviour {
 		if (c.gameObject.layer == 8)
 		{
 			var tPC = c.gameObject.GetComponent<ThirdPersonController>();
-			var tPM = c.gameObject.GetComponent<TopDownMovement>();
+			var tPM = c.gameObject.GetComponent<TopDownController>();
 			tPC.movementSpeed = ((ms / 2) - 0.5f);
 			tPM.movementSpeed = ((ms / 2) - 0.5f);
 			tPC.dashSpeed = ((tPC.dashSpeed / 2) - 0.5f);
@@ -38,9 +38,9 @@ public class Slow : MonoBehaviour {
 		if (c.gameObject.layer == 8)
 		{
 			c.gameObject.GetComponent<ThirdPersonController>().movementSpeed = ms;
-			c.gameObject.GetComponent<TopDownMovement>().movementSpeed = ms;
+			c.gameObject.GetComponent<TopDownController>().movementSpeed = ms;
 			c.gameObject.GetComponent<ThirdPersonController>().dashSpeed = dashMs;
-			c.gameObject.GetComponent<TopDownMovement>().dashSpeed = dashMs;
+			c.gameObject.GetComponent<TopDownController>().dashSpeed = dashMs;
 
 		}
 	}

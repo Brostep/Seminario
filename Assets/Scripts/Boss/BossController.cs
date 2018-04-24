@@ -227,11 +227,11 @@ public class BossController : MonoBehaviour
         PlayerController.inTopDown = !PlayerController.inTopDown;
         if (playerController.promedyTarget && !PlayerController.inTopDown)
         {
-            playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = false;
+            playerController.topDownCamera.GetComponent<TopDownAverageTarget>().enabled = false;
         }
         else if (playerController.promedyTarget)
         {
-            playerController.topDownCamera.GetComponent<TopDownPromedyTargets>().enabled = true;
+            playerController.topDownCamera.GetComponent<TopDownAverageTarget>().enabled = true;
         }
 
         fase2Enabled = true;
@@ -300,7 +300,7 @@ public class BossController : MonoBehaviour
 
             var particleObj = ParticleManager.Instance.GetParticle(ParticleManager.BLOOD_GULA_HIT_EFFECT);
             particleObj.transform.position = c.transform.position;
-            
+
             //psTakeDamage.Play();
         }
     }

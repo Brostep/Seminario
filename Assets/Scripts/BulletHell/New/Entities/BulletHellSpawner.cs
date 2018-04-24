@@ -26,7 +26,9 @@ public class BulletHellSpawner : MonoBehaviour
     public Vector3 SpawnPosition { get; private set; }
     public Quaternion SpawnRotation { get; private set; }
     private int index;
+    [HideInInspector]
     public int pattern;
+    [HideInInspector]
     public bool startShooting;
 
     private void Awake()
