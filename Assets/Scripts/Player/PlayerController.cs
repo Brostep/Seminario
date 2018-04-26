@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     public Transform playerResetBoss;
     public Transform playerResetRoom;
     public Transform spawnGroundParticles;
-    public float meleeRadius;
+    public float lightMeleeRadius;
+    public float heavyMeleeRadius;
     public float lightAttackDamage;
     public float heavyAttackDamage;
     Animator anim;
@@ -237,7 +238,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!inTopDown)
             transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-        var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+        var enemiesHited = Physics.OverlapSphere(meleeFront.position, lightMeleeRadius, LayerMask.GetMask("Enemy"));
         if (enemiesHited.Length > 0)
         {
             foreach (var enemy in enemiesHited)
@@ -256,7 +257,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!inTopDown)
             transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-        var enemiesHited = Physics.OverlapSphere(transform.position, meleeRadius * 2, LayerMask.GetMask("Enemy"));
+        var enemiesHited = Physics.OverlapSphere(transform.position, lightMeleeRadius * 2, LayerMask.GetMask("Enemy"));
         if (enemiesHited.Length > 0)
         {
             foreach (var enemy in enemiesHited)
@@ -275,7 +276,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!inTopDown)
             transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);
-        var enemiesHited = Physics.OverlapSphere(meleeFront.position, meleeRadius, LayerMask.GetMask("Enemy"));
+        var enemiesHited = Physics.OverlapSphere(meleeFront.position, lightMeleeRadius, LayerMask.GetMask("Enemy"));
         if (enemiesHited.Length > 0)
         {
             foreach (var enemy in enemiesHited)
@@ -311,7 +312,7 @@ public class PlayerController : MonoBehaviour
 
         /*if (!inTopDown)
 			transform.rotation = new Quaternion(transform.rotation.x, thirdPersonCamera.transform.rotation.y, transform.rotation.z, thirdPersonCamera.transform.rotation.w);*/
-        var hits = Physics.OverlapSphere(meleeFront.position, meleeRadius);
+        var hits = Physics.OverlapSphere(meleeFront.position, heavyMeleeRadius);
         if (hits.Length > 0)
         {
             foreach (var hit in hits)
@@ -394,6 +395,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.cyan;
 
         if (Input.GetKey(KeyCode.E))
-            Gizmos.DrawSphere(meleeFront.position, meleeRadius);
+            Gizmos.DrawSphere(meleeFront.position, lightMeleeRadius);
     }
 }
