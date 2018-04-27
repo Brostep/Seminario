@@ -24,9 +24,9 @@ public class CameraTransitionBetween2Points : MonoBehaviour {
 			currentTransitionIndex = player.currentTransitionIndex;
 
 		float total = CalculatePos();
-	
-		if (total > 0 && total<=1)
 
+		if (total > 0 && total <= 1)
+		{ }
 	}
 	float CalculatePos()
 	{
