@@ -23,8 +23,9 @@ public class PlayerController : MonoBehaviour
     public float lightAttackDamage;
     public float heavyAttackDamage;
     Animator anim;
+	public int currentTransitionIndex;
 
-    List<ParticleSystem> particles;
+	List<ParticleSystem> particles;
     public GameObject groundParticles;
 
     TrailRenderer trail;
