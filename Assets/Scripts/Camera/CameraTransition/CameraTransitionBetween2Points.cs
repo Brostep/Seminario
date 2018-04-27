@@ -26,7 +26,6 @@ public class CameraTransitionBetween2Points : MonoBehaviour {
 		float total = CalculatePos();
 	
 		if (total > 0 && total<=1)
-			print("Total"+total);
 
 	}
 	float CalculatePos()
