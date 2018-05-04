@@ -6,46 +6,48 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TopDownController))]
 public class PlayerController : MonoBehaviour
 {
-    public Camera Cam;
-    ThirdPersonController thirdPersonController;
-    TopDownController topDownController;
-    AnimationControllerPlayer animController;
-    public GameObject thirdPersonCamera;
-    public GameObject topDownCamera;
+	[Header("Camera and Camera Holders")]
+	public Camera Cam;
+	ThirdPersonController thirdPersonController;
+	TopDownController topDownController;
+	AnimationControllerPlayer animController;
+	public GameObject thirdPersonCamera;
+	public GameObject topDownCamera;
 
-    public static bool inTopDown;
-    public Transform meleeFront;
-    public Transform playerResetBoss;
+	[Header("Reset Points")]
+	public Transform playerResetBoss;
     public Transform playerResetRoom;
-    public Transform spawnGroundParticles;
+
+	[Header("Melee Variables")]
+	public Transform meleeFront;
+	public Transform spawnGroundParticles;
     public float lightMeleeRadius;
     public float heavyMeleeRadius;
     public float lightAttackDamage;
     public float heavyAttackDamage;
-    Animator anim;
-	public int currentTransitionIndex;
 
-	List<ParticleSystem> particles;
-    public GameObject groundParticles;
+	[Header("Camera Transition Variables")]
+	public int currentTransitionIndex = -1;
+	public bool fromThirdPersonToTopDown;
+	public bool fromTopDownToThirdPerson;
+	public static bool inTopDown;
+	public bool promedyTarget;
+	public bool isTransitioning;
+	public bool cameraChange { get; set; }
 
-    TrailRenderer trail;
-    GameObject objParticle;
-
-    int runHash;
-    int jumpHash;
-    int deathHash;
-
-    bool isJumping;
-    bool onGround;
-    bool playDeathAnim;
-    public bool promedyTarget;
-    public bool cameraChange { get; set; }
+	[Header("Boss Variables")]
     public bool deathBySnuSnu;
     public bool inBossFight;
+
+	[Header("Force Applied To Enemies")]
     public float boop;
-    Vector3 velocity;
+
+	[Header("Particles")]
     public GameObject bloodHit;
-    Rigidbody rb;
+	List<ParticleSystem> particles;
+	public GameObject groundParticles;
+
+	[Header("UI")]
     public Image crosshair;
     public Image lifeBar;
     private float _currentLife;
@@ -71,7 +73,19 @@ public class PlayerController : MonoBehaviour
     [Range(1f, 179f)]
     public float fieldOfViewTP;
 
-    void Start()
+	TrailRenderer trail;
+	GameObject objParticle;
+	Animator anim;
+	int runHash;
+	int jumpHash;
+	int deathHash;
+	Rigidbody rb;
+	bool isJumping;
+	bool onGround;
+	bool playDeathAnim;
+	Vector3 velocity;
+
+	void Start()
     {
         life = _life;
         thirdPersonController = GetComponent<ThirdPersonController>();
