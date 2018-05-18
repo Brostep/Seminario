@@ -16,7 +16,7 @@ public class Head : MonoBehaviour {
 
 	private void Start()
 	{
-		offsetPositionY = this.transform.position.y;
+		offsetPositionY = 1.8f;
 		bulletSpawn = Eye.GetComponent<EyeBehaviourRotation>().bulletSpawner;
 	}
 	private void Update()
