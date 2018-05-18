@@ -160,20 +160,20 @@ public class ThirdPersonController : MonoBehaviour
 
     private void CheckGroundStatus()
     {
-        RaycastHit hitInfo;
-        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
-        {
-            if (hitInfo.distance < 0.1f)
-            {
-                groundNormal = hitInfo.normal;
-                isGrounded = true;
-            }
-            else
-            {
-                groundNormal = Vector3.up;
-                isGrounded = false;
-            }
-        }
+        //RaycastHit hitInfo;
+        //if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, float.MaxValue))
+        //{
+        //    if (hitInfo.distance < 0.1f)
+        //    {
+        //        groundNormal = hitInfo.normal;
+        //        isGrounded = true;
+        //    }
+        //    else
+        //    {
+        //        groundNormal = Vector3.up;
+        //        isGrounded = false;
+        //    }
+        //}
     }
 
     private void ApplyExtraTurnRotation()
